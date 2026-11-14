@@ -1,0 +1,684 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Der Stammbaum für dich · Datenbank-Edition</title>
+<meta name="author" content="Katharina Schütz">
+<meta name="robots" content="noindex, nofollow">
+<style>
+:root{--navy:#012169;--red:#d31334;--cream:#faf6ee;--ink:#1c2333;--line:#e5dcc8;--ok:#1a7a3c;--no:#b3222e;--gold:#b08d3f}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Georgia,'Times New Roman',serif;background:var(--cream);color:var(--ink);min-height:100vh}
+header{position:sticky;top:0;z-index:30;background:linear-gradient(180deg,var(--navy),color-mix(in srgb,var(--navy) 85%,#fff));color:#fff;padding:14px 14px 12px;box-shadow:0 2px 10px rgba(0,0,0,.25);border-bottom:3px solid var(--red)}
+.hrow{display:block;max-width:760px;margin:0 auto}
+hgroup{cursor:pointer;text-align:center}
+header h1{font-size:1.05rem;letter-spacing:.02em;line-height:1.35;margin:0}
+header .sub{display:block;font-size:.68rem;opacity:.85;font-style:italic;margin-top:3px}
+nav{display:flex;gap:6px;flex-wrap:wrap;align-items:center;justify-content:center;margin-top:9px}
+nav button{font-family:inherit;font-size:.68rem;padding:5px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.08);color:#fff;cursor:pointer;transition:all .18s ease;white-space:nowrap}
+nav button:hover,nav button.on{background:#fff;color:var(--navy);border-color:#fff;transform:translateY(-1px)}
+#cover{max-width:760px;margin:14px auto;padding:22px 16px;text-align:center;background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 6px 22px rgba(0,0,0,.08)}
+#cover .flag{font-size:1.9rem}
+#cover h2{font-size:1.5rem;color:var(--navy);margin:6px 0 3px;line-height:1.25}
+#cover .kick{letter-spacing:.2em;text-transform:uppercase;font-size:.66rem;color:var(--red)}
+#cover p{font-style:italic;color:#555;margin-bottom:3px;font-size:.85rem}
+#cover .author{font-size:.74rem;color:#777;margin:10px 0 6px}
+.coverinfo{background:var(--cream);border:1px solid var(--line);border-radius:12px;padding:9px 10px;margin:12px 0 4px;text-align:center}
+.coverinfo .ci{font-size:.74rem;color:#555;margin:4px 0;line-height:1.35}
+.coverinfo .ci strong{color:var(--navy)}
+.btn{font-family:inherit;font-size:.95rem;padding:11px 24px;border-radius:999px;border:none;cursor:pointer;background:var(--navy);color:#fff;transition:transform .15s ease,box-shadow .15s ease}
+.btn:hover{transform:translateY(-2px);box-shadow:0 6px 14px rgba(0,0,0,.3)}
+.btn.red{background:var(--red)}
+.btn.ghost{background:#fff;color:var(--navy);border:1px solid var(--navy)}
+.btn.small{font-size:.76rem;padding:6px 12px}
+main{max-width:760px;margin:0 auto;padding:12px 8px 40px}
+.view{display:none;animation:fade .25s ease}
+.view.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:10px;box-shadow:0 2px 8px rgba(0,0,0,.05);max-width:100%}
+.viewhead{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.viewhead h3{color:var(--navy);font-size:1.05rem}
+.closex{font-family:inherit;font-size:.72rem;padding:6px 11px;border-radius:999px;border:1px solid var(--red);background:#fff;color:var(--red);cursor:pointer;transition:all .15s ease}
+.closex:hover{background:var(--red);color:#fff}
+label{display:block;font-size:.7rem;margin:7px 0 2px;color:#444}
+input,select,textarea{width:100%;font-family:inherit;font-size:.85rem;padding:7px 8px;border:1px solid #ccc9bd;border-radius:8px;background:#fffdf8}
+.row2{display:flex;gap:8px;flex-wrap:wrap}.row2>*{flex:1;min-width:120px}
+table{width:100%;min-width:430px;border-collapse:collapse;font-size:.68rem;table-layout:fixed}
+th{background:var(--navy);color:#fff;text-align:left;padding:5px;font-size:.58rem;letter-spacing:.02em}
+td{padding:4px 5px;border-bottom:1px solid var(--line);word-break:normal;overflow-wrap:break-word;vertical-align:top;hyphens:none;-webkit-hyphens:none}
+tr{cursor:pointer}
+tr:hover td{background:#f6f0e2}
+th:nth-child(1){width:28%}th:nth-child(2){width:22%}th:nth-child(3){width:15%}th:nth-child(4){width:35%}
+th{hyphens:auto;-webkit-hyphens:auto}
+td:nth-child(3){white-space:nowrap;padding-left:2px}
+td:nth-child(4){padding-left:10px}
+.filters{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+.filters input{flex:1;min-width:150px}
+.letters{display:flex;flex-wrap:wrap;gap:2px;margin:6px 0}
+.letters button{font-family:inherit;min-width:26px;height:26px;border-radius:7px;border:1px solid var(--line);background:#fff;cursor:pointer;font-size:.68rem}
+.letters button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.hint{font-size:.74rem;color:#999;text-align:center}
+/* Verzweigungs-Ansicht */
+.focuslabel{text-align:center;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin:4px 0 6px}
+.rowlabel{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:#8a8273;margin:14px 0 6px;border-bottom:1px dashed var(--line);padding-bottom:3px}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:stretch}
+.pcard{background:#fff;border:1px solid var(--line);border-left:4px solid var(--navy);border-radius:10px;padding:9px 11px;box-shadow:0 2px 6px rgba(0,0,0,.05);cursor:pointer;transition:all .15s ease;flex:1;min-width:150px;max-width:230px}
+.pcard:hover{border-color:var(--navy);transform:translateY(-2px);box-shadow:0 5px 12px rgba(0,0,0,.12)}
+.pcard.big{max-width:420px;margin:0 auto;border-left:5px solid var(--red);text-align:center}
+.pcard .cat{font-size:.62rem;color:#8a8273;font-style:italic;margin-bottom:3px}
+.pcard .name{font-weight:bold;color:var(--navy);font-size:.9rem;line-height:1.3}
+.pcard.big .name{font-size:1.12rem}
+.pcard .gebname{display:block;font-weight:normal;font-size:.72rem;color:#8a8273;font-style:italic}
+.pcard .meta{font-size:.7rem;color:#666;margin-top:3px}
+.pcard .desc{font-size:.66rem;color:#8a8273;margin-top:4px;line-height:1.45}
+.sep{align-self:center;color:#c9bfa5;font-size:1.1rem}
+.chip{display:inline-flex;align-items:center;gap:6px;background:#eee7d6;border:1px solid #d9cfb4;border-radius:999px;padding:3px 10px;margin:3px 4px 3px 0;font-size:.72rem;color:var(--navy)}
+.chip button{background:none;border:none;cursor:pointer;color:var(--no);font-size:.8rem;padding:0}
+#chime{position:fixed;top:14px;right:14px;padding:10px 18px;border-radius:12px;color:#fff;font-size:.85rem;opacity:0;transition:opacity .3s;z-index:99;max-width:70vw}
+#chime.show{opacity:1}
+footer{max-width:760px;margin:0 auto;padding:10px 10px 24px;text-align:center;color:#8a8273;border-top:1px solid var(--line)}
+.frow{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.flink{background:none;border:none;color:var(--navy);text-decoration:underline;cursor:pointer;font-family:inherit;font-size:.76rem;padding:0}
+.fbundle{background:none;border:none;color:var(--navy);font-family:inherit;font-weight:bold;font-size:.74rem;letter-spacing:.14em;cursor:pointer;padding:0;transition:transform .2s ease}
+.fbundle:hover{transform:scale(1.06)}
+.fcopy{font-size:.66rem;color:#a39b87;margin-top:6px}
+.emblem{position:fixed;bottom:110px;left:50%;transform:translate(-50%,20px) scale(.9);opacity:0;pointer-events:none;z-index:60;
+  background:var(--navy);color:#fff;border-radius:14px;padding:16px 42px;text-align:center;min-width:340px;
+  box-shadow:0 12px 34px rgba(0,0,0,.35);transition:all .4s cubic-bezier(.34,1.4,.5,1)}
+.emblem.on{opacity:1;pointer-events:auto;transform:translate(-50%,0) scale(1);animation:sway 3.2s ease-in-out .45s infinite}
+@keyframes sway{0%,100%{transform:translate(-50%,0) scale(1) rotate(0deg)}25%{transform:translate(-50%,-6px) scale(1) rotate(2deg)}75%{transform:translate(-50%,2px) scale(1) rotate(-2deg)}}
+.emblem-word{font-weight:bold;font-size:1.12rem;letter-spacing:.12em}
+.emblem-studio{font-size:.7rem;letter-spacing:.3em;margin-top:3px;opacity:.95}
+.emblem-methode{font-size:.66rem;letter-spacing:.1em;margin-top:6px;opacity:.85}
+.emblem-close{color:#fff;opacity:.6;font-size:.62rem;margin-top:9px;letter-spacing:.05em}
+.overlay{display:none;position:fixed;inset:0;background:rgba(20,25,45,.55);z-index:50;align-items:flex-start;justify-content:center;padding:30px 14px;overflow:auto}
+.overlay.on{display:flex}
+.modal{background:var(--cream);border-radius:14px;max-width:640px;width:100%;padding:22px;box-shadow:0 12px 40px rgba(0,0,0,.3);border-top:5px solid var(--red)}
+.modal h3{color:var(--navy);margin-bottom:10px}
+.modal p{font-size:.85rem;margin-bottom:8px}
+.statgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(105px,1fr));gap:10px}
+.statbox{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px;text-align:center}
+.statbox .n{font-size:1.5rem;color:var(--navy);font-weight:bold}
+.statbox .l{font-size:.7rem;color:#888}
+@media(max-width:560px){#cover h2{font-size:1.35rem}.pcard{min-width:130px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="hrow">
+    <hgroup onclick="show('cover')">
+      <h1>🌳 Der Stammbaum für dich</h1>
+      <div class="sub">Datenbank-Edition · Version 2.9.7 · Erstellt seit 1869</div>
+    </hgroup>
+    <nav>
+      <button id="nav-db" onclick="show('db')">📇 Datenbank</button>
+      <button id="nav-person" onclick="openLast()">🌳 Verzweigung</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section id="cover" class="view on">
+    <div class="flag">🌳</div>
+    <div class="kick">Eine Familie · ein Baum · ein Buch</div>
+    <h2>Der Stammbaum für dich</h2>
+    <p>Knegendorf · Möller · Rath · Buhl</p>
+    <p>Ziebart · Kalkbrenner · Wegner</p>
+    <p>Lindemann · Tabbert · Schütz</p>
+    <p>Reimer · Zimmermann</p>
+    <div class="coverinfo">
+      <div class="ci"><strong>Deine Familien-Datenbank</strong> – Personen eintragen, verknüpfen, verzweigen</div>
+      <div class="ci">Jede angetippte Person zeigt <strong>Eltern, Großeltern, Partner, Kinder, Enkel, Geschwister</strong></div>
+      <div class="ci"><strong>CSV-Import &amp; Export</strong> – für Apple Notes, Numbers &amp; Excel</div>
+      <div class="ci"><strong>Alles bleibt lokal</strong> auf deinem Gerät – kein Server, keine Cloud</div>
+    </div>
+    <div class="author">Zusammengetragen von Katharina · Potsdam · Germany</div>
+    <button class="btn red" onclick="show('db')">In den Stammbaum · Los geht's</button>
+  </section>
+
+  <section id="db" class="view">
+    <div class="viewhead">
+      <h3 id="dbTitle">📇 Deine Familien-Datenbank</h3>
+      <button class="closex" onclick="show('cover')">✕ Zum Cover</button>
+    </div>
+    <div class="card">
+      <div class="filters">
+        <input id="fSearch" placeholder="🔍 Namen suchen (Vorname, Nachname, Geburtsname)" oninput="renderList()">
+        <span id="count" style="font-size:.76rem;color:#888"></span>
+      </div>
+      <div class="letters" id="letters"></div>
+      <div style="overflow:auto;max-height:44vh">
+        <table>
+          <thead><tr><th>Name</th><th>Geburts-<br>name</th><th>Geboren</th><th>Beziehung / Hinweis</th></tr></thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+      <div class="hint" style="margin-top:6px">Eine Person antippen öffnet die Verzweigungs-Ansicht – das Datenblatt steht oben, alles gehört danach.</div>
+    </div>
+    <div class="card">
+      <div class="row2">
+        <div style="flex:2;min-width:180px">
+          <label>Vornamen (auch 4–5 Vornamen möglich)</label>
+          <input id="iVn" placeholder="z. B. Katharina Andrea Maria">
+        </div>
+        <div>
+          <label>Nachname</label>
+          <input id="iNn" placeholder="z. B. Schütz">
+        </div>
+        <div>
+          <label>Geburtsname</label>
+          <input id="iGn" placeholder="z. B. geb. Rath">
+        </div>
+      </div>
+      <div class="row2">
+        <div>
+          <label>Geschlecht</label>
+          <select id="iG"><option value="w">weiblich</option><option value="m">männlich</option></select>
+        </div>
+        <div>
+          <label>Geburtsdatum</label>
+          <input id="iGeb" placeholder="TT.MM.JJJJ oder unbekannt">
+        </div>
+        <div>
+          <label>Sterbedatum</label>
+          <input id="iGest" placeholder="leer lassen, wenn lebend">
+        </div>
+        <div>
+          <label>Geburtsort</label>
+          <input id="iOrt" placeholder="z. B. Potsdam">
+        </div>
+      </div>
+      <div class="row2">
+        <div>
+          <label>Vater (aus der Liste wählen)</label>
+          <select id="iVater" onchange="fillForm()"></select>
+        </div>
+        <div>
+          <label>Mutter (aus der Liste wählen)</label>
+          <select id="iMutter" onchange="fillForm()"></select>
+        </div>
+      </div>
+      <label>Ehepartner / Partnerinnen ( ⚭ = verheiratet · ♥ = Partnerschaft )</label>
+      <div id="pChips"></div>
+      <div class="row2" id="pForm" style="align-items:flex-end">
+        <div style="flex:2;min-width:150px">
+          <label>Person</label>
+          <select id="iP"></select>
+        </div>
+        <div>
+          <label>Art</label>
+          <select id="iPtyp"><option value="ehe">⚭ Ehe</option><option value="partner">♥ Partnerschaft</option></select>
+        </div>
+        <div>
+          <label>Hochzeitstag</label>
+          <input id="iHd" placeholder="TT.MM.JJJJ">
+        </div>
+        <div>
+          <label> &nbsp; </label>
+          <button class="btn small ghost" onclick="addPartnerChip()">＋ Partner hinzufügen</button>
+        </div>
+      </div>
+      <label>Hinweis / Beziehung (z. B. „Nichte von Katharina – Tochter von Simone")</label>
+      <textarea id="iNote" rows="2" placeholder="Beziehung, Registernummer, Besonderes …"></textarea>
+      <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn small" id="saveBtn" onclick="saveEntry()">＋ Person speichern</button>
+        <button class="btn small ghost" id="resetBtn" style="display:none" onclick="resetForm()">✕ Abbrechen</button>
+        <button class="btn small ghost" onclick="document.getElementById('csvFile').click()">📥 CSV-Import</button>
+        <input type="file" id="csvFile" accept=".csv,.txt" style="display:none" onchange="importCSV(this)">
+        <button class="btn small ghost" onclick="exportCSV()">📤 CSV-Export</button>
+        <button class="btn small ghost" onclick="exportJSON()">💾 JSON-Backup</button>
+        <button class="btn small red" onclick="wipeAll()">🗑 Alles löschen</button>
+      </div>
+      <div class="hint" style="text-align:left;margin-top:6px">CSV-Spalten: Vornamen;Nachname;Geburtsname;Geschlecht;Geburtsdatum;Sterbedatum;Geburtsort;Vater;Mutter;Ehepartner;Hochzeitstag;Hinweis. Mehrere Ehepartner mit „ | " trennen. Vater, Mutter und Ehepartner werden beim Import über den Namen automatisch verknüpft – unbekannte Namen werden als neue Person angelegt.</div>
+    </div>
+    <div class="card"><div class="statgrid" id="stats"></div></div>
+  </section>
+
+  <section id="personview" class="view">
+    <div class="viewhead">
+      <h3>🌳 Verzweigungs-Ansicht</h3>
+      <button class="closex" onclick="show('db')">📇 Zurück zur Datenbank</button>
+    </div>
+    <div id="panel"></div>
+  </section>
+</main>
+
+<footer>
+  <div class="frow">
+    <button class="flink" onclick="openModal('impModal')">Impressum</button>
+    <button class="fbundle" onclick="toggleBundle()">ARC(E)ANA</button>
+    <button class="flink" onclick="openModal('dsModal')">Datenschutz</button>
+  </div>
+  <div class="fcopy">Version 2.9.7 · Erstellt seit 1869 · © 2026</div>
+</footer>
+
+<div class="emblem" id="emblem" onclick="toggleBundle()">
+  <div class="emblem-word">ARC(E)ANA</div>
+  <div class="emblem-studio">KREATIVSTUDIO</div>
+  <div class="emblem-methode">ENTDECKEN · ENTWICKELN · ERSCHAFFEN</div>
+  <div class="emblem-close">✕</div>
+</div>
+
+<div class="overlay" id="impModal" onclick="if(event.target===this)closeModal('impModal')">
+  <div class="modal">
+    <h3>Impressum</h3>
+    <p><strong>Der Stammbaum für dich · Datenbank-Edition</strong><br>Eine Familiendatenbank des Ella Pinorella Verlags</p>
+    <p><strong>Verantwortlich:</strong><br>Katharina Schütz<br>Platz der Einheit 10<br>14467 Potsdam<br>Deutschland</p>
+    <p><strong>Projektcharakter:</strong> Diese App ist ein <strong>unverkäufliches Produkt</strong> und ein <strong>Prototyp</strong>. Sie wurde ausschließlich zum persönlichen Gebrauch für die Familie erstellt.</p>
+    <p><strong>Urheberrecht:</strong> © 2026 Katharina Schütz · Alle Rechte vorbehalten. Die App darf <strong>nicht kopiert, verändert oder weitergegeben werden</strong> – weder ganz noch in Teilen – ohne die <strong>ausdrückliche Genehmigung</strong> von Katharina Schütz.</p>
+    <div style="text-align:right;margin-top:14px"><button class="closex" onclick="closeModal('impModal')">✕ Schließen</button></div>
+  </div>
+</div>
+
+<div class="overlay" id="dsModal" onclick="if(event.target===this)closeModal('dsModal')">
+  <div class="modal">
+    <h3>Datenschutz</h3>
+    <p><strong>1. Datenerhebung:</strong> Durch diese App werden <strong>keinerlei Daten erhoben, übertragen oder verarbeitet</strong>. Es gibt keine Server-Anbindung, keine Cloud-Speicherung, kein Tracking.</p>
+    <p><strong>2. Lokale Speicherung:</strong> Alle Personen und Verknüpfungen werden ausschließlich <strong>lokal im Browser deines Geräts</strong> gespeichert. Du hast jederzeit die volle Kontrolle: Einträge bearbeiten oder löschen, alles über die Löschen-Funktion oder die Browser-Einstellungen entfernen.</p>
+    <p><strong>3. Backups:</strong> Über CSV-Export und JSON-Backup kannst du dir jederzeit eine Sicherungskopie auf dein Gerät herunterladen.</p>
+    <div style="text-align:right;margin-top:14px"><button class="closex" onclick="closeModal('dsModal')">✕ Schließen</button></div>
+  </div>
+</div>
+
+<div id="chime"></div>
+
+<script>
+/* ---------- Seed: alle Personen des Stammbaums (Version 2.9.7) ----------
+   Aufbau: [id, Vornamen, Nachname, Geburtsname, Geschlecht, geboren, gestorben, Ort, Hinweis,
+            Partner-Liste [[id, Art, Hochzeitstag, Zusatz]], Vater, Mutter]
+   Partner-Art: "ehe" = verheiratet, "partner" = Partnerschaft */
+const SEED=[
+["friedaM","Frieda Lisette Dorothea","Möller","geb. Knegendorf","w","16.10.1873","22.12.1943","","Urgroßmutter väterlicherseits",["johannM","ehe","",""]],
+["johannM","Johann Ludwig Joachim Christian","Möller","","m","12.01.1869","","","Urgroßvater väterlicherseits",["friedaM","ehe","",""]],
+["elseM","Else","Möller","","w","18.03.1904","19.04.1939","","Tante der Großmutter Hedwig",null,"johannM","friedaM"],
+["idaM","Ida","Möller","","w","unbekannt","","","Großtante – Schwester von Großmutter Hedwig",null,"johannM","friedaM"],
+["anniM","Anni","Möller","","w","unbekannt","","","Großtante – Schwester von Großmutter Hedwig",null,"johannM","friedaM"],
+["hulda","Hulda","Kalkbrenner","geb. Ziebart","w","um 1886 (ungesichert)","","","Urgroßmutter mütterlicherseits",[["friedrichK","ehe","","1. Ehe von Hulda"],["ottoW","ehe","","2. Ehe von Hulda"]]],
+["friedrichK","Friedrich","Kalkbrenner","","m","unbekannt","","","1. Ehemann von Hulda · Urgroßvater mütterlicherseits",null],
+["ottoW","Otto","Wegner","","m","unbekannt","","","2. Ehemann von Hulda",null],
+["august","August Wilhelm","Tabbert","","m","unbekannt","","Kölzig","Urgroßvater mütterlicherseits",["ernestine","ehe","",""]],
+["ernestine","Ernestine Wilhelmine","Tabbert","geb. Lindemann","w","25.12.1867 (eventuell)","","Kölzig","Urgroßmutter mütterlicherseits",null],
+["marieUllmann","Marie","Ullmann","","w","03.01.1914 (ungesichert)","","","Großmutter von Andreas Schütz",["ullaMann","ehe","",""]],
+["ullaMann","Willi","Ullmann","","m","unbekannt","","","Großvater von Andreas Schütz – Ehemann von Marie",null],
+["karlMartin","Karl Martin Heinrich Friedrich","Rath","","m","23.09.1904","","","Großvater väterlicherseits",[["hedwig","ehe","18.12.1931","Heirat 18.12.1931 in Neu Wokern"]]],
+["hedwig","Hedwig Johanna Frieda","Rath","geb. Möller","w","29.02.1912","05.02.2013 (fast 101)","Neu Wokern","Großmutter väterlicherseits – wurde 100",null,"johannM","friedaM"],
+["wilhelm","Wilhelm","Tabbert","","m","Januar 1908","","","Großvater mütterlicherseits",["marie","ehe","",""]],
+["marie","Marie-Sophie","Tabbert","geb. Kalkbrenner","w","15.04.1912","1981 (Datum folgt)","","Großmutter mütterlicherseits",null,"friedrichK","hulda"],
+["eva","Eva","Wirt","geb. Ziebart","w","unbekannt","","","Halbtante – Huldas älteste Tochter, vor der 1. Ehe geboren",null,null,"hulda"],
+["helga","Helga","Wegner","","w","unbekannt","","","Halbtante – aus Huldas 2. Ehe",null,null,"hulda","ottoW"],
+["willi","Willi","Wegner","","m","unbekannt","","","Halbonkel – aus Huldas 2. Ehe",null,null,"hulda","ottoW"],
+["klaus","Klaus","Wegner","","m","unbekannt","","","Halbonkel – aus Huldas 2. Ehe",null,null,"hulda","ottoW"],
+["elisabeth","Elisabeth","O'Neill","geb. Wegner","w","unbekannt","","Texas 🤠","Halbtante – ging nach Texas",null,null,"hulda","ottoW"],
+["meta","Meta","Herzberg","geb. Tabbert","w","unbekannt","","","Großtante – Schwester von Wilhelm Tabbert, 4 Kinder",null,null,"august","ernestine"],
+["elseK","Else","Karwinkel","geb. Tabbert","w","unbekannt","","","Großtante – Schwester von Wilhelm Tabbert",null,null,"august","ernestine"],
+["friedaG","Frieda","Gehlhar","geb. Tabbert","w","unbekannt","","","Großtante – Schwester von Wilhelm Tabbert",null,null,"august","ernestine"],
+["schuetzVater","Kurt Werner","Schütz","","m","05.10.1929","","","Schwiegervater – Vater von Andreas",["schuetzMutter","ehe","",""]],
+["schuetzMutter","Annemarie Olga","Schütz","geb. Ullmann","w","08.10.1934","","","Schwiegermutter – Mutter von Andreas",null,"ullaMann","marieUllmann"],
+["wolfgangReimer","Wolfgang","Reimer","","m","22.11.1952","","","Vater von Ulrike",["martinaReimer","ehe","",""]],
+["martinaReimer","Martina","Reimer","","w","04.05.1955","","","Mutter von Ulrike",null],
+["andreaZimmermann","Andrea","Zimmermann","geb. Rüdiger","w","17.09.1960","","","Mutter von Steven und Julia",[["detlef","ehe","","Detlef ist Julias Vater, nicht Stevens"],["stevenVater","partner","","keine Ehe – Stevens Vater"]]],
+["stevenVater","Rüdiger","Spieth","","m","unbekannt","","","Stevens Vater – kein Ehepartner von Andrea",null],
+["detlef","Detlef","Zimmermann","","m","13.11.1954","27.04.2023","","Ehemann von Andrea – Vater von Julia · Adoptivvater von Steven",null],
+["silvio","Silvio","Kemmer","","m","unbekannt","","","1. Ehemann von Sarina",null],
+["karlheinz","Karl-Heinz Erich Friedrich","Rath","","m","04.10.1932","25.06.2001","Teterow / Potsdam","Vater von Katharina · Heirat 30.09.1955 in Jörgensdorf",[["friedel","ehe","30.09.1955","Heirat 30.09.1955 in Jörgensdorf"]],"karlMartin","hedwig"],
+["friedel","Friedel Annemarie","Rath","geb. Tabbert","w","05.02.1931","","Kölzig (heute Kolsk, Polen)","Mutter von Katharina",null,"wilhelm","marie"],
+["anita","Anita Editha","Herter","geb. Tabbert","w","16.08.1934","","","Tante – Schwester der Mutter",[["hannes","ehe","Februar 1965","Heirat Februar 1965"]],"wilhelm","marie"],
+["hannes","Hans Joachim Wilhelm","Herter","","m","19.11.1943","","","Ehemann von Tante Anita – Heirat Februar 1965",null],
+["juergen","Jürgen","Tabbert","","m","02.09.1939","","","Onkel – Bruder der Mutter (geb. als der Krieg begann)",[["waltraud","ehe","",""]],"wilhelm","marie"],
+["waltraud","Waltraud","Tabbert","Geburtsname folgt","w","unbekannt","Datum folgt","","Frau von Onkel Jürgen",null],
+["annemarieB","Annemarie Ida Waltraud","Buhl","geb. Rath","w","13.03.1931","20.10.2017","","Tante – Schwester des Vaters",[["wernerKurt","ehe","",""]],"karlMartin","hedwig"],
+["wernerKurt","Werner Kurt","Buhl","","m","04.05.1932","04.06.2011","","Onkel – Ehemann von Tante Annemarie",null],
+["volker","Volker Karl-Heinz","Rath","","m","08.01.1956","","Teterow","Bruder von Katharina · Registernummer 10/1956",[["viola","ehe","","1. Ehe von Volker"],["marianne","ehe","18.10.1985","2. Ehe von Volker – Heirat 18.10.1985 in Oberwiesenthal · Michael und Stefanie sind Marianes leibliche Kinder und wurden von Volker adoptiert"]],"karlheinz","friedel"],
+["viola","Viola","Rath","geb. Vogt","w","17.11.1955","","","1. Schwägerin – erste Frau von Volker",null],
+["marianne","Marianne","Rath","geb. Schmidt","w","15.02.1955","","","2. Schwägerin – zweite Frau von Volker · Heirat 18.10.1985 in Oberwiesenthal",null],
+["thomas","Thomas Karl-Wilhelm","Rath","","m","11.12.1958","","Teterow","Bruder von Katharina · Registernummer 387/1958",[["martina","ehe","",""]],"karlheinz","friedel"],
+["martina","Martina","Rath","geb. Lange","w","17.09.1957","","","Schwägerin – Frau von Thomas",null],
+["katharina","Katharina Andrea","Schütz","geb. Rath","w","29.07.1960","","Teterow","Ich 🙂 – mein Stammbaum · Registernummer 293/1960",[["andreas","ehe","05.05.1984","Heirat 05.05.1984 in Potsdam · Registernummer 333 · geschieden am 25.04.2017 (Geschäftsnummer 42F29/17)"]],"karlheinz","friedel"],
+["simone","Simone Carmen","Rath","","w","24.08.1963","","Teterow","Schwester von Katharina · Registernummer 348/1963",[["fitzner","partner","","keine Ehe – Jörg ist nur Lisas Vater"]],"karlheinz","friedel"],
+["sarina","Sarina Anita","Rath","","w","18.08.1967","","Ueckermünde","Schwester von Katharina · Registernummer 329/1967",[["silvio","ehe","","1. Ehe von Sarina"],["ingmar","ehe","","2. Ehe von Sarina"]],"karlheinz","friedel"],
+["ingmar","Ingmar","Wist","","m","21.12.1969","","","2. Ehemann von Sarina",null],
+["andreas","Andreas Jörg","Schütz","","m","16.06.1960","08.04.2023","Caputh (heute Schwielowsee)","Ehemann von Katharina · geb. Registernummer 198/1960 · ✝ Sterberegister S911/2023",null,"schuetzVater","schuetzMutter"],
+["michaelSchuetz","Michael","Schütz","","m","21.12.1955","30.07.2024","","Schwager – Bruder von Andreas",[["monikaS","ehe","",""]],"schuetzVater","schuetzMutter"],
+["monikaS","Monika","Schütz","geb. Schwarz","w","unbekannt","","","Ehefrau von Michael Schütz",null],
+["claudia","Claudia","Schütz","","w","unbekannt","","","Nichte von Andreas – Tochter von Michael",null,"michaelSchuetz","monikaS"],
+["markus","Markus","Schütz","","m","unbekannt","","","Neffe von Andreas – Sohn von Michael (Markus mit C)",null,"michaelSchuetz","monikaS"],
+["christian","Christian","Schütz","","m","unbekannt","sehr früh verstorben (Daten folgen)","","Sohn von Michael – sehr früh verstorben",null,"michaelSchuetz","monikaS"],
+["andreasT","Andreas","Tabbert","","m","16.11.1961","","","Cousin mütterlicherseits – ältestes Kind von Jürgen · Heirat 11.07.2005",[["janaK","ehe","11.07.2005","Heirat 11.07.2005"]],"juergen","waltraud"],
+["janaK","Jana","Tabbert","geb. Krumrich","w","15.08.1969","","","Ehefrau von Cousin Andreas",null],
+["marcelK","Marcel","Krumrich","","m","11.07.1989","","","Sohn von Cousin Andreas – trägt den Geburtsnamen der Mutter",null,"andreasT","janaK"],
+["raik","Raik","Tabbert","","m","1963","","","Cousin mütterlicherseits – zweites Kind von Jürgen",null,"juergen","waltraud"],
+["silke","Silke","Tabbert","heutiger Name folgt","w","1965","","","Cousine mütterlicherseits – drittes Kind von Jürgen",null,"juergen","waltraud"],
+["thoralf","Thoralf","Tabbert","heutiger Name folgt","m","unbekannt","","","Cousin mütterlicherseits – viertes Kind von Jürgen",null,"juergen","waltraud"],
+["beatrix","Beatrix","Tabbert","heutiger Name folgt","w","unbekannt","","","Cousine mütterlicherseits – jüngstes Kind von Jürgen",null,"juergen","waltraud"],
+["marionHauff","Marion","Hauff","geb. Schütz","w","November 1964 (ungesichert)","","","Schwägerin – Schwester von Andreas · 2. Ehe: Walk",[["walk","ehe","","2. Ehe von Marion"]],"schuetzVater","schuetzMutter"],
+["walk","","Walk","Vorname folgt","m","unbekannt","","","2. Ehemann von Marion Hauff",null],
+["anitaWalk","Anita","Walk","","w","unbekannt","","","Nichte von Katharina – Tochter von Schwägerin Marion (Schwester von Andreas)",null,"walk","marionHauff"],
+["stefanWalk","Stefan","Walk","","m","unbekannt","","","Neffe von Katharina – Sohn von Schwägerin Marion (Schwester von Andreas)",null,"walk","marionHauff"],
+["thomasWalk","Thomas","Walk","","m","unbekannt","","","Neffe von Katharina – jüngster Sohn von Schwägerin Marion",null,"walk","marionHauff"],
+["fitzner","Jörg Ulrich","Pfitzner","","m","08.04.1962","","","Partner von Simone – Vater von Lisa",null],
+["margit","Margit Annegret","Jürgensen","geb. Buhl","w","30.09.1955","Dezember 2025 (Datum folgt)","","Cousine von Katharina",null,"wernerKurt","annemarieB"],
+["armin","Armin","Buhl","","m","04.09.1957","05.09.1957","","Cousin von Katharina – nur einen Tag alt geworden",null,"wernerKurt","annemarieB"],
+["karin","Karin Elke","Köhler","geb. Buhl","w","29.03.1961","","","Cousine von Katharina – Tochter von Tante Annemarie",null,"wernerKurt","annemarieB"],
+["wernerO","Werner Ottmar","Buhl","","m","20.05.1968","","","Cousin von Katharina",null,"wernerKurt","annemarieB"],
+["steffen","Steffen","Rath","","m","26.06.1974","","","Neffe von Katharina – 1. Sohn von Volker (1. Ehe)",[["anja","ehe","","1. Ehe von Steffen"],["claudiaH","partner","","2. Partnerin – keine Ehe"]],"volker","viola"],
+["anja","Anja","Rath","geb. Stickel","w","21.07.1975","","","1. Ehefrau von Neffen Steffen",null],
+["claudiaH","Claudia Hedwig","Nachname folgt","Claudia Hedwig","w","03.01.1974","","","2. Partnerin von Neffen Steffen – keine Ehe",null],
+["jannis","Jannis","Rath","","m","13.03.2009","","","Großneffe – Sohn von Steffen und Anja",null,"steffen","anja"],
+["jonas","Jonas","Rath","","m","23.09.2005","","","Großneffe – Sohn von Steffen und Anja",null,"steffen","anja"],
+["peer","Peer","Rath","","m","31.01.1979","","","Neffe von Katharina – 2. Sohn von Volker (1. Ehe)",[["judith","ehe","",""]],"volker","viola"],
+["judith","Judith","Rath","geb. Schmalz","w","07.08.1979","","","Ehefrau von Neffen Peer",null],
+["timo","Timo","Rath","","m","08.08.2018","","","Großneffe – Sohn von Peer und Judith",null,"peer","judith"],
+["louis","Louis","Rath","","m","22.03.2013","","","Großneffe – 2. Sohn von Peer und Judith",null,"peer","judith"],
+["michaelRath","Michael","Rath","geb. Schmidt","m","06.07.1975","","","Neffe von Katharina – leiblicher Sohn von Marianne, von Volker adoptiert (trägt seit der Heirat 18.10.1985 den Namen Rath)",[["daniela","ehe","",""]],"volker","marianne"],
+["daniela","Daniela","Rath","geb. Wahle","w","01.10.1975","","","Ehefrau von Neffen Michael",null],
+["jennifer","Jennifer","Rath","","w","03.08.2008","","","Großnichte – Tochter von Michael und Daniela",null,"michaelRath","daniela"],
+["oliver","Oliver","Rath","","m","30.11.2012","","","Großneffe – jüngster Sohn von Michael und Daniela",null,"michaelRath","daniela"],
+["stefanie","Stefanie","Rath","geb. Schmidt","w","12.02.1979","","","Nichte von Katharina – leibliche Tochter von Marianne, von Volker adoptiert (trägt seit der Heirat 18.10.1985 den Namen Rath)",[["matthis","ehe","",""]],"volker","marianne"],
+["matthis","Matthias","Neumann-Rath","geb. Neumann","m","25.04.1972","","","Ehemann von Nichte Stefanie",null],
+["elisabethR","Elisabeth","Rath","","w","23.12.2004","","","Großnichte – Tochter von Stefanie, Zwilling",null,"matthis","stefanie"],
+["dorotheaR","Dorothea","Rath","","w","23.12.2004","","","Großnichte – Tochter von Stefanie, Zwilling",null,"matthis","stefanie"],
+["linda","Linda","Rath","","w","19.08.1981","","","Nichte von Katharina",[["lindaPartner","ehe","",""]],"thomas","martina"],
+["lindaPartner","","Rath","Ehemann von Linda","m","unbekannt","","","Ehemann von Nichte Linda",null],
+["robin","Robin","Rath","","m","02.07.1984","","","Neffe von Katharina",null,"thomas","martina"],
+["lisa","Lisa Julanta","Rath","","w","05.06.1995","","","Nichte von Katharina – Tochter von Simone",null,"fitzner","simone"],
+["marco","Marco Thomas","Schütz","geb. Rath (Geburtenregister)","m","17.06.1983","","Potsdam","Sohn von Katharina – geboren, bevor seine Eltern heirateten · Registernummer 1592/1983",[["ulrike","ehe","",""]],"andreas","katharina"],
+["ulrike","Ulrike","Schütz","geb. Reimer","w","10.11.1981","","","Schwiegertochter – Frau von Marco",null,"wolfgangReimer","martinaReimer"],
+["sebastian","Sebastian","Reimer","","m","unbekannt","","","Bruder von Ulrike",null,"wolfgangReimer","martinaReimer"],
+["matthias","Matthias","Reimer","","m","unbekannt","","","Bruder von Ulrike",null,"wolfgangReimer","martinaReimer"],
+["nathalie","Nathalie Maria Katharina","Schütz-Zimmermann","geb. Schütz","w","19.05.1987","","Potsdam","Tochter von Katharina · Registernummer 1366/1987",[["steven","ehe","",""]],"andreas","katharina"],
+["steven","Steven","Zimmermann","geb. Rüdiger","m","13.08.1984","","","Schwiegersohn – leiblicher Sohn von Andrea, von Detlef Zimmermann adoptiert (trug bis zur Adoption den Geburtsnamen Rüdiger)",null,"stevenVater","andreaZimmermann"],
+["julia","Julia","Zimmermann","","w","21.12.1987","","","Schwester von Steven – Tochter von Andrea und Detlef",null,"detlef","andreaZimmermann"],
+["hannaZ","Hannah","Zimmermann","","w","24.03.2021","","","Tochter von Julia – Stevens Nichte",null,null,"julia"],
+["saana","Saana","Rath","","w","01.11.2019","","","Großnichte von Katharina – Tochter von Linda",null,"lindaPartner","linda"],
+["cecilia","Cecilia","Rath","","w","03.12.2019","","","Großnichte von Katharina – Tochter von Robin",null,"robin",null],
+["skadi","Skadi Martina","Schütz","","w","23.04.2012","","Potsdam","Enkelin von Katharina",null,"marco","ulrike"],
+["nelly","Nelly Katharina","Schütz","","w","02.03.2015","","Potsdam","Enkelin von Katharina",null,"marco","ulrike"],
+["eleanor","Eleanor Elva Andrea","Zimmermann","","w","18.02.2017","","Potsdam","Enkelin von Katharina",null,"steven","nathalie"],
+["alaistair","Alaistair Meinhard","Zimmermann","","m","25.05.2020","","Potsdam","Enkel von Katharina",null,"steven","nathalie"]
+];
+
+/* ---------- Storage ---------- */
+let DB=null;
+function load(){try{DB=JSON.parse(localStorage.getItem('stammbaumDB')||'null')}catch(e){DB=null}
+  if(!DB||!Array.isArray(DB.persons)){DB={persons:[]};seed()}}
+function save(){localStorage.setItem('stammbaumDB',JSON.stringify(DB))}
+function pid(){return Date.now()+Math.random()}
+function seed(){
+  const map={};
+  SEED.forEach(s=>{
+    const [id,vn,nn,gn,g,geb,gest,ort,note,ps,v,m]=s;
+    map[id]={id:id,vn:vn||'',nn:nn||'',gn:gn||'',g:g||'w',geb:geb||'',gest:gest||'',ort:ort||'',note:note||'',vater:v||null,mutter:m||null,ps:[]};
+  });
+  SEED.forEach(s=>{
+    const [id,vn,nn,gn,g,geb,gest,ort,note,ps]=s;
+    const psArr=(ps&&Array.isArray(ps[0]))?ps:(ps?[ps]:[]);
+    psArr.forEach(p=>{
+      if(map[p[0]])map[id].ps.push({p:p[0],t:p[1]||'ehe',h:p[2]||'',l:p[3]||''});
+    });
+  });
+  DB={persons:Object.values(map)};
+  save();
+}
+/* ---------- Helpers ---------- */
+const byId=id=>DB.persons.find(x=>x.id===id);
+const nameOf=p=>[(p.vn||'').trim(),(p.nn||'').trim()].filter(Boolean).join(' ');
+const fullName=id=>{const p=byId(id);return p?nameOf(p):''};
+const parentsOf=id=>{const p=byId(id);if(!p)return[];
+  return [p.vater,p.mutter].filter(Boolean).filter(x=>byId(x))};
+const childrenOf=id=>DB.persons.filter(p=>p.vater===id||p.mutter===id).map(p=>p.id);
+const partnersOf=id=>{
+  const out=[];
+  const me=byId(id);
+  /* ausgehende Verknüpfungen: mein eigener Eintrag */
+  if(me&&me.ps)me.ps.forEach(x=>{if(byId(x.p))out.push({other:x.p,t:x.t,h:x.h,l:x.l})});
+  /* eingehende Verknüpfungen: jemand anderes hat mich als Partner eingetragen */
+  DB.persons.forEach(p=>{if(p.id!==id&&p.ps)p.ps.forEach(x=>{
+    if(x.p===id&&!out.some(o=>o.other===p.id))out.push({other:p.id,t:x.t,h:x.h,l:x.l})})});
+  return out};
+const siblingsOf=id=>{const p=byId(id);if(!p)return[];
+  return DB.persons.filter(q=>q.id!==id&&((p.vater&&q.vater===p.vater&&p.vater)||(p.mutter&&q.mutter===p.mutter&&p.mutter))).map(q=>q.id)};
+const uniq=a=>[...new Set(a.filter(Boolean))];
+function esc(s){return String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function chime(msg,ok){const c=document.getElementById('chime');
+  c.textContent=msg;c.style.background=ok?'var(--ok)':'var(--no)';c.classList.add('show');
+  clearTimeout(c._t);c._t=setTimeout(()=>c.classList.remove('show'),2400)}
+
+/* ---------- Navigation ---------- */
+function show(id){document.querySelectorAll('.view').forEach(v=>v.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  document.getElementById('nav-db').classList.toggle('on',id==='db');
+  document.getElementById('nav-person').classList.toggle('on',id==='personview');
+  window.scrollTo(0,0);
+  if(id==='db')renderList();
+  if(id==='personview'&&!document.getElementById('panel').innerHTML)select(lastSel||'katharina')}
+let lastSel=null;
+function openLast(){if(!lastSel)lastSel='katharina';show('personview')}
+function openModal(id){document.getElementById(id).classList.add('on')}
+function closeModal(id){document.getElementById(id).classList.remove('on')}
+function toggleBundle(){document.getElementById('emblem').classList.toggle('on')}
+
+/* ---------- Datenbank-Liste ---------- */
+let curLetter='';
+(function(){const L=document.getElementById('letters');
+  ['*','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'].forEach(x=>{
+    const b=document.createElement('button');b.textContent=x==='*'?'Alle':x;
+    b.onclick=()=>{curLetter=x==='*'?'':x;[...L.children].forEach(c=>c.classList.remove('on'));b.classList.add('on');renderList()};
+    if(x==='*')b.classList.add('on');L.appendChild(b)})})();
+function renderList(){
+  const q=document.getElementById('fSearch').value.toLowerCase();
+  let a=[...DB.persons];
+  if(curLetter)a=a.filter(p=>(nameOf(p)||'').toUpperCase().startsWith(curLetter)||(p.gn||'').toUpperCase().startsWith(curLetter));
+  if(q)a=a.filter(p=>(nameOf(p)+' '+(p.gn||'')+' '+(p.note||'')).toLowerCase().includes(q));
+  a.sort((x,y)=>nameOf(x).localeCompare(nameOf(y),'de'));
+  const tb=document.getElementById('tbody');tb.innerHTML='';
+  a.forEach(p=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td><strong>${esc(nameOf(p))}</strong>${p.gest?' ✝':''}</td><td>${esc(p.gn)}</td><td>${esc(p.geb)}</td><td>${esc(p.note)}</td>`;
+    tr.onclick=()=>select(p.id);
+    tb.appendChild(tr)});
+  document.getElementById('count').textContent=a.length+' von '+DB.persons.length+' Personen';
+  renderStats()}
+
+function renderStats(){
+  const total=DB.persons.length;
+  const lebend=DB.persons.filter(p=>!p.gest).length;
+  const verstorben=total-lebend;
+  const frauen=DB.persons.filter(p=>p.g==='w').length;
+  const maenner=DB.persons.filter(p=>p.g==='m').length;
+  const withParents=DB.persons.filter(p=>p.vater||p.mutter).length;
+  document.getElementById('stats').innerHTML=
+   `<div class="statbox"><div class="n">${total}</div><div class="l">Personen</div></div>
+    <div class="statbox"><div class="n">${frauen}</div><div class="l">Frauen & Mädchen</div></div>
+    <div class="statbox"><div class="n">${maenner}</div><div class="l">Männer & Jungen</div></div>
+    <div class="statbox"><div class="n">${lebend}</div><div class="l">lebend</div></div>
+    <div class="statbox"><div class="n">${verstorben}</div><div class="l">✝ verstorben</div></div>
+    <div class="statbox"><div class="n">${withParents}</div><div class="l">mit Eltern verknüpft</div></div>`}
+
+/* ---------- Formular ---------- */
+let editId=null,pChips=[];
+function personOptions(exclude){
+  const sorted=[...DB.persons].sort((x,y)=>nameOf(x).localeCompare(nameOf(y),'de'));
+  let html='<option value="">– keiner / unbekannt –</option>';
+  sorted.forEach(p=>{if(exclude&&p.id===exclude)return;
+    html+=`<option value="${p.id}">${esc(nameOf(p))}${p.gn?' ('+esc(p.gn)+')':''}${p.geb?' · '+esc(p.geb):''}</option>`});
+  return html}
+function fillForm(){
+  document.getElementById('iVater').innerHTML=personOptions(editId);
+  document.getElementById('iMutter').innerHTML=personOptions(editId);
+  document.getElementById('iP').innerHTML=personOptions(editId);
+  if(editId){const p=byId(editId);
+    document.getElementById('iVater').value=p.vater||'';
+    document.getElementById('iMutter').value=p.mutter||''}
+  renderChips()}
+function renderChips(){
+  const el=document.getElementById('pChips');
+  el.innerHTML=pChips.length?'':'<span style="font-size:.72rem;color:#aaa">noch kein Partner eingetragen</span>';
+  pChips.forEach((c,i)=>{
+    const d=document.createElement('span');d.className='chip';
+    d.innerHTML=`${esc(fullName(c.p))} ${c.t==='ehe'?'⚭':'♥'}${c.h?' · '+esc(c.h):''} <button onclick="delChip(${i})" title="Entfernen">✕</button>`;
+    el.appendChild(d)})}
+function delChip(i){pChips.splice(i,1);renderChips()}
+function addPartnerChip(){
+  const id=document.getElementById('iP').value;
+  if(!id){chime('Bitte zuerst eine Person aus der Liste wählen.',false);return}
+  if(id===editId){chime('Eine Person kann nicht ihr eigener Partner sein 🙂',false);return}
+  pChips.push({p:id,t:document.getElementById('iPtyp').value,h:document.getElementById('iHd').value,l:''});
+  document.getElementById('iHd').value='';
+  renderChips()}
+function resetForm(){editId=null;pChips=[];
+  ['iVn','iNn','iGn','iGeb','iGest','iOrt','iNote'].forEach(i=>document.getElementById(i).value='');
+  document.getElementById('saveBtn').textContent='＋ Person speichern';
+  document.getElementById('resetBtn').style.display='none';
+  fillForm()}
+function editEntry(id){const p=byId(id);if(!p)return;
+  editId=id;pChips=partnersOf(id).map(x=>({p:x.other,t:x.t,h:x.h,l:x.l}));
+  document.getElementById('iVn').value=p.vn||'';
+  document.getElementById('iNn').value=p.nn||'';
+  document.getElementById('iGn').value=p.gn||'';
+  document.getElementById('iG').value=p.g||'w';
+  document.getElementById('iGeb').value=p.geb||'';
+  document.getElementById('iGest').value=p.gest||'';
+  document.getElementById('iOrt').value=p.ort||'';
+  document.getElementById('iNote').value=p.note||'';
+  document.getElementById('saveBtn').textContent='✔ Änderungen speichern';
+  document.getElementById('resetBtn').style.display='inline-block';
+  fillForm();show('db');
+  document.getElementById('iVn').scrollIntoView({behavior:'smooth'});
+  chime('„'+nameOf(p)+'“ wird bearbeitet.',true)}
+function saveEntry(){
+  const vn=document.getElementById('iVn').value.trim(),nn=document.getElementById('iNn').value.trim();
+  if(!nn){chime('Bitte mindestens den Nachnamen ausfüllen.',false);return}
+  let p=editId?byId(editId):null;
+  if(!p){p={id:pid(),vn:'',nn:'',gn:'',g:'w',geb:'',gest:'',ort:'',note:'',vater:null,mutter:null,ps:[]};DB.persons.push(p)}
+  p.vn=vn;p.nn=nn;p.gn=document.getElementById('iGn').value.trim();
+  p.g=document.getElementById('iG').value;
+  p.geb=document.getElementById('iGeb').value.trim();p.gest=document.getElementById('iGest').value.trim();
+  p.ort=document.getElementById('iOrt').value.trim();p.note=document.getElementById('iNote').value.trim();
+  p.vater=document.getElementById('iVater').value||null;p.mutter=document.getElementById('iMutter').value||null;
+  /* Partner-Links dieser Person entfernen und neu setzen (Links leben bei der Person selbst) */
+  DB.persons.forEach(x=>{if(x.ps)x.ps=x.ps.filter(y=>y.p!==p.id)});
+  pChips.forEach(c=>p.ps.push({p:c.p,t:c.t,h:c.h,l:c.l}));
+  save();resetForm();renderList();
+  chime('Gespeichert! Die Datenbank hat jetzt '+DB.persons.length+' Personen.',true)}
+async function delEntry(id){
+  const p=byId(id);if(!p)return;
+  if(!confirm('„'+nameOf(p)+'“ wirklich löschen? Verknüpfungen bei Eltern, Kindern und Partnern werden mit entfernt.'))return;
+  DB.persons=DB.persons.filter(x=>x.id!==id);
+  DB.persons.forEach(x=>{if(x.vater===id)x.vater=null;if(x.mutter===id)x.mutter=null;
+    if(x.ps)x.ps=x.ps.filter(y=>y.p!==id)});
+  save();renderList();chime('Person gelöscht.',false)}
+async function wipeAll(){
+  if(!confirm('WIRKLICH die komplette Stammbaum-Datenbank löschen? Das kann nicht rückgängig gemacht werden.'))return;
+  DB={persons:[]};save();renderList();chime('Datenbank geleert.',false)}
+
+/* ---------- Verzweigungs-Ansicht ---------- */
+function cardHTML(id,big){
+  const p=byId(id);if(!p)return '';
+  const ps=parentsOf(id),ks=childrenOf(id),sps=partnersOf(id);
+  let desc='';
+  if(ps.length)desc+='↑ '+(p.g==='m'?'Sohn':'Tochter')+' von '+ps.map(fullName).join(' und ')+'<br>';
+  sps.forEach(x=>{desc+=(x.t==='ehe'?'⚭ Ehe mit ':'♥ Partner/in ')+fullName(x.other)+(x.h?' ('+esc(x.h)+')':'')+'<br>'});
+  if(ks.length)desc+='↓ '+(p.g==='m'?'Vater':'Mutter')+' von '+ks.map(k=>nameOf(byId(k)).split(' ')[0]).join(', ');
+  return `<div class="pcard${big?' big':''}" onclick="select('${id}')">`
+    +`<div class="cat">${esc(p.note)}</div>`
+    +`<div class="name">${esc(nameOf(p))}${p.gn?`<span class="gebname">${esc(p.gn)}</span>`:''}</div>`
+    +`<div class="meta">geb. ${esc(p.geb)}${p.ort?' · '+esc(p.ort):''}${p.gest?'<br/>✝ '+esc(p.gest):''}</div>`
+    +(desc?`<div class="desc">${desc}</div>`:'')
+    +'</div>'}
+function rowHTML(label,ids){
+  if(!ids.length)return '';
+  return `<div class="rowlabel">${label}</div><div class="row">`
+    +ids.map(id=>cardHTML(id,false)).join('<span class="sep">·</span>')+'</div>'}
+function select(id){
+  if(!byId(id))return;
+  lastSel=id;
+  const sps=partnersOf(id).map(x=>x.other);
+  const sibs=siblingsOf(id);
+  let html=`<div class="focuslabel">✦ ${esc(nameOf(byId(id)).split(' ')[0])} – gerade ausgewählt ✦</div><div class="row">`;
+  html+=cardHTML(id,true)+'</div>';
+  html+=rowHTML('Ehepartner ⚭ · Partner ♥',sps);
+  /* Nachkommen: so viele Generationen wie vorhanden */
+  const downLabels=['Kinder','Enkelkinder','Urenkelkinder','Ururenkelkinder','Ur-Ur-Enkelkinder'];
+  let gen=childrenOf(id),di=0;
+  while(gen.length&&di<downLabels.length){html+=rowHTML(downLabels[di],gen);gen=uniq(gen.flatMap(childrenOf));di++}
+  /* Vorfahren: so viele Generationen wie vorhanden */
+  const upLabels=['Eltern','Großeltern','Urgroßeltern','Ur-Urgroßeltern','Ur-Ur-Urgroßeltern'];
+  let up=parentsOf(id),ui=0;
+  while(up.length&&ui<upLabels.length){html+=rowHTML(upLabels[ui],up);up=uniq(up.flatMap(parentsOf));ui++}
+  html+=rowHTML('Geschwister',sibs);
+  html+=`<div style="text-align:center;margin-top:16px"><button class="btn small ghost" onclick="editEntry('${id}')">✏️ Diese Person bearbeiten</button> <button class="btn small ghost" onclick="show('db')">📇 Zurück zur Datenbank</button></div>`;
+  document.getElementById('panel').innerHTML=html;
+  show('personview');
+  window.scrollTo(0,0)}
+
+/* ---------- CSV / JSON ---------- */
+function parseCSVLine(line){const out=[];let cur='',q=false;
+  for(let i=0;i<line.length;i++){const c=line[i];
+    if(q){if(c==='"'){if(line[i+1]==='"'){cur+='"';i++}else q=false}else cur+=c}
+    else if(c==='"')q=true;
+    else if(c===';'||c===','){out.push(cur.trim());cur=''}
+    else cur+=c}
+  out.push(cur.trim());return out}
+function findByName(nm){
+  nm=String(nm||'').trim();if(!nm)return null;
+  const norm=s=>String(s||'').toLowerCase().replace(/\s+/g,' ').trim();
+  return DB.persons.find(p=>norm(nameOf(p))===norm(nm))}
+function ensurePerson(nm){
+  if(!nm)return null;
+  let p=findByName(nm);
+  if(!p){const parts=nm.trim().split(/\s+/);
+    p={id:pid(),vn:parts.slice(0,-1).join(' '),nn:parts[parts.length-1],gn:'',g:'w',geb:'',gest:'',ort:'',note:'aus CSV-Import angelegt',vater:null,mutter:null,ps:[]};
+    DB.persons.push(p)}
+  return p.id}
+function csvField(f){f=String(f||'');return (f.includes(';')||f.includes('"')||f.includes('\n'))?'"'+f.replace(/"/g,'""')+'"':f}
+function exportCSV(){
+  const sorted=[...DB.persons].sort((x,y)=>nameOf(x).localeCompare(nameOf(y),'de'));
+  const lines=['Vornamen;Nachname;Geburtsname;Geschlecht;Geburtsdatum;Sterbedatum;Geburtsort;Vater;Mutter;Ehepartner;Hochzeitstag;Hinweis'];
+  sorted.forEach(p=>{
+    const ps=partnersOf(p.id);
+    const row=[p.vn,p.nn,p.gn,p.g==='m'?'m':'w',p.geb,p.gest,p.ort,
+      p.vater?fullName(p.vater):'',p.mutter?fullName(p.mutter):'',
+      ps.map(x=>fullName(x.other)).join(' | '),ps.map(x=>x.h||'').join(' | '),p.note];
+    lines.push(row.map(csvField).join(';'))});
+  dl('stammbaum-datenbank.csv',lines.join('\n'),'text/csv')}
+function exportJSON(){dl('stammbaum-backup.json',JSON.stringify(DB,null,2),'application/json')}
+function dl(name,content,type){const b=new Blob([content],{type:type+';charset=utf-8'});const u=URL.createObjectURL(b);
+  const a=document.createElement('a');a.href=u;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(u),2000)}
+function importCSV(inp){
+  const f=inp.files[0];if(!f)return;
+  const reader=new FileReader();
+  reader.onload=()=>{
+    const text=reader.result;
+    let n=0,header=true;
+    text.split(/\r?\n/).forEach(line=>{line=line.trim();if(!line)return;
+      const p=parseCSVLine(line);
+      if(header&&/vornamen/i.test(p[0])){header=false;return}
+      if(p.length<2||!p[1])return;
+      const id=ensurePerson(p[0]+' '+p[1]);
+      const per=byId(id);
+      if(p[2])per.gn=p[2];
+      if(p[3])per.g=p[3].toLowerCase().startsWith('m')?'m':'w';
+      if(p[4])per.geb=p[4];if(p[5])per.gest=p[5];if(p[6])per.ort=p[6];
+      if(p[11])per.note=p[11];
+      if(p[7])per.vater=ensurePerson(p[7]);
+      if(p[8])per.mutter=ensurePerson(p[8]);
+      const ps=(p[9]||'').split('|').map(s=>s.trim()).filter(Boolean);
+      const hs=(p[10]||'').split('|').map(s=>s.trim());
+      ps.forEach((nm,i)=>{
+        const otherId=ensurePerson(nm);
+        if(otherId===id)return;
+        if(!per.ps.some(x=>x.p===otherId))per.ps.push({p:otherId,t:'ehe',h:hs[i]||'',l:''})});
+      n++});
+    save();renderList();
+    chime(n+' Personen importiert – die Datenbank hat jetzt '+DB.persons.length+' Personen.',true)};
+  reader.readAsText(f,'UTF-8');
+  inp.value=''}
+
+/* ---------- Start ---------- */
+load();
+fillForm();
+renderList();
+</script>
+</body>
+</html>
