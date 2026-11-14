@@ -23,6 +23,7 @@ nav button:hover,nav button.on{background:#fff;color:var(--navy);border-color:#f
 #cover h2{font-size:1.5rem;color:var(--navy);margin:6px 0 3px;line-height:1.25}
 #cover .kick{letter-spacing:.2em;text-transform:uppercase;font-size:.66rem;color:var(--red)}
 #cover p{font-style:italic;color:#555;margin-bottom:3px;font-size:.85rem}
+#cover .names{font-style:normal;color:var(--navy);font-size:.82rem;line-height:1.85;margin:12px 0 2px}
 #cover .author{font-size:.74rem;color:#777;margin:10px 0 6px}
 .coverinfo{background:var(--cream);border:1px solid var(--line);border-radius:12px;padding:9px 10px;margin:12px 0 4px;text-align:center}
 .coverinfo .ci{font-size:.74rem;color:#555;margin:4px 0;line-height:1.35}
@@ -62,17 +63,17 @@ td:nth-child(4){padding-left:10px}
 /* Verzweigungs-Ansicht */
 .focuslabel{text-align:center;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin:4px 0 6px}
 .rowlabel{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:#8a8273;margin:14px 0 6px;border-bottom:1px dashed var(--line);padding-bottom:3px}
-.row{display:flex;flex-wrap:wrap;gap:8px;align-items:stretch}
-.pcard{background:#fff;border:1px solid var(--line);border-left:4px solid var(--navy);border-radius:10px;padding:9px 11px;box-shadow:0 2px 6px rgba(0,0,0,.05);cursor:pointer;transition:all .15s ease;flex:1;min-width:150px;max-width:230px}
+.row{display:flex;flex-wrap:wrap;gap:6px;align-items:stretch;justify-content:center;max-width:560px;margin:0 auto}
+.pcard{background:#fff;border:1px solid var(--line);border-left:4px solid var(--navy);border-radius:10px;padding:7px 9px;box-shadow:0 2px 6px rgba(0,0,0,.05);cursor:pointer;transition:all .15s ease;flex:0 1 175px;min-width:132px;max-width:175px}
 .pcard:hover{border-color:var(--navy);transform:translateY(-2px);box-shadow:0 5px 12px rgba(0,0,0,.12)}
-.pcard.big{max-width:420px;margin:0 auto;border-left:5px solid var(--red);text-align:center}
-.pcard .cat{font-size:.62rem;color:#8a8273;font-style:italic;margin-bottom:3px}
-.pcard .name{font-weight:bold;color:var(--navy);font-size:.9rem;line-height:1.3}
-.pcard.big .name{font-size:1.12rem}
-.pcard .gebname{display:block;font-weight:normal;font-size:.72rem;color:#8a8273;font-style:italic}
-.pcard .meta{font-size:.7rem;color:#666;margin-top:3px}
-.pcard .desc{font-size:.66rem;color:#8a8273;margin-top:4px;line-height:1.45}
-.sep{align-self:center;color:#c9bfa5;font-size:1.1rem}
+.pcard.big{max-width:330px;margin:0 auto;border-left:5px solid var(--red);text-align:center;flex:1 1 auto;width:100%}
+.pcard .cat{font-size:.6rem;color:#8a8273;font-style:italic;margin-bottom:3px}
+.pcard .name{font-weight:bold;color:var(--navy);font-size:.84rem;line-height:1.3}
+.pcard.big .name{font-size:1.05rem}
+.pcard .gebname{display:block;font-weight:normal;font-size:.7rem;color:#8a8273;font-style:italic}
+.pcard .meta{font-size:.68rem;color:#666;margin-top:3px}
+.pcard .desc{font-size:.64rem;color:#8a8273;margin-top:4px;line-height:1.4}
+.sep{align-self:center;color:#c9bfa5;font-size:1rem}
 .chip{display:inline-flex;align-items:center;gap:6px;background:#eee7d6;border:1px solid #d9cfb4;border-radius:999px;padding:3px 10px;margin:3px 4px 3px 0;font-size:.72rem;color:var(--navy)}
 .chip button{background:none;border:none;cursor:pointer;color:var(--no);font-size:.8rem;padding:0}
 #chime{position:fixed;top:14px;right:14px;padding:10px 18px;border-radius:12px;color:#fff;font-size:.85rem;opacity:0;transition:opacity .3s;z-index:99;max-width:70vw}
@@ -123,18 +124,13 @@ footer{max-width:760px;margin:0 auto;padding:10px 10px 24px;text-align:center;co
     <div class="flag">🌳</div>
     <div class="kick">Eine Familie · ein Baum · ein Buch</div>
     <h2>Der Stammbaum für dich</h2>
-    <p>Knegendorf · Möller · Rath · Buhl</p>
-    <p>Ziebart · Kalkbrenner · Wegner</p>
-    <p>Lindemann · Tabbert · Schütz</p>
-    <p>Reimer · Zimmermann</p>
+    <p class="names">Knegendorf · Möller · Rath · Buhl<br>Ziebart · Kalkbrenner · Wegner<br>Lindemann · Tabbert · Schütz<br>Reimer · Zimmermann</p>
     <div class="coverinfo">
-      <div class="ci"><strong>Deine Familien-Datenbank</strong> – Personen eintragen, verknüpfen, verzweigen</div>
-      <div class="ci">Jede angetippte Person zeigt <strong>Eltern, Großeltern, Partner, Kinder, Enkel, Geschwister</strong></div>
-      <div class="ci"><strong>CSV-Import &amp; Export</strong> – für Apple Notes, Numbers &amp; Excel</div>
-      <div class="ci"><strong>Alles bleibt lokal</strong> auf deinem Gerät – kein Server, keine Cloud</div>
+      <div class="ci"><strong>Deine Familien-Datenbank</strong> – alle Daten seit 1869</div>
+      <div class="ci">Jede angetippte Person zeigt Eltern, Großeltern, Partner, Kinder, Enkel, Geschwister</div>
     </div>
     <div class="author">Zusammengetragen von Katharina · Potsdam · Germany</div>
-    <button class="btn red" onclick="show('db')">In den Stammbaum · Los geht's</button>
+    <button class="btn red" onclick="show('db')">Los geht's</button>
   </section>
 
   <section id="db" class="view">
@@ -199,7 +195,7 @@ footer{max-width:760px;margin:0 auto;padding:10px 10px 24px;text-align:center;co
           <select id="iMutter" onchange="fillForm()"></select>
         </div>
       </div>
-      <label>Ehepartner / Partnerinnen ( ⚭ = verheiratet · ♥ = Partnerschaft )</label>
+      <label>Ehepartner / Partnerinnen ( ⚭ Ehe · ♥ Partnerschaft · ⇔ getrennt lebend )</label>
       <div id="pChips"></div>
       <div class="row2" id="pForm" style="align-items:flex-end">
         <div style="flex:2;min-width:150px">
@@ -208,7 +204,7 @@ footer{max-width:760px;margin:0 auto;padding:10px 10px 24px;text-align:center;co
         </div>
         <div>
           <label>Art</label>
-          <select id="iPtyp"><option value="ehe">⚭ Ehe</option><option value="partner">♥ Partnerschaft</option></select>
+          <select id="iPtyp"><option value="ehe">⚭ Ehe</option><option value="partner">♥ Partnerschaft</option><option value="getrennt">⇔ Getrennt lebend</option></select>
         </div>
         <div>
           <label>Hochzeitstag</label>
@@ -230,7 +226,7 @@ footer{max-width:760px;margin:0 auto;padding:10px 10px 24px;text-align:center;co
         <button class="btn small ghost" onclick="exportJSON()">💾 JSON-Backup</button>
         <button class="btn small red" onclick="wipeAll()">🗑 Alles löschen</button>
       </div>
-      <div class="hint" style="text-align:left;margin-top:6px">CSV-Spalten: Vornamen;Nachname;Geburtsname;Geschlecht;Geburtsdatum;Sterbedatum;Geburtsort;Vater;Mutter;Ehepartner;Hochzeitstag;Hinweis. Mehrere Ehepartner mit „ | " trennen. Vater, Mutter und Ehepartner werden beim Import über den Namen automatisch verknüpft – unbekannte Namen werden als neue Person angelegt.</div>
+      <div class="hint" style="text-align:left;margin-top:6px">CSV-Spalten: Vornamen;Nachname;Geburtsname;Geschlecht;Geburtsdatum;Sterbedatum;Geburtsort;Vater;Mutter;Ehepartner;Hochzeitstag;Hinweis. Mehrere Ehepartner mit „ | " trennen. Die Verbindungsart hängt am Namen: ⚭ Ehe, ♥ Partnerschaft, ⇔ getrennt lebend. Vater, Mutter und Ehepartner werden beim Import über den Namen automatisch verknüpft – unbekannte Namen werden als neue Person angelegt.</div>
     </div>
     <div class="card"><div class="statgrid" id="stats"></div></div>
   </section>
@@ -245,12 +241,12 @@ footer{max-width:760px;margin:0 auto;padding:10px 10px 24px;text-align:center;co
 </main>
 
 <footer>
-  <div class="frow">
+  <button class="fbundle" onclick="toggleBundle()">ARC(E)ANA</button>
+  <div class="frow" style="margin-top:6px">
     <button class="flink" onclick="openModal('impModal')">Impressum</button>
-    <button class="fbundle" onclick="toggleBundle()">ARC(E)ANA</button>
+    <div class="fcopy" style="margin:0">© 2026</div>
     <button class="flink" onclick="openModal('dsModal')">Datenschutz</button>
   </div>
-  <div class="fcopy">Version 2.9.7 · Erstellt seit 1869 · © 2026</div>
 </footer>
 
 <div class="emblem" id="emblem" onclick="toggleBundle()">
@@ -267,6 +263,7 @@ footer{max-width:760px;margin:0 auto;padding:10px 10px 24px;text-align:center;co
     <p><strong>Verantwortlich:</strong><br>Katharina Schütz<br>Platz der Einheit 10<br>14467 Potsdam<br>Deutschland</p>
     <p><strong>Projektcharakter:</strong> Diese App ist ein <strong>unverkäufliches Produkt</strong> und ein <strong>Prototyp</strong>. Sie wurde ausschließlich zum persönlichen Gebrauch für die Familie erstellt.</p>
     <p><strong>Urheberrecht:</strong> © 2026 Katharina Schütz · Alle Rechte vorbehalten. Die App darf <strong>nicht kopiert, verändert oder weitergegeben werden</strong> – weder ganz noch in Teilen – ohne die <strong>ausdrückliche Genehmigung</strong> von Katharina Schütz.</p>
+    <p><strong>Technik:</strong> Die Daten lassen sich als <strong>CSV-Datei</strong> exportieren und importieren (für Apple Notes, Numbers &amp; Excel) sowie als JSON-Backup sichern und wiederherstellen.</p>
     <div style="text-align:right;margin-top:14px"><button class="closex" onclick="closeModal('impModal')">✕ Schließen</button></div>
   </div>
 </div>
@@ -274,9 +271,11 @@ footer{max-width:760px;margin:0 auto;padding:10px 10px 24px;text-align:center;co
 <div class="overlay" id="dsModal" onclick="if(event.target===this)closeModal('dsModal')">
   <div class="modal">
     <h3>Datenschutz</h3>
-    <p><strong>1. Datenerhebung:</strong> Durch diese App werden <strong>keinerlei Daten erhoben, übertragen oder verarbeitet</strong>. Es gibt keine Server-Anbindung, keine Cloud-Speicherung, kein Tracking.</p>
-    <p><strong>2. Lokale Speicherung:</strong> Alle Personen und Verknüpfungen werden ausschließlich <strong>lokal im Browser deines Geräts</strong> gespeichert. Du hast jederzeit die volle Kontrolle: Einträge bearbeiten oder löschen, alles über die Löschen-Funktion oder die Browser-Einstellungen entfernen.</p>
-    <p><strong>3. Backups:</strong> Über CSV-Export und JSON-Backup kannst du dir jederzeit eine Sicherungskopie auf dein Gerät herunterladen.</p>
+    <p><strong>1. Keine Datenerhebung durch die App:</strong> Diese App enthält <strong>keine Werbung, kein Tracking und keine Statistik-Funktionen</strong>. Sie sammelt keine Daten und wertet nichts aus.</p>
+    <p><strong>2. Deine Familiendaten bleiben auf deinem Gerät:</strong> Alle Personen und Verknüpfungen, die du eingibst, werden ausschließlich <strong>lokal im Browser deines Geräts</strong> gespeichert (lokaler Speicher des Browsers). Sie werden <strong>nicht an GitHub oder sonstwohin übertragen</strong> – die App kennt keinen Server, an den sie deine Einträge senden könnte. Beim Schließen der Seite bleibt alles auf dem Gerät, und du kannst Einträge jederzeit bearbeiten, löschen oder die gesamte Datenbank über die Löschen-Funktion bzw. die Browser-Einstellungen entfernen.</p>
+    <p><strong>3. Hosting auf GitHub:</strong> Die App selbst ist als unverkäuflicher Prototyp in meiner <strong>persönlichen Lernumgebung auf GitHub</strong> hochgeladen und wird von dort geladen. Das heißt: Beim <strong>Aufruf der App</strong> wird die Verbindung zu GitHub hergestellt, damit die Seite im Browser erscheint. Dabei gelten die <strong>Datenschutzbestimmungen von GitHub</strong> für den Abruf der Seite. <strong>Nicht hochgeladen</strong> werden dagegen die Familiendaten, die du später in die App eintippst – die bleiben, wie unter 2. beschrieben, ausschließlich auf deinem Gerät.</p>
+    <p><strong>4. Backups unter deiner Kontrolle:</strong> Über CSV-Export und JSON-Backup erstellst du selbst Sicherungskopien auf deinem Gerät, wann immer du möchtest. Was du damit machst – ob in Apple Notes, Numbers oder im Drucker –, entscheidest ganz allein du.</p>
+    <p><strong>5. Keine Cookies, keine Server, keine Cloud</strong> – nur deine Familie, dein Baum, dein Buch. 🌳</p>
     <div style="text-align:right;margin-top:14px"><button class="closex" onclick="closeModal('dsModal')">✕ Schließen</button></div>
   </div>
 </div>
@@ -291,7 +290,7 @@ footer{max-width:760px;margin:0 auto;padding:10px 10px 24px;text-align:center;co
 const SEED=[
 ["friedaM","Frieda Lisette Dorothea","Möller","geb. Knegendorf","w","16.10.1873","22.12.1943","","Urgroßmutter väterlicherseits",["johannM","ehe","",""]],
 ["johannM","Johann Ludwig Joachim Christian","Möller","","m","12.01.1869","","","Urgroßvater väterlicherseits",["friedaM","ehe","",""]],
-["elseM","Else","Möller","","w","18.03.1904","19.04.1939","","Tante der Großmutter Hedwig",null,"johannM","friedaM"],
+["elseM","Else","Möller","","w","18.03.1904","19.04.1939","","Urgroßtante – Schwester von Urgroßvater Johann Möller · Tante der Großmutter Hedwig",null],
 ["idaM","Ida","Möller","","w","unbekannt","","","Großtante – Schwester von Großmutter Hedwig",null,"johannM","friedaM"],
 ["anniM","Anni","Möller","","w","unbekannt","","","Großtante – Schwester von Großmutter Hedwig",null,"johannM","friedaM"],
 ["hulda","Hulda","Kalkbrenner","geb. Ziebart","w","um 1886 (ungesichert)","","","Urgroßmutter mütterlicherseits",[["friedrichK","ehe","","1. Ehe von Hulda"],["ottoW","ehe","","2. Ehe von Hulda"]]],
@@ -378,8 +377,8 @@ const SEED=[
 ["matthis","Matthias","Neumann-Rath","geb. Neumann","m","25.04.1972","","","Ehemann von Nichte Stefanie",null],
 ["elisabethR","Elisabeth","Rath","","w","23.12.2004","","","Großnichte – Tochter von Stefanie, Zwilling",null,"matthis","stefanie"],
 ["dorotheaR","Dorothea","Rath","","w","23.12.2004","","","Großnichte – Tochter von Stefanie, Zwilling",null,"matthis","stefanie"],
-["linda","Linda","Rath","","w","19.08.1981","","","Nichte von Katharina",[["lindaPartner","ehe","",""]],"thomas","martina"],
-["lindaPartner","","Stephan","Gensch","Vater von Saana, jetzt getrennt lebend","m","unbekannt","","","Ehemann von Nichte Linda",null],
+["linda","Linda","Rath","","w","19.08.1981","","","Nichte von Katharina",[["stefanGensch","getrennt","","getrennt lebend, verbunden durch Tochter Saana"]],"thomas","martina"],
+["stefanGensch","Stefan","Gensch","","m","unbekannt","","","Getrennt lebender Partner von Linda Rath – Vater von Saana",[["linda","getrennt","",""]]],
 ["robin","Robin","Rath","","m","02.07.1984","","","Neffe von Katharina",null,"thomas","martina"],
 ["lisa","Lisa Julanta","Rath","","w","05.06.1995","","","Nichte von Katharina – Tochter von Simone",null,"fitzner","simone"],
 ["marco","Marco Thomas","Schütz","geb. Rath (Geburtenregister)","m","17.06.1983","","Potsdam","Sohn von Katharina – geboren, bevor seine Eltern heirateten · Registernummer 1592/1983",[["ulrike","ehe","",""]],"andreas","katharina"],
@@ -390,7 +389,7 @@ const SEED=[
 ["steven","Steven","Zimmermann","geb. Rüdiger","m","13.08.1984","","","Schwiegersohn – leiblicher Sohn von Andrea, von Detlef Zimmermann adoptiert (trug bis zur Adoption den Geburtsnamen Rüdiger)",null,"stevenVater","andreaZimmermann"],
 ["julia","Julia","Zimmermann","","w","21.12.1987","","","Schwester von Steven – Tochter von Andrea und Detlef",null,"detlef","andreaZimmermann"],
 ["hannaZ","Hannah","Zimmermann","","w","24.03.2021","","","Tochter von Julia – Stevens Nichte",null,null,"julia"],
-["saana","Saana","Rath","","w","01.11.2019","","","Großnichte von Katharina – Tochter von Linda",null,"lindaPartner","linda"],
+["saana","Saana","Rath","","w","01.11.2019","","","Großnichte von Katharina – Tochter von Linda und Stefan Gensch",null,"stefanGensch","linda"],
 ["cecilia","Cecilia","Rath","","w","03.12.2019","","","Großnichte von Katharina – Tochter von Robin",null,"robin",null],
 ["skadi","Skadi Martina","Schütz","","w","23.04.2012","","Potsdam","Enkelin von Katharina",null,"marco","ulrike"],
 ["nelly","Nelly Katharina","Schütz","","w","02.03.2015","","Potsdam","Enkelin von Katharina",null,"marco","ulrike"],
@@ -401,9 +400,28 @@ const SEED=[
 /* ---------- Storage ---------- */
 let DB=null;
 function load(){try{DB=JSON.parse(localStorage.getItem('stammbaumDB')||'null')}catch(e){DB=null}
-  if(!DB||!Array.isArray(DB.persons)){DB={persons:[]};seed()}}
+  if(!DB||!Array.isArray(DB.persons)){DB={persons:[]};seed()}
+  else cleanDB()}
+/* Reparatur: doppelte und gespiegelte Partner-Einträge entfernen */
+function cleanDB(){
+  DB.persons.forEach(p=>{
+    if(!p.ps)return;
+    const seen=new Set();
+    /* 1. Duplikate innerhalb einer Liste und tote Verweise entfernen */
+    p.ps=p.ps.filter(x=>{if(!x.p||!byId(x.p))return false;
+      if(seen.has(x.p))return false;seen.add(x.p);return true})});
+  /* 2. Gespiegelte Einträge entfernen – jede Verbindung bleibt genau einmal, bei einer der beiden Personen */
+  DB.persons.forEach((p,pi)=>{
+    if(!p.ps)return;
+    p.ps=p.ps.filter(x=>{const other=byId(x.p);if(!other||!other.ps)return true;
+      if(other.ps.some(y=>y.p===p.id))return pi<DB.persons.indexOf(other);
+      return true})});
+  save()}
 function save(){localStorage.setItem('stammbaumDB',JSON.stringify(DB))}
 function pid(){return Date.now()+Math.random()}
+const SIBLINGS=[
+  ["elseM","johannM"]  /* Else Möller ist die Schwester von Johann Möller – gemeinsame Eltern unbekannt */
+];
 function seed(){
   const map={};
   SEED.forEach(s=>{
@@ -417,6 +435,9 @@ function seed(){
       if(map[p[0]])map[id].ps.push({p:p[0],t:p[1]||'ehe',h:p[2]||'',l:p[3]||''});
     });
   });
+  /* Geschwister-Verknüpfungen setzen (für Personen mit unbekannten gemeinsamen Eltern) */
+  SIBLINGS.forEach(pair=>{const [a,b]=pair;
+    if(map[a]&&map[b]){map[a].sib=[...(map[a].sib||[]),b];map[b].sib=[...(map[b].sib||[]),a]}});
   DB={persons:Object.values(map)};
   save();
 }
@@ -428,16 +449,23 @@ const parentsOf=id=>{const p=byId(id);if(!p)return[];
   return [p.vater,p.mutter].filter(Boolean).filter(x=>byId(x))};
 const childrenOf=id=>DB.persons.filter(p=>p.vater===id||p.mutter===id).map(p=>p.id);
 const partnersOf=id=>{
-  const out=[];
+  const out=[],seen=new Set();
+  const add=x=>{if(x.other&&byId(x.other)&&!seen.has(x.other)){seen.add(x.other);out.push(x)}};
   const me=byId(id);
   /* ausgehende Verknüpfungen: mein eigener Eintrag */
-  if(me&&me.ps)me.ps.forEach(x=>{if(byId(x.p))out.push({other:x.p,t:x.t,h:x.h,l:x.l})});
+  if(me&&me.ps)me.ps.forEach(x=>{if(byId(x.p))add({other:x.p,t:x.t,h:x.h,l:x.l})});
   /* eingehende Verknüpfungen: jemand anderes hat mich als Partner eingetragen */
   DB.persons.forEach(p=>{if(p.id!==id&&p.ps)p.ps.forEach(x=>{
-    if(x.p===id&&!out.some(o=>o.other===p.id))out.push({other:p.id,t:x.t,h:x.h,l:x.l})})});
+    if(x.p===id)add({other:p.id,t:x.t,h:x.h,l:x.l})})});
   return out};
 const siblingsOf=id=>{const p=byId(id);if(!p)return[];
-  return DB.persons.filter(q=>q.id!==id&&((p.vater&&q.vater===p.vater&&p.vater)||(p.mutter&&q.mutter===p.mutter&&p.mutter))).map(q=>q.id)};
+  const res=new Set();
+  /* Geschwister über gemeinsame Eltern */
+  DB.persons.forEach(q=>{if(q.id!==id&&((p.vater&&q.vater===p.vater)||(p.mutter&&q.mutter===p.mutter)))res.add(q.id)});
+  /* direkt verknüpfte Geschwister (Eltern unbekannt) – beide Richtungen */
+  (p.sib||[]).forEach(s=>{if(byId(s))res.add(s)});
+  DB.persons.forEach(q=>{if(q.id!==id&&(q.sib||[]).includes(id))res.add(q.id)});
+  return [...res]};
 const uniq=a=>[...new Set(a.filter(Boolean))];
 function esc(s){return String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
 function chime(msg,ok){const c=document.getElementById('chime');
@@ -516,7 +544,7 @@ function renderChips(){
   el.innerHTML=pChips.length?'':'<span style="font-size:.72rem;color:#aaa">noch kein Partner eingetragen</span>';
   pChips.forEach((c,i)=>{
     const d=document.createElement('span');d.className='chip';
-    d.innerHTML=`${esc(fullName(c.p))} ${c.t==='ehe'?'⚭':'♥'}${c.h?' · '+esc(c.h):''} <button onclick="delChip(${i})" title="Entfernen">✕</button>`;
+    d.innerHTML=`${esc(fullName(c.p))} ${c.t==='ehe'?'⚭':c.t==='getrennt'?'⇔':'♥'}${c.h?' · '+esc(c.h):''} <button onclick="delChip(${i})" title="Entfernen">✕</button>`;
     el.appendChild(d)})}
 function delChip(i){pChips.splice(i,1);renderChips()}
 function addPartnerChip(){
@@ -558,7 +586,9 @@ function saveEntry(){
   p.vater=document.getElementById('iVater').value||null;p.mutter=document.getElementById('iMutter').value||null;
   /* Partner-Links dieser Person entfernen und neu setzen (Links leben bei der Person selbst) */
   DB.persons.forEach(x=>{if(x.ps)x.ps=x.ps.filter(y=>y.p!==p.id)});
-  pChips.forEach(c=>p.ps.push({p:c.p,t:c.t,h:c.h,l:c.l}));
+  if(!p.ps)p.ps=[];
+  const seenP=new Set();
+  pChips.forEach(c=>{if(c.p&&c.p!==p.id&&byId(c.p)&&!seenP.has(c.p)){seenP.add(c.p);p.ps.push({p:c.p,t:c.t,h:c.h,l:c.l})}});
   save();resetForm();renderList();
   chime('Gespeichert! Die Datenbank hat jetzt '+DB.persons.length+' Personen.',true)}
 async function delEntry(id){
@@ -578,7 +608,7 @@ function cardHTML(id,big){
   const ps=parentsOf(id),ks=childrenOf(id),sps=partnersOf(id);
   let desc='';
   if(ps.length)desc+='↑ '+(p.g==='m'?'Sohn':'Tochter')+' von '+ps.map(fullName).join(' und ')+'<br>';
-  sps.forEach(x=>{desc+=(x.t==='ehe'?'⚭ Ehe mit ':'♥ Partner/in ')+fullName(x.other)+(x.h?' ('+esc(x.h)+')':'')+'<br>'});
+  sps.forEach(x=>{desc+=(x.t==='ehe'?'⚭ Ehe mit ':x.t==='getrennt'?'⇔ getrennt lebend mit ':'♥ Partner/in ')+fullName(x.other)+(x.h?' ('+esc(x.h)+')':'')+'<br>'});
   if(ks.length)desc+='↓ '+(p.g==='m'?'Vater':'Mutter')+' von '+ks.map(k=>nameOf(byId(k)).split(' ')[0]).join(', ');
   return `<div class="pcard${big?' big':''}" onclick="select('${id}')">`
     +`<div class="cat">${esc(p.note)}</div>`
@@ -597,7 +627,7 @@ function select(id){
   const sibs=siblingsOf(id);
   let html=`<div class="focuslabel">✦ ${esc(nameOf(byId(id)).split(' ')[0])} – gerade ausgewählt ✦</div><div class="row">`;
   html+=cardHTML(id,true)+'</div>';
-  html+=rowHTML('Ehepartner ⚭ · Partner ♥',sps);
+  html+=rowHTML('Ehepartner ⚭ · Partner ♥ · Getrennt ⇔',sps);
   /* Nachkommen: so viele Generationen wie vorhanden */
   const downLabels=['Kinder','Enkelkinder','Urenkelkinder','Ururenkelkinder','Ur-Ur-Enkelkinder'];
   let gen=childrenOf(id),di=0;
@@ -639,7 +669,8 @@ function exportCSV(){
     const ps=partnersOf(p.id);
     const row=[p.vn,p.nn,p.gn,p.g==='m'?'m':'w',p.geb,p.gest,p.ort,
       p.vater?fullName(p.vater):'',p.mutter?fullName(p.mutter):'',
-      ps.map(x=>fullName(x.other)).join(' | '),ps.map(x=>x.h||'').join(' | '),p.note];
+      ps.map(x=>fullName(x.other)+(x.t==='ehe'?' ⚭':x.t==='getrennt'?' ⇔':' ♥')).join(' | '),
+      ps.map(x=>x.h||'').join(' | '),p.note];
     lines.push(row.map(csvField).join(';'))});
   dl('stammbaum-datenbank.csv',lines.join('\n'),'text/csv')}
 function exportJSON(){dl('stammbaum-backup.json',JSON.stringify(DB,null,2),'application/json')}
@@ -665,10 +696,13 @@ function importCSV(inp){
       if(p[8])per.mutter=ensurePerson(p[8]);
       const ps=(p[9]||'').split('|').map(s=>s.trim()).filter(Boolean);
       const hs=(p[10]||'').split('|').map(s=>s.trim());
-      ps.forEach((nm,i)=>{
+      ps.forEach((raw,i)=>{
+        let nm=raw,t='ehe';
+        const m=nm.match(/\s(⚭|♥|⇔)$/);
+        if(m){t=m[1]==='⚭'?'ehe':m[1]==='⇔'?'getrennt':'partner';nm=nm.replace(/\s(⚭|♥|⇔)$/,'').trim()}
         const otherId=ensurePerson(nm);
         if(otherId===id)return;
-        if(!per.ps.some(x=>x.p===otherId))per.ps.push({p:otherId,t:'ehe',h:hs[i]||'',l:''})});
+        if(!per.ps.some(x=>x.p===otherId))per.ps.push({p:otherId,t:t,h:hs[i]||'',l:''})});
       n++});
     save();renderList();
     chime(n+' Personen importiert – die Datenbank hat jetzt '+DB.persons.length+' Personen.',true)};
