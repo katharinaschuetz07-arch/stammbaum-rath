@@ -303,16 +303,16 @@ const SEED=[
 ["ullaMann","Willi","Ullmann","","m","unbekannt","","","Großvater von Andreas Schütz – Ehemann von Marie",null],
 ["karlMartin","Karl Martin Heinrich Friedrich","Rath","","m","23.09.1904","","","Großvater väterlicherseits",[["hedwig","ehe","18.12.1931","Heirat 18.12.1931 in Neu Wokern"]]],
 ["hedwig","Hedwig Johanna Frieda","Rath","geb. Möller","w","29.02.1912","05.02.2013 (fast 101)","Neu Wokern","Großmutter väterlicherseits – wurde 100",null,"johannM","friedaM"],
-["wilhelm","Wilhelm","Tabbert","","m","Januar 1908","","","Großvater mütterlicherseits",["marie","ehe","",""]],
+["wilhelm","Wilhelm","Tabbert","","m","Januar 1904 oder 1908 (Datum folgt)","","Kölzig","Großvater mütterlicherseits – Bruder von Meta, Else und Frieda · Sohn von August und Ernestine",[["marie","ehe","",""]],"august","ernestine"],
 ["marie","Marie-Sophie","Tabbert","geb. Kalkbrenner","w","15.04.1912","1981 (Datum folgt)","","Großmutter mütterlicherseits",null,"friedrichK","hulda"],
 ["eva","Eva","Wirt","geb. Ziebart","w","unbekannt","","","Halbtante – Huldas älteste Tochter, vor der 1. Ehe geboren",null,null,"hulda"],
-["helga","Helga","Wegner","","w","unbekannt","","","Halbtante – aus Huldas 2. Ehe",null,null,"hulda","ottoW"],
-["willi","Willi","Wegner","","m","unbekannt","","","Halbonkel – aus Huldas 2. Ehe",null,null,"hulda","ottoW"],
-["klaus","Klaus","Wegner","","m","unbekannt","","","Halbonkel – aus Huldas 2. Ehe",null,null,"hulda","ottoW"],
-["elisabeth","Elisabeth","O'Neill","geb. Wegner","w","unbekannt","","Texas 🤠","Halbtante – ging nach Texas",null,null,"hulda","ottoW"],
-["meta","Meta","Herzberg","geb. Tabbert","w","unbekannt","","","Großtante – Schwester von Wilhelm Tabbert, 4 Kinder",null,null,"august","ernestine"],
-["elseK","Else","Karwinkel","geb. Tabbert","w","unbekannt","","","Großtante – Schwester von Wilhelm Tabbert",null,null,"august","ernestine"],
-["friedaG","Frieda","Gehlhar","geb. Tabbert","w","unbekannt","","","Großtante – Schwester von Wilhelm Tabbert",null,null,"august","ernestine"],
+["helga","Helga","Wegner","","w","unbekannt","","","Halbtante – aus Huldas 2. Ehe",null,"ottoW","hulda"],
+["willi","Willi","Wegner","","m","unbekannt","","","Halbonkel – aus Huldas 2. Ehe",null,"ottoW","hulda"],
+["klaus","Klaus","Wegner","","m","unbekannt","","","Halbonkel – aus Huldas 2. Ehe",null,"ottoW","hulda"],
+["elisabeth","Elisabeth","O'Neill","geb. Wegner","w","unbekannt","","Texas 🤠","Halbtante – ging nach Texas",null,"ottoW","hulda"],
+["meta","Meta","Herzberg","geb. Tabbert","w","unbekannt","","","Großtante – Schwester von Wilhelm Tabbert, 4 Kinder",null,"august","ernestine"],
+["elseK","Else","Karwinkel","geb. Tabbert","w","unbekannt","","","Großtante – Schwester von Wilhelm Tabbert",null,"august","ernestine"],
+["friedaG","Frieda","Gehlhar","geb. Tabbert","w","unbekannt","","","Großtante – Schwester von Wilhelm Tabbert",null,"august","ernestine"],
 ["schuetzVater","Kurt Werner","Schütz","","m","05.10.1929","","","Schwiegervater – Vater von Andreas",["schuetzMutter","ehe","",""]],
 ["schuetzMutter","Annemarie Olga","Schütz","geb. Ullmann","w","08.10.1934","","","Schwiegermutter – Mutter von Andreas",null,"ullaMann","marieUllmann"],
 ["wolfgangReimer","Wolfgang","Reimer","","m","22.11.1952","","","Vater von Ulrike",["martinaReimer","ehe","",""]],
@@ -400,9 +400,43 @@ const SEED=[
 
 /* ---------- Storage ---------- */
 let DB=null;
+const DBV=4; /* Korrektur-Stand: Tabbert- und Wegner-Geschwister korrekt mit beiden Eltern verknüpft */
 function load(){try{DB=JSON.parse(localStorage.getItem('stammbaumDB')||'null')}catch(e){DB=null}
   if(!DB||!Array.isArray(DB.persons)){DB={persons:[]};seed()}
-  else cleanDB()}
+  else{cleanDB();if(!DB.v||DB.v<DBV)migrate()}}
+/* Fehlende Verknüpfungen in bestehenden Datenbanken nachziehen, ohne eigene Einträge zu verändern */
+function migrate(){
+  const find=(vn,nn,geb)=>DB.persons.find(p=>p.vn===vn&&p.nn===nn&&(!geb||p.geb===geb));
+  /* 1b. Wegner-Kinder aus Huldas 2. Ehe: Vater Otto Wegner, Mutter Hulda nachtragen */
+  const o=find('Otto','Wegner');
+  const h=DB.persons.find(p=>p.nn==='Kalkbrenner'&&p.vn==='Hulda');
+  if(o&&h){
+    ['Helga','Willi','Klaus'].forEach(vn=>{const k=DB.persons.find(p=>p.nn==='Wegner'&&p.vn===vn);
+      if(k){if(!k.vater)k.vater=o.id;if(!k.mutter)k.mutter=h.id}});
+    const el=DB.persons.find(p=>p.nn==="O'Neill"&&p.vn==='Elisabeth');
+    if(el){if(!el.vater)el.vater=o.id;if(!el.mutter)el.mutter=h.id}}
+  /* 1. Tabbert-Geschwister: Eltern August und Ernestine nachtragen (Wilhelm, Meta, Else, Frieda) */
+  const a=find('August Wilhelm','Tabbert');
+  const e=find('Ernestine Wilhelmine','Tabbert');
+  if(a&&e){
+    const sibs=[
+      DB.persons.find(p=>p.nn==='Tabbert'&&p.vn==='Wilhelm'),
+      DB.persons.find(p=>p.nn==='Herzberg'&&p.vn==='Meta'),
+      DB.persons.find(p=>p.nn==='Karwinkel'&&p.vn==='Else'),
+      DB.persons.find(p=>p.nn==='Gehlhar'&&p.vn==='Frieda')];
+    sibs.forEach(w=>{if(w){
+      if(!w.vater)w.vater=a.id;
+      if(!w.mutter)w.mutter=e.id}});
+    const w=DB.persons.find(p=>p.nn==='Tabbert'&&p.vn==='Wilhelm');
+    if(w&&w.geb==='Januar 1908')w.geb='Januar 1904 oder 1908 (Datum folgt)';
+    if(w&&!w.ort)w.ort='Kölzig'}
+  /* 2. Geschwister-Link Else Möller ↔ Johann Möller sicherstellen */
+  const j=DB.persons.find(p=>p.nn==='Möller'&&/Johann Ludwig/.test(p.vn||''));
+  const el=DB.persons.find(p=>p.nn==='Möller'&&p.vn==='Else'&&p.geb==='18.03.1904');
+  if(j&&el){
+    const addSib=(x,y)=>{if(!x.sib)x.sib=[];if(!x.sib.includes(y.id))x.sib.push(y.id)};
+    addSib(j,el);addSib(el,j)}
+  DB.v=DBV;save()}
 /* Reparatur: doppelte und gespiegelte Partner-Einträge entfernen */
 function cleanDB(){
   DB.persons.forEach(p=>{
