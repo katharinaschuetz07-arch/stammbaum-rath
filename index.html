@@ -33,7 +33,7 @@ nav button:hover,nav button.on{background:#fff;color:var(--navy);border-color:#f
 .btn:hover{transform:translateY(-2px);box-shadow:0 6px 14px rgba(0,0,0,.3)}
 .btn.red{background:var(--red)}
 .btn.ghost{background:#fff;color:var(--navy);border:1px solid var(--navy)}
-.btn.small{font-size:.76rem;padding:6px 12px}
+.btn.small{font-size:.7rem;padding:4px 9px}
 main{max-width:760px;margin:0 auto;padding:4px 8px 10px;flex:1;display:flex;flex-direction:column}
 #cover.on{flex:1;display:flex;flex-direction:column;justify-content:center}
 .view{display:none;animation:fade .25s ease}
@@ -46,8 +46,8 @@ main{max-width:760px;margin:0 auto;padding:4px 8px 10px;flex:1;display:flex;flex
 .closex:hover{background:var(--red);color:#fff}
 label{display:block;font-size:.7rem;margin:7px 0 2px;color:#444}
 input,select,textarea{width:100%;font-family:inherit;font-size:.85rem;padding:7px 8px;border:1px solid #ccc9bd;border-radius:8px;background:#fffdf8}
-.row2{display:flex;gap:8px;flex-wrap:wrap}.row2>*{flex:1;min-width:120px}
-table{width:100%;min-width:360px;border-collapse:collapse;font-size:.66rem;table-layout:fixed}
+.row2{display:flex;flex-direction:column;gap:6px}.row2>*{flex:none;min-width:0}
+table{width:100%;min-width:300px;border-collapse:collapse;font-size:.66rem;table-layout:fixed}
 th{background:var(--navy);color:#fff;text-align:left;padding:5px;font-size:.58rem;letter-spacing:.02em}
 td{padding:4px 5px;border-bottom:1px solid var(--line);word-break:normal;overflow-wrap:break-word;vertical-align:top;hyphens:none;-webkit-hyphens:none}
 tr{cursor:pointer}
@@ -80,31 +80,37 @@ td:nth-child(4){padding-left:10px}
 .chip button{background:none;border:none;cursor:pointer;color:var(--no);font-size:.8rem;padding:0}
 #chime{position:fixed;top:14px;right:14px;padding:10px 18px;border-radius:12px;color:#fff;font-size:.85rem;opacity:0;transition:opacity .3s;z-index:99;max-width:70vw}
 #chime.show{opacity:1}
-footer{max-width:100%;margin:0 auto;padding:6px 4px 10px;text-align:center;color:#8a8273;border-top:1px solid var(--line)}
+footer{max-width:330px;margin:8px 0 10px 20px;padding:6px 0 10px;text-align:center;color:#8a8273;border-top:1px solid var(--line)}
 .frow{display:flex;justify-content:space-between;align-items:center;gap:8px;width:100%}
 .flink{background:none;border:none;color:var(--navy);text-decoration:underline;cursor:pointer;font-family:inherit;font-size:.76rem;padding:0}
 .fbundle{background:none;border:none;color:var(--navy);font-family:inherit;font-weight:bold;font-size:.74rem;letter-spacing:.14em;cursor:pointer;padding:0;transition:transform .2s ease}
 .fbundle:hover{transform:scale(1.06)}
 .fcopy{font-size:.66rem;color:#a39b87;margin-top:6px}
 .emblem{position:fixed;bottom:110px;left:50%;transform:translate(-50%,20px) scale(.9);opacity:0;pointer-events:none;z-index:60;
-  background:var(--navy);color:#fff;border-radius:14px;padding:16px 42px;text-align:center;min-width:340px;
+  background:var(--navy);color:#fff;border-radius:14px;padding:12px 22px;text-align:center;min-width:230px;
   box-shadow:0 12px 34px rgba(0,0,0,.35);transition:all .4s cubic-bezier(.34,1.4,.5,1)}
 .emblem.on{opacity:1;pointer-events:auto;transform:translate(-50%,0) scale(1);animation:sway 3.2s ease-in-out .45s infinite}
 @keyframes sway{0%,100%{transform:translate(-50%,0) scale(1) rotate(0deg)}25%{transform:translate(-50%,-6px) scale(1) rotate(2deg)}75%{transform:translate(-50%,2px) scale(1) rotate(-2deg)}}
 .emblem-word{font-weight:bold;font-size:1.12rem;letter-spacing:.12em}
 .emblem-studio{font-size:.7rem;letter-spacing:.3em;margin-top:3px;opacity:.95}
-.emblem-methode{font-size:.66rem;letter-spacing:.1em;margin-top:6px;opacity:.85}
+.emblem-methode{font-size:.66rem;letter-spacing:.1em;margin-top:6px;opacity:.85;white-space:nowrap}
 .emblem-close{color:#fff;opacity:.6;font-size:.62rem;margin-top:9px;letter-spacing:.05em}
 .overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(20,25,45,.55);z-index:50;align-items:flex-start;justify-content:center;padding:20px 12px;overflow:auto;-webkit-overflow-scrolling:touch}
 .overlay.open{display:flex}
 .overlay.on{display:flex}
 .modal{background:var(--cream);border-radius:14px;max-width:640px;width:100%;padding:14px;box-shadow:0 12px 40px rgba(0,0,0,.3);border-top:5px solid var(--red)}
 .modal h3{font-size:.95rem;margin:2px 0 8px}
-.modal p{font-size:.74rem;line-height:1.5;margin:6px 0}
+.modal p{font-size:.74rem;line-height:1.5;margin:6px 0;overflow-wrap:anywhere}
 .modal h3{color:var(--navy);margin-bottom:10px}
 .modal p{font-size:.85rem;margin-bottom:8px}
 .statgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(105px,1fr));gap:10px}
 .statsgrid{display:grid;grid-template-columns:repeat(3,minmax(84px,1fr));gap:4px;margin:10px 0 2px;justify-content:start;max-width:330px;width:100%}
+.nstitle{font-size:.72rem;color:var(--navy);font-weight:bold;margin:12px 0 5px}
+.nsrow{display:flex;align-items:center;gap:6px;margin:2px 0;font-size:.66rem}
+.nsname{width:92px;flex:none;color:#555}
+.nsbar{flex:1;height:10px;background:#f0ead9;border-radius:5px;overflow:hidden}
+.nsbar span{display:block;height:100%;background:var(--navy);border-radius:5px}
+.nscount{width:26px;flex:none;text-align:right;color:var(--navy);font-weight:bold}
 .statbox{background:#fff;border:1px solid var(--line);border-radius:10px;padding:4px 3px;text-align:center;min-width:0}
 .statbox .n{font-size:1rem;color:var(--navy);font-weight:bold}
 .statbox .l{font-size:.6rem;color:#888}
@@ -146,13 +152,13 @@ footer{max-width:100%;margin:0 auto;padding:6px 4px 10px;text-align:center;color
     </div>
     <div class="card">
       <div class="filters">
-        <input id="fSearch" placeholder="🔍 Namen suchen (Vorname, Nachname, Geburtsname)" oninput="searchInput()">
+        <input id="fSearch" placeholder="🔍 Namen suchen" oninput="searchInput()">
         <span id="count" style="font-size:.76rem;color:#888"></span>
       </div>
       <div class="letters" id="letters"></div>
       <div style="overflow:auto;max-height:44vh;-webkit-overflow-scrolling:touch">
         <table>
-          <thead><tr><th>Name</th><th>Geburts-<br>name</th><th>Geboren</th><th>Beziehung / Hinweis</th></tr></thead>
+          <thead><tr><th style="width:40%;cursor:pointer" onclick="setSort('name')">Name ⇅</th><th style="width:33%;cursor:pointer" onclick="setSort('gn')">Geburts-<br>name ⇅</th><th style="width:27%;cursor:pointer" onclick="setSort('geb')">Geboren ⇅</th></tr></thead>
           <tbody id="tbody"></tbody>
         </table>
       </div>
@@ -160,7 +166,7 @@ footer{max-width:100%;margin:0 auto;padding:6px 4px 10px;text-align:center;color
     </div>
     <div class="card">
       <div class="row2">
-        <div style="flex:2;min-width:180px">
+        <div style="min-width:0">
           <label>Vornamen (auch 4–5 Vornamen möglich)</label>
           <input id="iVn" placeholder="z. B. Katharina Andrea Maria">
         </div>
@@ -170,7 +176,7 @@ footer{max-width:100%;margin:0 auto;padding:6px 4px 10px;text-align:center;color
         </div>
         <div>
           <label>Geburtsname</label>
-          <input id="iGn" placeholder="z. B. geb. Rath">
+          <input id="iGn" placeholder="z. B. Rath (nur den Namen, „geb." kommt automatisch)">
         </div>
       </div>
       <div class="row2">
@@ -203,16 +209,16 @@ footer{max-width:100%;margin:0 auto;padding:6px 4px 10px;text-align:center;color
       </div>
       <label>Ehepartner / Partnerinnen ( ⚭ Ehe · ♥ Partnerschaft · ⇔ getrennt lebend )</label>
       <div id="pChips"></div>
-      <div class="row2" id="pForm" style="align-items:flex-end">
+      <div class="row2" id="pForm" style="flex-direction:row;flex-wrap:wrap;align-items:flex-end">
         <div style="flex:2;min-width:150px">
           <label>Person</label>
           <select id="iP"></select>
         </div>
-        <div>
+        <div style="min-width:115px">
           <label>Art</label>
           <select id="iPtyp"><option value="ehe">⚭ Ehe</option><option value="partner">♥ Partnerschaft</option><option value="getrennt">⇔ Getrennt lebend</option></select>
         </div>
-        <div>
+        <div style="min-width:115px">
           <label>Hochzeitstag</label>
           <input id="iHd" placeholder="TT.MM.JJJJ">
         </div>
@@ -222,19 +228,20 @@ footer{max-width:100%;margin:0 auto;padding:6px 4px 10px;text-align:center;color
         </div>
       </div>
       <label>Hinweis / Beziehung (z. B. „Nichte von Katharina – Tochter von Simone")</label>
-      <textarea id="iNote" rows="2" placeholder="Beziehung, Registernummer, Besonderes …"></textarea>
+      <textarea id="iNote" rows="1" placeholder="Beziehung, Registernummer, Besonderes …"></textarea>
       <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
         <button class="btn small" id="saveBtn" onclick="saveEntry()">＋ Person speichern</button>
         <button class="btn small ghost" id="resetBtn" style="display:none" onclick="resetForm()">✕ Abbrechen</button>
         <button class="btn small ghost" onclick="document.getElementById('csvFile').click()">📥 CSV-Import</button>
         <input type="file" id="csvFile" accept=".csv,.txt" style="display:none" onchange="importCSV(this)">
         <button class="btn small ghost" onclick="exportCSV()">📤 CSV-Export</button>
+      </div>
+      <div style="margin-top:6px;display:flex;gap:8px;flex-wrap:wrap">
         <button class="btn small ghost" onclick="exportJSON()">💾 JSON-Backup</button>
         <button class="btn small red" onclick="wipeAll()">🗑 Alles löschen</button>
       </div>
-      <div class="hint" style="text-align:left;margin-top:6px">CSV-Spalten: Vornamen;Nachname;Geburtsname;Geschlecht;Geburtsdatum;Sterbedatum;Geburtsort;Vater;Mutter;Ehepartner;Hochzeitstag;Hinweis. Mehrere Ehepartner mit „ | " trennen. Die Verbindungsart hängt am Namen: ⚭ Ehe, ♥ Partnerschaft, ⇔ getrennt lebend. Vater, Mutter und Ehepartner werden beim Import über den Namen automatisch verknüpft – unbekannte Namen werden als neue Person angelegt.</div>
     </div>
-    <div class="card"><div class="statgrid" id="stats"></div></div>
+    <div class="card"><div class="statgrid" id="stats"></div><div id="namestats"></div></div>
   </section>
 
   <section id="personview" class="view">
@@ -257,8 +264,8 @@ footer{max-width:100%;margin:0 auto;padding:6px 4px 10px;text-align:center;color
 
 <div class="emblem" id="emblem" onclick="toggleBundle()">
   <div class="emblem-word">ARC(E)ANA</div>
-  <div class="emblem-studio">KREATIVSTUDIO</div>
-  <div class="emblem-methode">ENTDECKEN · ENTWICKELN · ERSCHAFFEN</div>
+  <div class="emblem-studio">creative studio</div>
+  <div class="emblem-methode">Entdecken · Entwickeln · Erschaffen</div>
   <div class="emblem-close">✕</div>
 </div>
 
@@ -269,7 +276,8 @@ footer{max-width:100%;margin:0 auto;padding:6px 4px 10px;text-align:center;color
     <p><strong>Verantwortlich:</strong><br>Katharina Schütz<br>Platz der Einheit 10<br>14467 Potsdam<br>Deutschland</p>
     <p><strong>Projektcharakter:</strong> Diese App ist ein <strong>unverkäufliches Produkt</strong> und ein <strong>Prototyp</strong>. Sie wurde ausschließlich zum persönlichen Gebrauch für die Familie erstellt.</p>
     <p><strong>Urheberrecht:</strong> © 2026 Katharina Schütz · Alle Rechte vorbehalten. Die App darf <strong>nicht kopiert, verändert oder weitergegeben werden</strong> – weder ganz noch in Teilen – ohne die <strong>ausdrückliche Genehmigung</strong> von Katharina Schütz.</p>
-    <p><strong>Technik:</strong> Die Daten lassen sich als <strong>CSV-Datei</strong> exportieren und importieren (für Apple Notes, Numbers &amp; Excel) sowie als JSON-Backup sichern und wiederherstellen.</p>
+    <p><strong>Technik:</strong> Die Daten lassen sich als <strong>CSV-Datei</strong> exportieren und importieren (für Apple Notes, Numbers &amp; Excel) sowie als JSON-Backup sichern und wiederherstellen. Die Verbindungsart hängt am Namen: ⚭ Ehe, ♥ Partnerschaft, ⇔ getrennt lebend – mehrere Ehepartner werden mit „ | " getrennt. Vater, Mutter und Ehepartner werden beim Import über den Namen automatisch verknüpft, unbekannte Namen werden als neue Person angelegt.</p>
+    <p><strong>CSV-Spalten:</strong> Vornamen · Nachname · Geburtsname · Geschlecht · Geburtsdatum · Sterbedatum · Geburtsort · Vater · Mutter · Ehepartner · Hochzeitstag · Hinweis</p>
     <div style="text-align:right;margin-top:14px"><button class="closex" onclick="closeModal('impModal')">✕ Schließen</button></div>
   </div>
 </div>
@@ -294,123 +302,182 @@ footer{max-width:100%;margin:0 auto;padding:6px 4px 10px;text-align:center;color
             Partner-Liste [[id, Art, Hochzeitstag, Zusatz]], Vater, Mutter]
    Partner-Art: "ehe" = verheiratet, "partner" = Partnerschaft */
 const SEED=[
-["friedaM","Frieda Lisette Dorothea","Möller","geb. Knegendorf","w","16.10.1873","22.12.1943","","Urgroßmutter väterlicherseits",["johannM","ehe","",""]],
-["johannM","Johann Ludwig Joachim Christian","Möller","","m","12.01.1869","","","Urgroßvater väterlicherseits",["friedaM","ehe","",""]],
-["elseM","Else","Möller","","w","18.03.1904","19.04.1939","","Urgroßtante – Schwester von Urgroßvater Johann Möller · Tante der Großmutter Hedwig",null],
-["idaM","Ida","Möller","","w","unbekannt","","","Großtante – Schwester von Großmutter Hedwig",null,"johannM","friedaM"],
-["anniM","Anni","Möller","","w","unbekannt","","","Großtante – Schwester von Großmutter Hedwig",null,"johannM","friedaM"],
-["hulda","Hulda","Kalkbrenner","geb. Ziebart","w","um 1886 (ungesichert)","","","Urgroßmutter mütterlicherseits",[["friedrichK","ehe","","1. Ehe von Hulda"],["ottoW","ehe","","2. Ehe von Hulda"]]],
-["friedrichK","Friedrich","Kalkbrenner","","m","unbekannt","","","1. Ehemann von Hulda · Urgroßvater mütterlicherseits",null],
-["ottoW","Otto","Wegner","","m","unbekannt","","","2. Ehemann von Hulda",null],
-["august","August Wilhelm","Tabbert","","m","unbekannt","","Kölzig","Urgroßvater mütterlicherseits",["ernestine","ehe","",""]],
-["ernestine","Ernestine Wilhelmine","Tabbert","geb. Lindemann","w","25.12.1867 (eventuell)","","Kölzig","Urgroßmutter mütterlicherseits",null],
+["friedaM","Frieda Lisette Dorothea","Möller","Knegendorf","w","16.10.1873","22.12.1943","","Urgroßmutter väterlicherseits",["johannM","ehe","",""]],
+["johannM","Johann Ludwig Joachim Christian","Möller","Möller","m","12.01.1869","","","Urgroßvater väterlicherseits",["friedaM","ehe","",""]],
+["elseM","Else","Möller","Möller","w","18.03.1904","19.04.1939","","Urgroßtante – Schwester von Urgroßvater Johann Möller · Tante der Großmutter Hedwig",null],
+["idaM","Ida","Möller","Möller","w","unbekannt","","","Großtante – Schwester von Großmutter Hedwig",null,"johannM","friedaM"],
+["anniM","Anni","Avolin","Möller","w","unbekannt","","","Großtante – Schwester von Großmutter Hedwig",null,"johannM","friedaM"],
+["hulda","Hulda","Kalkbrenner","Ziebart","w","um 1886 (ungesichert)","","","Urgroßmutter mütterlicherseits",[["friedrichK","ehe","","1. Ehe von Hulda"],["ottoW","ehe","","2. Ehe von Hulda"]]],
+["friedrichK","Friedrich","Kalkbrenner","Kalkbrenner","m","unbekannt","","","1. Ehemann von Hulda · Urgroßvater mütterlicherseits",null],
+["ottoW","Otto","Wegner","Wegner","m","unbekannt","","","2. Ehemann von Hulda",null],
+["august","August Wilhelm","Tabbert","Tabbert","m","unbekannt","","Kölzig","Urgroßvater mütterlicherseits",["ernestine","ehe","",""]],
+["ernestine","Ernestine Wilhelmine","Tabbert","Lindemann","w","25.12.1867 (eventuell)","","Kölzig","Urgroßmutter mütterlicherseits",null],
 ["marieUllmann","Marie","Ullmann","","w","03.01.1914 (ungesichert)","","","Großmutter von Andreas Schütz",["ullaMann","ehe","",""]],
-["ullaMann","Willi","Ullmann","","m","unbekannt","","","Großvater von Andreas Schütz – Ehemann von Marie",null],
-["karlMartin","Karl Martin Heinrich Friedrich","Rath","","m","23.09.1904","","","Großvater väterlicherseits",[["hedwig","ehe","18.12.1931","Heirat 18.12.1931 in Neu Wokern"]]],
-["hedwig","Hedwig Johanna Frieda","Rath","geb. Möller","w","29.02.1912","05.02.2013 (fast 101)","Neu Wokern","Großmutter väterlicherseits – wurde 100",null,"johannM","friedaM"],
-["wilhelm","Wilhelm","Tabbert","","m","Januar 1904 oder 1908 (Datum folgt)","","Kölzig","Großvater mütterlicherseits – Bruder von Meta, Else und Frieda · Sohn von August und Ernestine",[["marie","ehe","",""]],"august","ernestine"],
-["marie","Marie-Sophie","Tabbert","geb. Kalkbrenner","w","15.04.1912","1981 (Datum folgt)","","Großmutter mütterlicherseits",null,"friedrichK","hulda"],
-["eva","Eva","Wirt","geb. Ziebart","w","unbekannt","","","Halbtante – Huldas älteste Tochter, vor der 1. Ehe geboren",null,null,"hulda"],
-["helga","Helga","Wegner","","w","unbekannt","","","Halbtante – aus Huldas 2. Ehe",null,"ottoW","hulda"],
-["willi","Willi","Wegner","","m","unbekannt","","","Halbonkel – aus Huldas 2. Ehe",null,"ottoW","hulda"],
-["klaus","Klaus","Wegner","","m","unbekannt","","","Halbonkel – aus Huldas 2. Ehe",null,"ottoW","hulda"],
-["elisabeth","Elisabeth","O'Neill","geb. Wegner","w","unbekannt","","Texas 🤠","Halbtante – ging nach Texas",null,"ottoW","hulda"],
-["meta","Meta","Herzberg","geb. Tabbert","w","unbekannt","","","Großtante – Schwester von Wilhelm Tabbert, 4 Kinder",null,"august","ernestine"],
-["elseK","Else","Karwinkel","geb. Tabbert","w","unbekannt","","","Großtante – Schwester von Wilhelm Tabbert",null,"august","ernestine"],
-["friedaG","Frieda","Gehlhar","geb. Tabbert","w","unbekannt","","","Großtante – Schwester von Wilhelm Tabbert",null,"august","ernestine"],
-["schuetzVater","Kurt Werner","Schütz","","m","05.10.1929","","","Schwiegervater – Vater von Andreas",["schuetzMutter","ehe","",""]],
-["schuetzMutter","Annemarie Olga","Schütz","geb. Ullmann","w","08.10.1934","","","Schwiegermutter – Mutter von Andreas",null,"ullaMann","marieUllmann"],
-["wolfgangReimer","Wolfgang","Reimer","","m","22.11.1952","","","Vater von Ulrike",["martinaReimer","ehe","",""]],
+["ullaMann","Willi","Ullmann","Ullmann","m","unbekannt","","","Großvater von Andreas Schütz – Ehemann von Marie",null],
+["karlMartin","Karl Martin Heinrich Friedrich","Rath","Rath","m","23.09.1904","","","Großvater väterlicherseits",[["hedwig","ehe","18.12.1931","Heirat 18.12.1931 in Neu Wokern"]]],
+["hedwig","Hedwig Johanna Frieda","Rath","Möller","w","29.02.1912","05.02.2013 (fast 101)","Neu Wokern","Großmutter väterlicherseits – wurde 100",null,"johannM","friedaM"],
+["wilhelm","Wilhelm","Tabbert","Tabbert","m","Januar 1908","","Kölzig","Großvater mütterlicherseits – Bruder von Meta, Else und Frieda · Sohn von August und Ernestine",[["marie","ehe","",""]],"august","ernestine"],
+["marie","Marie-Sophie","Tabbert","Kalkbrenner","w","15.04.1912","1981 (Datum folgt)","","Großmutter mütterlicherseits",null,"friedrichK","hulda"],
+["eva","Eva","Wirth","Ziebart","w","unbekannt","","","Halbtante – Huldas älteste Tochter, vor der 1. Ehe geboren",null,null,"hulda"],
+["dieterWirth","Dieter","Wirth","Wirth","m","unbekannt","","","Halbcousin von Katharina – Sohn von Eva Wirth",null,null,"eva"],
+["ingridBalow","Ingrid","Balow","Wirth","w","unbekannt","","","Halbcousine von Katharina – Tochter von Eva Wirth",null,null,"eva"],
+["sabineBalow","Sabine","Balow","Balow","w","unbekannt","","","Enkelin von Eva Wirth – Tochter von Ingrid Balow",null,null,"ingridBalow"],
+["helga","Helga","Hageböck","Wegner","w","unbekannt","","","Halbtante – aus Huldas 2. Ehe",null,"ottoW","hulda"],
+["willi","Willi","Wegner","Wegner","m","unbekannt","","","Halbonkel – aus Huldas 2. Ehe",null,"ottoW","hulda"],
+["klaus","Klaus","Wegner","Wegner","m","unbekannt","","","Halbonkel – aus Huldas 2. Ehe",null,"ottoW","hulda"],
+["elisabeth","Elisabeth","O'Neill","Wegner","w","unbekannt","","Texas 🤠","Halbtante – ging nach Texas",null,"ottoW","hulda"],
+["meta","Meta","Herzberg","Tabbert","w","unbekannt","","","Großtante – Schwester von Wilhelm Tabbert, 4 Kinder",null,"august","ernestine"],
+["elseK","Else","Karwinkel","Tabbert","w","unbekannt","","","Großtante – Schwester von Wilhelm Tabbert",null,"august","ernestine"],
+["friedaG","Frieda","Gehlhar","Tabbert","w","unbekannt","","","Großtante – Schwester von Wilhelm Tabbert",null,"august","ernestine"],
+["schuetzVater","Kurt Werner","Schütz","Schütz","m","05.10.1929","","","Schwiegervater – Vater von Andreas",["schuetzMutter","ehe","",""]],
+["schuetzMutter","Annemarie Olga","Schütz","Ullmann","w","08.10.1934","","","Schwiegermutter – Mutter von Andreas",null,"ullaMann","marieUllmann"],
+["wolfgangReimer","Wolfgang","Reimer","Reimer","m","22.11.1952","","","Vater von Ulrike",["martinaReimer","ehe","",""]],
 ["martinaReimer","Martina","Reimer","","w","04.05.1955","","","Mutter von Ulrike",null],
-["andreaZimmermann","Andrea","Zimmermann","geb. Rüdiger","w","17.09.1960","","","Mutter von Steven und Julia",[["detlef","ehe","","Detlef ist Julias Vater, nicht Stevens"],["stevenVater","partner","","keine Ehe – Stevens Vater"]]],
-["stevenVater","Rüdiger","Spieth","","m","unbekannt","","","Stevens Vater – kein Ehepartner von Andrea",null],
-["detlef","Detlef","Zimmermann","","m","13.11.1954","27.04.2023","","Ehemann von Andrea – Vater von Julia · Adoptivvater von Steven",null],
-["silvio","Silvio","Kemmer","","m","unbekannt","","","1. Ehemann von Sarina",null],
-["karlheinz","Karl-Heinz Erich Friedrich","Rath","","m","04.10.1932","25.06.2001","Teterow / Potsdam","Vater von Katharina · Heirat 30.09.1955 in Jörgensdorf",[["friedel","ehe","30.09.1955","Heirat 30.09.1955 in Jörgensdorf"]],"karlMartin","hedwig"],
-["friedel","Friedel Annemarie","Rath","geb. Tabbert","w","05.02.1931","","Kölzig (heute Kolsk, Polen)","Mutter von Katharina",null,"wilhelm","marie"],
-["anita","Anita Editha","Herter","geb. Tabbert","w","16.08.1934","","","Tante – Schwester der Mutter",[["hannes","ehe","Februar 1965","Heirat Februar 1965"]],"wilhelm","marie"],
-["hannes","Hans Joachim Wilhelm","Herter","","m","19.11.1943","","","Ehemann von Tante Anita – Heirat Februar 1965",null],
-["juergen","Jürgen","Tabbert","","m","02.09.1939","","","Onkel – Bruder der Mutter (geb. als der Krieg begann)",[["waltraud","ehe","",""]],"wilhelm","marie"],
+["andreaZimmermann","Andrea","Zimmermann","Rüdiger","w","17.09.1960","","","Mutter von Steven und Julia",[["detlef","ehe","","Detlef ist Julias Vater, nicht Stevens"],["stevenVater","partner","","keine Ehe – Stevens Vater"]]],
+["stevenVater","Rüdiger","Spiet","Spiet","m","unbekannt","","","Stevens Vater – kein Ehepartner von Andrea",null],
+["detlef","Detlef","Zimmermann","Zimmermann","m","13.11.1954","27.04.2023","","Ehemann von Andrea – Vater von Julia · Adoptivvater von Steven",null],
+["silvio","Silvio","Kämmer","Kämmer","m","unbekannt","","","1. Ehemann von Sarina",null],
+["karlheinz","Karl-Heinz Erich Friedrich","Rath","Rath","m","04.10.1932","25.06.2001","Teterow / Potsdam","Vater von Katharina · Heirat 30.09.1955 in Jörgensdorf",[["friedel","ehe","30.09.1955","Heirat 30.09.1955 in Jörgensdorf"]],"karlMartin","hedwig"],
+["friedel","Friedel Annemarie","Rath","Tabbert","w","05.02.1931","","Kölzig (heute Kolsk, Polen)","Mutter von Katharina",null,"wilhelm","marie"],
+["anita","Anita Editha","Herter","Tabbert","w","16.08.1934","","","Tante – Schwester der Mutter",[["hannes","ehe","Februar 1965","Heirat Februar 1965"]],"wilhelm","marie"],
+["hannes","Hans Joachim Wilhelm","Herter","Herter","m","19.11.1943","","","Ehemann von Tante Anita – Heirat Februar 1965",null],
+["juergen","Jürgen","Tabbert","Tabbert","m","02.09.1939","","","Onkel – Bruder der Mutter (geb. als der Krieg begann)",[["waltraud","ehe","",""]],"wilhelm","marie"],
 ["waltraud","Waltraud","Tabbert","Geburtsname folgt","w","unbekannt","Datum folgt","","Frau von Onkel Jürgen",null],
-["annemarieB","Annemarie Ida Waltraud","Buhl","geb. Rath","w","13.03.1931","20.10.2017","","Tante – Schwester des Vaters",[["wernerKurt","ehe","",""]],"karlMartin","hedwig"],
-["wernerKurt","Werner Kurt","Buhl","","m","04.05.1932","04.06.2011","","Onkel – Ehemann von Tante Annemarie",null],
-["volker","Volker Karl-Heinz","Rath","","m","08.01.1956","","Teterow","Bruder von Katharina · Registernummer 10/1956",[["viola","ehe","","1. Ehe von Volker"],["marianne","ehe","18.10.1985","2. Ehe von Volker – Heirat 18.10.1985 in Oberwiesenthal · Michael und Stefanie sind Marianes leibliche Kinder und wurden von Volker adoptiert"]],"karlheinz","friedel"],
-["viola","Viola","Rath","geb. Vogt","w","17.11.1955","","","1. Schwägerin – erste Frau von Volker",null],
-["marianne","Marianne","Rath","geb. Schmidt","w","15.02.1955","","","2. Schwägerin – zweite Frau von Volker · Heirat 18.10.1985 in Oberwiesenthal",null],
-["thomas","Thomas Karl-Wilhelm","Rath","","m","11.12.1958","","Teterow","Bruder von Katharina · Registernummer 387/1958",[["martina","ehe","",""]],"karlheinz","friedel"],
-["martina","Martina","Rath","geb. Lange","w","17.09.1957","","","Schwägerin – Frau von Thomas",null],
-["katharina","Katharina Andrea","Schütz","geb. Rath","w","29.07.1960","","Teterow","Ich 🙂 – mein Stammbaum · Registernummer 293/1960",[["andreas","ehe","05.05.1984","Heirat 05.05.1984 in Potsdam · Registernummer 333 · geschieden am 25.04.2017 (Geschäftsnummer 42F29/17)"]],"karlheinz","friedel"],
-["simone","Simone Carmen","Rath","","w","24.08.1963","","Teterow","Schwester von Katharina · Registernummer 348/1963",[["fitzner","partner","","keine Ehe – Jörg ist nur Lisas Vater"]],"karlheinz","friedel"],
-["sarina","Sarina Anita","Rath","","w","18.08.1967","","Ueckermünde","Schwester von Katharina · Registernummer 329/1967",[["silvio","ehe","","1. Ehe von Sarina"],["ingmar","ehe","","2. Ehe von Sarina"]],"karlheinz","friedel"],
-["ingmar","Ingmar","Wist","","m","21.12.1969","","","2. Ehemann von Sarina",null],
-["andreas","Andreas Jörg","Schütz","","m","16.06.1960","08.04.2023","Caputh (heute Schwielowsee)","Ehemann von Katharina · geb. Registernummer 198/1960 · ✝ Sterberegister S911/2023",null,"schuetzVater","schuetzMutter"],
-["michaelSchuetz","Michael","Schütz","","m","21.12.1955","30.07.2024","","Schwager – Bruder von Andreas",[["monikaS","ehe","",""]],"schuetzVater","schuetzMutter"],
-["monikaS","Monika","Schütz","geb. Schwarz","w","unbekannt","","","Ehefrau von Michael Schütz",null],
-["claudia","Claudia","Schütz","","w","unbekannt","","","Nichte von Andreas – Tochter von Michael",null,"michaelSchuetz","monikaS"],
-["markus","Markus","Schütz","","m","unbekannt","","","Neffe von Andreas – Sohn von Michael (Markus mit C)",null,"michaelSchuetz","monikaS"],
-["christian","Christian","Schütz","","m","unbekannt","sehr früh verstorben (Daten folgen)","","Sohn von Michael – sehr früh verstorben",null,"michaelSchuetz","monikaS"],
-["andreasT","Andreas","Tabbert","","m","16.11.1961","","","Cousin mütterlicherseits – ältestes Kind von Jürgen · Heirat 11.07.2005",[["janaK","ehe","11.07.2005","Heirat 11.07.2005"]],"juergen","waltraud"],
-["janaK","Jana","Tabbert","geb. Krumrich","w","15.08.1969","","","Ehefrau von Cousin Andreas",null],
-["marcelK","Marcel","Krumrich","","m","11.07.1989","","","Sohn von Cousin Andreas – trägt den Geburtsnamen der Mutter",null,"andreasT","janaK"],
-["raik","Raik","Tabbert","","m","1963","","","Cousin mütterlicherseits – zweites Kind von Jürgen",null,"juergen","waltraud"],
+["annemarieB","Annemarie Ida Waltraud","Buhl","Rath","w","13.03.1931","20.10.2017","","Tante – Schwester des Vaters",[["wernerKurt","ehe","",""]],"karlMartin","hedwig"],
+["wernerKurt","Werner Kurt","Buhl","Buhl","m","04.05.1932","04.06.2011","","Onkel – Ehemann von Tante Annemarie",null],
+["volker","Volker Karl-Heinz","Rath","Rath","m","08.01.1956","","Teterow","Bruder von Katharina · Registernummer 10/1956",[["viola","ehe","","1. Ehe von Volker"],["marianne","ehe","18.10.1985","2. Ehe von Volker – Heirat 18.10.1985 in Oberwiesenthal · Michael und Stefanie sind Marianes leibliche Kinder und wurden von Volker adoptiert"]],"karlheinz","friedel"],
+["viola","Viola","Rath","Vogt","w","17.11.1955","","","1. Schwägerin – erste Frau von Volker",null],
+["marianne","Marianne","Rath","Schmidt","w","15.02.1955","","","2. Schwägerin – zweite Frau von Volker · Heirat 18.10.1985 in Oberwiesenthal",null],
+["thomas","Thomas Karl-Wilhelm","Rath","Rath","m","11.12.1958","","Teterow","Bruder von Katharina · Registernummer 387/1958",[["martina","ehe","",""]],"karlheinz","friedel"],
+["martina","Martina","Rath","Lange","w","17.09.1957","","","Schwägerin – Frau von Thomas",null],
+["katharina","Katharina Andrea","Schütz","Rath","w","29.07.1960","","Teterow","Ich 🙂 – mein Stammbaum · Registernummer 293/1960",[["andreas","ehe","05.05.1984","Heirat 05.05.1984 in Potsdam · Registernummer 333 · geschieden am 25.04.2017 (Geschäftsnummer 42F29/17)"]],"karlheinz","friedel"],
+["simone","Simone Carmen","Rath","Rath","w","24.08.1963","","Teterow","Schwester von Katharina · Registernummer 348/1963",[["fitzner","partner","","keine Ehe – Jörg ist nur Lisas Vater"]],"karlheinz","friedel"],
+["sarina","Sarina Anita","Rath","Rath","w","18.08.1967","","Ueckermünde","Schwester von Katharina · Registernummer 329/1967",[["silvio","ehe","","1. Ehe von Sarina"],["ingmar","ehe","","2. Ehe von Sarina"]],"karlheinz","friedel"],
+["ingmar","Ingmar","Wist","Wist","m","23.12.1969","","","2. Ehemann von Sarina",null],
+["andreas","Andreas Jörg","Schütz","Schütz","m","16.06.1960","08.04.2023","Caputh (heute Schwielowsee)","Ehemann von Katharina · geb. Registernummer 198/1960 · ✝ Sterberegister S911/2023",null,"schuetzVater","schuetzMutter"],
+["michaelSchuetz","Michael","Schütz","Schütz","m","21.12.1955","30.07.2024","","Schwager – Bruder von Andreas",[["monikaS","ehe","",""]],"schuetzVater","schuetzMutter"],
+["monikaS","Monika","Schütz","Schwarz","w","unbekannt","","","Ehefrau von Michael Schütz",null],
+["claudia","Claudia","Schnepp","Schütz","w","unbekannt","","","Nichte von Andreas – Tochter von Michael · verheiratete Schnepp",null,"michaelSchuetz","monikaS"],
+["markus","Markus","Schütz","Schütz","m","unbekannt","","","Neffe von Andreas – Sohn von Michael (Markus mit C)",null,"michaelSchuetz","monikaS"],
+["christian","Christian","Schütz","Schütz","m","unbekannt","sehr früh verstorben (Daten folgen)","","Sohn von Michael – sehr früh verstorben",null,"michaelSchuetz","monikaS"],
+["andreasT","Andreas","Tabbert","Tabbert","m","16.11.1961","","","Cousin mütterlicherseits – ältestes Kind von Jürgen · Heirat 11.07.2005",[["janaK","ehe","11.07.2005","Heirat 11.07.2005"]],"juergen","waltraud"],
+["janaK","Jana","Tabbert","Krumrich","w","15.08.1969","","","Ehefrau von Cousin Andreas",null],
+["marcelK","Marcel","Krumrich","Krumrich","m","11.07.1989","","","Sohn von Cousin Andreas – trägt den Geburtsnamen der Mutter",null,"andreasT","janaK"],
+["raik","Raik","Tabbert","Tabbert","m","1963","","","Cousin mütterlicherseits – zweites Kind von Jürgen",null,"juergen","waltraud"],
 ["silke","Silke","Tabbert","heutiger Name folgt","w","1965","","","Cousine mütterlicherseits – drittes Kind von Jürgen",null,"juergen","waltraud"],
 ["thoralf","Thoralf","Tabbert","heutiger Name folgt","m","unbekannt","","","Cousin mütterlicherseits – viertes Kind von Jürgen",null,"juergen","waltraud"],
-["beatrix","Beatrix","Tabbert","heutiger Name folgt","w","unbekannt","","","Cousine mütterlicherseits – jüngstes Kind von Jürgen",null,"juergen","waltraud"],
-["marionHauff","Marion","Hauff","geb. Schütz","w","November 1964 (ungesichert)","","","Schwägerin – Schwester von Andreas · 2. Ehe: Walk",[["walk","ehe","","2. Ehe von Marion"]],"schuetzVater","schuetzMutter"],
-["walk","","Walk","Vorname folgt","m","unbekannt","","","2. Ehemann von Marion Hauff",null],
-["anitaWalk","Anita","Walk","","w","unbekannt","","","Nichte von Katharina – Tochter von Schwägerin Marion (Schwester von Andreas)",null,"walk","marionHauff"],
-["stefanWalk","Stefan","Walk","","m","unbekannt","","","Neffe von Katharina – Sohn von Schwägerin Marion (Schwester von Andreas)",null,"walk","marionHauff"],
-["thomasWalk","Thomas","Walk","","m","unbekannt","","","Neffe von Katharina – jüngster Sohn von Schwägerin Marion",null,"walk","marionHauff"],
-["fitzner","Jörg Ulrich","Pfitzner","","m","08.04.1962","","","Partner von Simone – Vater von Lisa",null],
-["margit","Margit Annegret","Jürgensen","geb. Buhl","w","30.09.1955","Dezember 2025 (Datum folgt)","","Cousine von Katharina",null,"wernerKurt","annemarieB"],
-["armin","Armin","Buhl","","m","04.09.1957","05.09.1957","","Cousin von Katharina – nur einen Tag alt geworden",null,"wernerKurt","annemarieB"],
-["karin","Karin Elke","Köhler","geb. Buhl","w","29.03.1961","","","Cousine von Katharina – Tochter von Tante Annemarie",null,"wernerKurt","annemarieB"],
-["wernerO","Werner Ottmar","Buhl","","m","20.05.1968","","","Cousin von Katharina",null,"wernerKurt","annemarieB"],
-["steffen","Steffen","Rath","","m","26.06.1974","","","Neffe von Katharina – 1. Sohn von Volker (1. Ehe)",[["anja","ehe","","1. Ehe von Steffen"],["claudiaH","partner","","2. Partnerin – keine Ehe"]],"volker","viola"],
-["anja","Anja","Rath","geb. Stickel","w","21.07.1975","","","1. Ehefrau von Neffen Steffen",null],
-["claudiaH","Claudia Hedwig","Nachname folgt","Claudia Hedwig","w","03.01.1974","","","2. Partnerin von Neffen Steffen – keine Ehe",null],
-["jannis","Jannis","Rath","","m","13.03.2009","","","Großneffe – Sohn von Steffen und Anja",null,"steffen","anja"],
-["jonas","Jonas","Rath","","m","23.09.2005","","","Großneffe – Sohn von Steffen und Anja",null,"steffen","anja"],
-["peer","Peer","Rath","","m","31.01.1979","","","Neffe von Katharina – 2. Sohn von Volker (1. Ehe)",[["judith","ehe","",""]],"volker","viola"],
-["judith","Judith","Rath","geb. Schmalz","w","07.08.1979","","","Ehefrau von Neffen Peer",null],
-["timo","Timo","Rath","","m","08.08.2018","","","Großneffe – Sohn von Peer und Judith",null,"peer","judith"],
-["louis","Louis","Rath","","m","22.03.2013","","","Großneffe – 2. Sohn von Peer und Judith",null,"peer","judith"],
-["michaelRath","Michael","Rath","geb. Schmidt","m","06.07.1975","","","Neffe von Katharina – leiblicher Sohn von Marianne, von Volker adoptiert (trägt seit der Heirat 18.10.1985 den Namen Rath)",[["daniela","ehe","",""]],"volker","marianne"],
-["daniela","Daniela","Rath","geb. Wahle","w","01.10.1975","","","Ehefrau von Neffen Michael",null],
-["jennifer","Jennifer","Rath","","w","03.08.2008","","","Großnichte – Tochter von Michael und Daniela",null,"michaelRath","daniela"],
-["oliver","Oliver","Rath","","m","30.11.2012","","","Großneffe – jüngster Sohn von Michael und Daniela",null,"michaelRath","daniela"],
-["stefanie","Stefanie","Rath","geb. Schmidt","w","12.02.1979","","","Nichte von Katharina – leibliche Tochter von Marianne, von Volker adoptiert (trägt seit der Heirat 18.10.1985 den Namen Rath)",[["matthis","ehe","",""]],"volker","marianne"],
-["matthis","Matthias","Neumann-Rath","geb. Neumann","m","25.04.1972","","","Ehemann von Nichte Stefanie",null],
-["elisabethR","Elisabeth","Rath","","w","23.12.2004","","","Großnichte – Tochter von Stefanie, Zwilling",null,"matthis","stefanie"],
-["dorotheaR","Dorothea","Rath","","w","23.12.2004","","","Großnichte – Tochter von Stefanie, Zwilling",null,"matthis","stefanie"],
-["linda","Linda","Rath","","w","19.08.1981","","","Nichte von Katharina",[["stefanGensch","getrennt","","getrennt lebend, verbunden durch Tochter Saana"]],"thomas","martina"],
-["stefanGensch","Stefan","Gensch","","m","unbekannt","","","Getrennt lebender Partner von Linda Rath – Vater von Saana",[["linda","getrennt","",""]]],
-["robin","Robin","Rath","","m","02.07.1984","","","Neffe von Katharina",null,"thomas","martina"],
-["lisa","Lisa Julanta","Rath","","w","05.06.1995","","","Nichte von Katharina – Tochter von Simone",null,"fitzner","simone"],
-["marco","Marco Thomas","Schütz","geb. Rath (Geburtenregister)","m","17.06.1983","","Potsdam","Sohn von Katharina – geboren, bevor seine Eltern heirateten · Registernummer 1592/1983",[["ulrike","ehe","",""]],"andreas","katharina"],
-["ulrike","Ulrike","Schütz","geb. Reimer","w","10.11.1981","","","Schwiegertochter – Frau von Marco",null,"wolfgangReimer","martinaReimer"],
-["sebastian","Sebastian","Reimer","","m","unbekannt","","","Bruder von Ulrike",null,"wolfgangReimer","martinaReimer"],
-["matthias","Matthias","Reimer","","m","unbekannt","","","Bruder von Ulrike",null,"wolfgangReimer","martinaReimer"],
-["nathalie","Nathalie Maria Katharina","Schütz-Zimmermann","geb. Schütz","w","19.05.1987","","Potsdam","Tochter von Katharina · Registernummer 1366/1987",[["steven","ehe","",""]],"andreas","katharina"],
-["steven","Steven","Zimmermann","geb. Rüdiger","m","13.08.1984","","","Schwiegersohn – leiblicher Sohn von Andrea, von Detlef Zimmermann adoptiert (trug bis zur Adoption den Geburtsnamen Rüdiger)",null,"stevenVater","andreaZimmermann"],
-["julia","Julia","Zimmermann","","w","21.12.1987","","","Schwester von Steven – Tochter von Andrea und Detlef",null,"detlef","andreaZimmermann"],
-["hannaZ","Hannah","Zimmermann","","w","24.03.2021","","","Tochter von Julia – Stevens Nichte",null,null,"julia"],
-["saana","Saana","Rath","","w","01.11.2019","","","Großnichte von Katharina – Tochter von Linda und Stefan Gensch",null,"stefanGensch","linda"],
-["cecilia","Cecilia","Rath","","w","03.12.2019","","","Großnichte von Katharina – Tochter von Robin",null,"robin",null],
-["skadi","Skadi Martina","Schütz","","w","23.04.2012","","Potsdam","Enkelin von Katharina",null,"marco","ulrike"],
-["nelly","Nelly Katharina","Schütz","","w","02.03.2015","","Potsdam","Enkelin von Katharina",null,"marco","ulrike"],
-["eleanor","Eleanor Elva Andrea","Zimmermann","","w","18.02.2017","","Potsdam","Enkelin von Katharina",null,"steven","nathalie"],
-["alaistair","Alaistair Meinhard","Zimmermann","","m","25.05.2020","","Potsdam","Enkel von Katharina",null,"steven","nathalie"]
+["beatrix","Beatrix","Tabbert","Tabbert","w","unbekannt","","","Cousine mütterlicherseits – jüngstes Kind von Jürgen",null,"juergen","waltraud"],
+["marionHauff","Marion","Hauff","Schütz","w","November 1964 (ungesichert)","","","Schwägerin – Schwester von Andreas · 2. Ehe: Walk",[["walk","ehe","","2. Ehe von Marion"]],"schuetzVater","schuetzMutter"],
+["walk","Bernd","Walk","Walk","m","unbekannt","","","2. Ehemann von Marion Hauff",null],
+["anitaWalk","Anita","Walk","Walk","w","unbekannt","","","Nichte von Katharina – Tochter von Schwägerin Marion (Schwester von Andreas)",null,"walk","marionHauff"],
+["stefanWalk","Stefan","Walk","Walk","m","unbekannt","","","Neffe von Katharina – Sohn von Schwägerin Marion (Schwester von Andreas)",null,"walk","marionHauff"],
+["thomasWalk","Thomas","Walk","Walk","m","unbekannt","","","Neffe von Katharina – jüngster Sohn von Schwägerin Marion",null,"walk","marionHauff"],
+["fitzner","Jörg Ulrich","Pfitzner","Pfitzner","m","08.04.1962","","","Partner von Simone – Vater von Lisa",null],
+["margit","Margit Annegret","Jürgensen","Buhl","w","30.09.1955","30.12.2025","","Cousine von Katharina",null,"wernerKurt","annemarieB"],
+["armin","Armin","Buhl","Buhl","m","04.09.1957","05.09.1957","","Cousin von Katharina – nur einen Tag alt geworden",null,"wernerKurt","annemarieB"],
+["karin","Karin Elke","Köhler","Buhl","w","29.03.1961","","","Cousine von Katharina – Tochter von Tante Annemarie",null,"wernerKurt","annemarieB"],
+["tanjaKoehler","Tanja Annika","Köhler","Köhler","w","04.09.1990","","","Nichte 2. Grades von Katharina – Tochter von Karin",null,null,"karin"],
+["ariKoehler","Ari Henry","Köhler","Köhler","m","08.12.2022","","","Enkelkind von Karin",null,null,"tanjaKoehler"],
+["romyKoehler","Romy Janina","Köhler","Köhler","w","03.05.2024","","","Enkelkind von Karin",null,null,"tanjaKoehler"],
+["janinaKoehler","Janina Christina","Köhler","Köhler","w","01.06.1995","","","Nichte 2. Grades von Katharina – Tochter von Karin",null,null,"karin"],
+["emmiKoehler","Emmi Tanja","Köhler","Köhler","w","19.09.2021","","","Enkelkind von Karin",null,null,"janinaKoehler"],
+["wernerO","Werner Ottmar","Buhl","Buhl","m","20.05.1968","","","Cousin von Katharina",null,"wernerKurt","annemarieB"],
+["steffen","Steffen","Rath","Rath","m","26.06.1975","","","Neffe von Katharina – 1. Sohn von Volker (1. Ehe)",[["anja","ehe","","1. Ehe von Steffen"],["claudiaH","partner","","2. Partnerin – keine Ehe"]],"volker","viola"],
+["anja","Anja","Rath","Stickel","w","21.07.1975","","","1. Ehefrau von Neffen Steffen",null],
+["claudiaH","Claudia Hedwig","Wirsching","Wirsching","w","03.01.1974","","","2. Partnerin von Neffen Steffen – keine Ehe",null],
+["jannis","Jannis","Rath","Rath","m","13.03.2009","","","Großneffe – Sohn von Steffen und Anja",null,"steffen","anja"],
+["jonas","Jonas","Rath","Rath","m","23.09.2005","","","Großneffe – Sohn von Steffen und Anja",null,"steffen","anja"],
+["peer","Peer","Rath","Rath","m","31.01.1979","","","Neffe von Katharina – 2. Sohn von Volker (1. Ehe)",[["judith","ehe","",""]],"volker","viola"],
+["judith","Judith","Rath","Schmalz","w","07.08.1979","","","Ehefrau von Neffen Peer",null],
+["timo","Timo","Rath","Rath","m","08.08.2018","","","Großneffe – Sohn von Peer und Judith",null,"peer","judith"],
+["louis","Louis","Rath","Rath","m","22.03.2013","","","Großneffe – 2. Sohn von Peer und Judith",null,"peer","judith"],
+["michaelRath","Michael","Rath","Schmidt","m","06.07.1975","","","Neffe von Katharina – leiblicher Sohn von Marianne, von Volker adoptiert (trägt seit der Heirat 18.10.1985 den Namen Rath)",[["daniela","ehe","",""]],"volker","marianne"],
+["daniela","Daniela","Rath","Wahle","w","01.10.1975","","","Ehefrau von Neffen Michael",null],
+["jennifer","Jennifer","Rath","Rath","w","03.08.2008","","","Großnichte – Tochter von Michael und Daniela",null,"michaelRath","daniela"],
+["oliver","Oliver","Rath","Rath","m","30.11.2012","","","Großneffe – jüngster Sohn von Michael und Daniela",null,"michaelRath","daniela"],
+["stefanie","Stefanie","Rath","Schmidt","w","12.02.1979","","","Nichte von Katharina – leibliche Tochter von Marianne, von Volker adoptiert (trägt seit der Heirat 18.10.1985 den Namen Rath)",[["matthis","ehe","",""]],"volker","marianne"],
+["matthis","Matthis","Neumann-Rath","Neumann","m","25.04.1972","","","Ehemann von Nichte Stefanie",null],
+["elisabethR","Elisabeth","Rath","Rath","w","23.12.2004","","","Großnichte – Tochter von Stefanie, Zwilling",null,"matthis","stefanie"],
+["dorotheaR","Dorothea","Rath","Rath","w","23.12.2004","","","Großnichte – Tochter von Stefanie, Zwilling",null,"matthis","stefanie"],
+["linda","Linda","Rath","Rath","w","19.08.1981","","","Nichte von Katharina",[["stefanGensch","getrennt","","getrennt lebend, verbunden durch Tochter Saana"]],"thomas","martina"],
+["stefanGensch","Stephan","Gensch","Gensch","m","unbekannt","","","Vater von Saana Rath · getrennt lebender Partner von Linda",[["linda","getrennt","",""]]],
+["robin","Robin","Rath","Rath","m","02.07.1984","","","Neffe von Katharina",null,"thomas","martina"],
+["lisa","Lisa Julanta","Rath","Rath","w","05.06.1995","","","Nichte von Katharina – Tochter von Simone",null,"fitzner","simone"],
+["marco","Marco Thomas","Schütz","Rath","m","17.06.1983","","Potsdam","Sohn von Katharina – geboren, bevor seine Eltern heirateten · Registernummer 1592/1983",[["ulrike","ehe","",""]],"andreas","katharina"],
+["ulrike","Ulrike","Schütz","Reimer","w","10.11.1981","","","Schwiegertochter – Frau von Marco",null,"wolfgangReimer","martinaReimer"],
+["sebastian","Sebastian","Reimer","Reimer","m","unbekannt","","","Bruder von Ulrike",null,"wolfgangReimer","martinaReimer"],
+["matthias","Matthias","Reimer","Reimer","m","unbekannt","","","Bruder von Ulrike",null,"wolfgangReimer","martinaReimer"],
+["nathalie","Nathalie Maria Katharina","Schütz-Zimmermann","Schütz","w","19.05.1987","","Potsdam","Tochter von Katharina · Registernummer 1366/1987",[["steven","ehe","",""]],"andreas","katharina"],
+["steven","Steven","Zimmermann","Rüdiger","m","13.08.1984","","","Schwiegersohn – leiblicher Sohn von Andrea, von Detlef Zimmermann adoptiert (trug bis zur Adoption den Geburtsnamen Rüdiger)",null,"stevenVater","andreaZimmermann"],
+["julia","Julia","Zimmermann","Zimmermann","w","21.12.1987","","","Schwester von Steven – Tochter von Andrea und Detlef",null,"detlef","andreaZimmermann"],
+["hannaZ","Hannah","Zimmermann","Zimmermann","w","24.03.2021","","","Tochter von Julia – Stevens Nichte",null,null,"julia"],
+["saana","Saana","Rath","Rath","w","01.11.2019","","","Großnichte von Katharina – Tochter von Linda und Stefan Gensch",null,"stefanGensch","linda"],
+["cecilia","Cecilia","Rath","Rath","w","03.12.2019","","","Großnichte von Katharina – Tochter von Robin",null,"robin",null],
+["skadi","Skadi Martina","Schütz","Schütz","w","23.04.2012","","Potsdam","Enkelin von Katharina",null,"marco","ulrike"],
+["nelly","Nelly Katharina","Schütz","Schütz","w","02.03.2015","","Potsdam","Enkelin von Katharina",null,"marco","ulrike"],
+["eleanor","Eleanor Elva Andrea","Zimmermann","Zimmermann","w","18.02.2017","","Potsdam","Enkelin von Katharina",null,"steven","nathalie"],
+["alaistair","Alaistair Meinhard","Zimmermann","Zimmermann","m","25.05.2020","","Potsdam","Enkel von Katharina",null,"steven","nathalie"]
 ];
 
 /* ---------- Storage ---------- */
 let DB=null;
-const DBV=4; /* Korrektur-Stand: Tabbert- und Wegner-Geschwister korrekt mit beiden Eltern verknüpft */
+const DBV=8; /* Korrektur-Stand: Köhler-Familie ergänzt, Stammdaten-Sync für neue Personen */
 function load(){try{DB=JSON.parse(localStorage.getItem('stammbaumDB')||'null')}catch(e){DB=null}
   if(!DB||!Array.isArray(DB.persons)){DB={persons:[]};seed()}
-  else{cleanDB();if(!DB.v||DB.v<DBV)migrate()}}
+  cleanDB();
+  if(!DB.v||DB.v<DBV)migrate()}
+/* Geburtsname normalisieren: nur der Name, kein „geb." / „geborene" davor */
+const normGn=s=>String(s||'').replace(/^\s*(geb\.?\s*|geborene\s+)+/i,'').trim();
 /* Fehlende Verknüpfungen in bestehenden Datenbanken nachziehen, ohne eigene Einträge zu verändern */
 function migrate(){
+  /* 0a. Geburtsnamen-Bereinigung: Personen, die ihren eigenen Nachnamen von Geburt an tragen */
+  const GNFIX={johannM:"Möller",elseM:"Möller",idaM:"Möller",anniM:"Möller",august:"Tabbert",ullaMann:"Ullmann",
+    karlMartin:"Rath",friedrichK:"Kalkbrenner",ottoW:"Wegner",wilhelm:"Tabbert",klaus:"Wegner",willi:"Wegner",
+    schuetzVater:"Schütz",wolfgangReimer:"Reimer",stevenVater:"Spiet",detlef:"Zimmermann",silvio:"Kämmer",
+    hannes:"Herter",juergen:"Tabbert",ingmar:"Wist",andreas:"Schütz",michaelSchuetz:"Schütz",markus:"Schütz",
+    christian:"Schütz",andreasT:"Tabbert",marcelK:"Krumrich",raik:"Tabbert",silke:"Tabbert",thoralf:"Tabbert",
+    beatrix:"Tabbert",walk:"Walk",anitaWalk:"Walk",stefanWalk:"Walk",thomasWalk:"Walk",fitzner:"Pfitzner",
+    armin:"Buhl",wernerKurt:"Buhl",wernerO:"Buhl",steffen:"Rath",jannis:"Rath",jonas:"Rath",peer:"Rath",
+    timo:"Rath",louis:"Rath",jennifer:"Rath",oliver:"Rath",elisabethR:"Rath",dorotheaR:"Rath",linda:"Rath",
+    stefanGensch:"Gensch",robin:"Rath",lisa:"Rath",matthias:"Reimer",julia:"Zimmermann",hannaZ:"Zimmermann",
+    saana:"Rath",cecilia:"Rath",skadi:"Schütz",nelly:"Schütz",eleanor:"Zimmermann",alaistair:"Zimmermann",
+    marco:"Rath",claudiaH:"Wirsching",helga:"Wegner",claudia:"Schütz"};
+  DB.persons.forEach(p=>{
+    if(p.id in GNFIX)p.gn=GNFIX[p.id];
+    /* Helga heißt mit Nachnamen Hageböck */
+    if(p.id==='helga')p.nn='Hageböck';
+    /* Claudia heißt mit Nachnamen Schnepp */
+    if(p.id==='claudia')p.nn='Schnepp';
+    /* Anni Avolin: Vorname Anni, Nachname Avolin, geborene Möller */
+    if(p.id==='anniM'){p.vn='Anni';p.nn='Avolin'}
+    /* Claudia Hedwig Wirsching: Nachname und Geburtsname nachtragen */
+    if(p.id==='claudiaH')p.nn='Wirsching';
+    /* Eva heißt Wirth (mit H) */
+    if(p.id==='eva')p.nn='Wirth';
+    /* Balow ohne R, Matthis ohne a */
+    if(p.id==='ingridBarlow'||p.id==='ingridBalow'){p.id='ingridBalow';p.nn='Balow'}
+    if(p.id==='sabineBarlow'||p.id==='sabineBalow'){p.id='sabineBalow';p.nn='Balow';if(p.mutter==='ingridBarlow')p.mutter='ingridBalow'}
+    if(p.id==='matthis')p.vn='Matthis';
+    DB.persons.forEach(x=>{if(x.mutter==='ingridBarlow')x.mutter='ingridBalow';if(x.ps)x.ps.forEach(r=>{if(r.p==='ingridBarlow')r.p='ingridBalow';if(r.p==='sabineBarlow')r.p='sabineBalow'})});
+    /* Steffen Rath: geboren am 26.06.1975 */
+    if(p.id==='steffen')p.geb='26.06.1975';
+    /* Silvio heißt Kämmer (mit Ä), Rüdiger heißt Spiet */
+    if(p.id==='silvio')p.nn='Kämmer';
+    if(p.id==='stevenVater')p.nn='Spiet';
+    /* Stephan Gensch: mit PH geschrieben */
+    if(p.id==='stefanGensch'){p.vn='Stephan';p.note='Vater von Saana Rath · getrennt lebender Partner von Linda'}
+    /* Bernd Walk: Vorname nachtragen, wenn er noch fehlt */
+    if(p.id==='walk'&&!p.vn)p.vn='Bernd'});
+  /* 0b. Geburtsnamen ohne „geb."-Vorsatz speichern */
+  DB.persons.forEach(p=>{if(p.gn)p.gn=normGn(p.gn)});
+  /* 0c. Neue Stammdaten ergänzen, die auf dem Gerät noch fehlen (keine Dubletten bei gleichem Namen) */
+  SEED.forEach(s=>{const [id,vn,nn,gn,g,geb,gest,ort,note,ps,v,m]=s;
+    if(!DB.persons.some(p=>p.id===id||(p.vn===vn&&p.nn===nn))){
+      const psArr=(ps&&Array.isArray(ps[0]))?ps:(ps?[ps]:[]);
+      DB.persons.push({id:id,vn:vn||'',nn:nn||'',gn:gn||'',g:g||'w',geb:geb||'',gest:gest||'',ort:ort||'',note:note||'',
+        vater:v||null,mutter:m||null,
+        ps:psArr.filter(p=>DB.persons.some(x=>x.id===p[0])||SEED.some(s2=>s2[0]===p[0]))
+                .map(p=>({p:p[0],t:p[1]||'ehe',h:p[2]||'',l:p[3]||''}))})}});
   const find=(vn,nn,geb)=>DB.persons.find(p=>p.vn===vn&&p.nn===nn&&(!geb||p.geb===geb));
   /* 1b. Wegner-Kinder aus Huldas 2. Ehe: Vater Otto Wegner, Mutter Hulda nachtragen */
   const o=find('Otto','Wegner');
@@ -433,7 +500,6 @@ function migrate(){
       if(!w.vater)w.vater=a.id;
       if(!w.mutter)w.mutter=e.id}});
     const w=DB.persons.find(p=>p.nn==='Tabbert'&&p.vn==='Wilhelm');
-    if(w&&w.geb==='Januar 1908')w.geb='Januar 1904 oder 1908 (Datum folgt)';
     if(w&&!w.ort)w.ort='Kölzig'}
   /* 2. Geschwister-Link Else Möller ↔ Johann Möller sicherstellen */
   const j=DB.persons.find(p=>p.nn==='Möller'&&/Johann Ludwig/.test(p.vn||''));
@@ -528,6 +594,17 @@ function toggleBundle(){document.getElementById('emblem').classList.toggle('on')
 
 /* ---------- Datenbank-Liste ---------- */
 let curLetter='';
+/* Sortier-Filter: Name ⇅ · Geburtsname ⇅ · Geboren ⇅ (antippen wechselt die Sortierung) */
+let sortKey='name',sortDir=1;
+function sortVal(p){if(sortKey==='gn')return(p.gn||'');if(sortKey==='geb')return(p.geb||'');return nameOf(p)}
+/* Geburtsdatum chronologisch sortieren: nach Jahr, Monat, Tag – Unbekannte ans Ende */
+function gebKey(p){const s=String(p.geb||'');
+  const m=s.match(/(\d{1,2})\.(\d{1,2})\.(\d{4})/);
+  if(m)return (+m[3])*10000+(+m[2])*100+(+m[1]);
+  const y=s.match(/(\d{4})/);
+  if(y)return (+y[1])*10000+5000; /* nur Jahrgang bekannt: Mitte des Jahres */
+  return 9e9}
+function setSort(k){if(sortKey===k)sortDir*=-1;else{sortKey=k;sortDir=1}renderList()}
 (function(){const L=document.getElementById('letters');
   ['*','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'].forEach(x=>{
     const b=document.createElement('button');b.textContent=x==='*'?'Alle':x;
@@ -545,11 +622,15 @@ function renderList(){
   let a=[...DB.persons];
   if(curLetter)a=a.filter(p=>(nameOf(p)||'').toUpperCase().startsWith(curLetter)||(p.gn||'').toUpperCase().startsWith(curLetter));
   if(q)a=a.filter(p=>(nameOf(p)+' '+(p.gn||'')+' '+(p.note||'')).toLowerCase().includes(q));
-  a.sort((x,y)=>nameOf(x).localeCompare(nameOf(y),'de'));
+  a.sort((x,y)=>{
+    if(sortKey==='geb'){const d=gebKey(x)-gebKey(y);
+      if(d)return d*sortDir;
+      return nameOf(x).localeCompare(nameOf(y),'de')}
+    return sortVal(x).localeCompare(sortVal(y),'de')*sortDir});
   const tb=document.getElementById('tbody');tb.innerHTML='';
   a.forEach(p=>{
     const tr=document.createElement('tr');
-    tr.innerHTML=`<td><strong>${esc(nameOf(p))}</strong>${p.gest?' ✝':''}</td><td>${esc(p.gn)}</td><td>${esc(p.geb)}</td><td>${esc(p.note)}</td>`;
+    tr.innerHTML=`<td><strong>${esc(nameOf(p))}</strong>${p.gest?' ✝':''}</td><td>${p.gn?'geb. '+esc(p.gn):''}</td><td>${esc(p.geb)}</td>`;
     tr.onclick=()=>select(p.id);
     tb.appendChild(tr)});
   document.getElementById('count').textContent=a.length+' von '+DB.persons.length+' Personen';
@@ -570,7 +651,21 @@ function renderStats(){
     <div class="statbox"><div class="n">${verstorben}</div><div class="l">✝ verstorben</div></div>
     <div class="statbox"><div class="n">${withParents}</div><div class="l">mit Eltern verknüpft</div></div></div>`;
   document.getElementById('stats').innerHTML=html;
-  const cs=document.getElementById('coverStats');if(cs)cs.innerHTML=html}
+  const cs=document.getElementById('coverStats');if(cs)cs.innerHTML=html;
+  renderNameStats()}
+/* Namens-Statistik: die Familienlinien als kleine Balken */
+function renderNameStats(){
+  const counts={};
+  DB.persons.forEach(p=>{String(p.nn||'').trim().split(/-|\s/).forEach(n=>{n=n.trim();
+    if(n&&n.length>2&&n!=='Nachname'&&n!=='folgt')counts[n]=(counts[n]||0)+1})});
+  const arr=Object.entries(counts).sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0],'de'));
+  const max=arr.length?arr[0][1]:1;
+  const el=document.getElementById('namestats');
+  if(!el)return;
+  el.innerHTML='<div class="nstitle">👥 Die Familienlinien</div>'
+    +arr.map(([n,c])=>`<div class="nsrow"><span class="nsname">${esc(n)}</span>`
+      +`<span class="nsbar"><span style="width:${Math.round(c/max*100)}%"></span></span>`
+      +`<span class="nscount">${c}</span></div>`).join('')}
 
 /* ---------- Formular ---------- */
 let editId=null,pChips=[];
@@ -628,7 +723,7 @@ function saveEntry(){
   if(!nn){chime('Bitte mindestens den Nachnamen ausfüllen.',false);return}
   let p=editId?byId(editId):null;
   if(!p){p={id:pid(),vn:'',nn:'',gn:'',g:'w',geb:'',gest:'',ort:'',note:'',vater:null,mutter:null,ps:[]};DB.persons.push(p)}
-  p.vn=vn;p.nn=nn;p.gn=document.getElementById('iGn').value.trim();
+  p.vn=vn;p.nn=nn;p.gn=normGn(document.getElementById('iGn').value.trim());
   p.g=document.getElementById('iG').value;
   p.geb=document.getElementById('iGeb').value.trim();p.gest=document.getElementById('iGest').value.trim();
   p.ort=document.getElementById('iOrt').value.trim();p.note=document.getElementById('iNote').value.trim();
@@ -661,7 +756,7 @@ function cardHTML(id,big){
   if(ks.length)desc+='↓ '+(p.g==='m'?'Vater':'Mutter')+' von '+ks.map(k=>nameOf(byId(k)).split(' ')[0]).join(', ');
   return `<div class="pcard${big?' big':''}" onclick="select('${id}')">`
     +`<div class="cat">${esc(p.note)}</div>`
-    +`<div class="name">${esc(nameOf(p))}${p.gn?`<span class="gebname">${esc(p.gn)}</span>`:''}</div>`
+    +`<div class="name">${esc(nameOf(p))}${p.gn?`<span class="gebname">geb. ${esc(p.gn)}</span>`:''}</div>`
     +`<div class="meta">geb. ${esc(p.geb)}${p.ort?' · '+esc(p.ort):''}${p.gest?'<br/>✝ '+esc(p.gest):''}</div>`
     +(desc?`<div class="desc">${desc}</div>`:'')
     +'</div>'}
@@ -737,7 +832,7 @@ function importCSV(inp){
       if(p.length<2||!p[1])return;
       const id=ensurePerson(p[0]+' '+p[1]);
       const per=byId(id);
-      if(p[2])per.gn=p[2];
+      if(p[2])per.gn=normGn(p[2]);
       if(p[3])per.g=p[3].toLowerCase().startsWith('m')?'m':'w';
       if(p[4])per.geb=p[4];if(p[5])per.gest=p[5];if(p[6])per.ort=p[6];
       if(p[11])per.note=p[11];
