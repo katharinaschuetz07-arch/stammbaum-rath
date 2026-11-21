@@ -3,34 +3,75 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Der Stammbaum unserer Familie · Interaktiv</title>
+<title>Datenbank der Familie</title>
+<meta name="author" content="Katharina Schütz">
+<meta name="robots" content="noindex, nofollow">
 <style>
 :root{--navy:#012169;--red:#d31334;--cream:#faf6ee;--ink:#1c2333;--line:#e5dcc8;--gold:#b08d3f}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:Georgia,'Times New Roman',serif;background:var(--cream);color:var(--ink)}
-header{position:sticky;top:0;z-index:30;background:linear-gradient(180deg,var(--navy),#0a2a7d);color:#fff;padding:12px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.25);border-bottom:3px solid var(--red)}
-header h1{font-size:1rem}
-header .sub{font-size:.68rem;opacity:.85;font-style:italic;margin-top:3px}
-nav{display:flex;gap:6px;justify-content:center;margin-top:8px;flex-wrap:wrap}
-nav button{font-family:inherit;font-size:.7rem;padding:5px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.4);background:rgba(255,255,255,.08);color:#fff;cursor:pointer}
+header{position:sticky;top:0;z-index:30;background:linear-gradient(180deg,var(--navy),#0a2a7d);color:#fff;padding:12px 12px 10px;box-shadow:0 2px 10px rgba(0,0,0,.25);border-bottom:3px solid var(--red)}
+header h1{font-size:1rem;text-align:center}
+header .sub{font-size:.66rem;opacity:.85;font-style:italic;text-align:center;margin-top:3px}
+nav{display:flex;gap:6px;justify-content:center;margin-top:9px;flex-wrap:wrap}
+nav button{font-family:inherit;font-size:.68rem;padding:6px 11px;border-radius:999px;border:1px solid rgba(255,255,255,.4);background:rgba(255,255,255,.08);color:#fff;cursor:pointer}
 nav button.on{background:#fff;color:var(--navy);border-color:#fff}
-main{max-width:820px;margin:0 auto;padding:14px 10px 60px}
-.view{display:none}.view.on{display:block}
+main{max-width:820px;margin:0 auto;padding:14px 10px 50px}
+.view{display:none}.view.on{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 .card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
 h3{color:var(--navy);margin-bottom:8px;font-size:1rem}
-input{width:100%;font-family:inherit;font-size:.85rem;padding:8px;border:1px solid #ccc9bd;border-radius:8px}
-.plist .prow{display:flex;justify-content:space-between;gap:10px;padding:7px 8px;border-bottom:1px solid var(--line);cursor:pointer;border-radius:6px}
+input,select{width:100%;font-family:inherit;font-size:.85rem;padding:8px;border:1px solid #ccc9bd;border-radius:8px;background:#fffdf8}
+.filters{display:flex;gap:8px;flex-wrap:wrap}
+.filters input{flex:2;min-width:140px}
+.filters select{flex:1;min-width:150px}
+.letters{display:flex;flex-wrap:wrap;gap:2px;margin:8px 0}
+.letters button{font-family:inherit;min-width:26px;height:26px;border-radius:7px;border:1px solid var(--line);background:#fff;cursor:pointer;font-size:.68rem}
+.letters button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.trow{padding:9px 8px;border-bottom:1px solid var(--line);cursor:pointer;border-radius:6px}
+.trow:hover{background:#f6f0e2}
+.trow .nm{font-weight:bold;color:var(--navy)}
+.trow .zz{font-size:.72rem;color:#555}
+.trow .rg{font-size:.68rem;color:#8a8273;font-style:italic}
+.badge{display:inline-block;font-size:.58rem;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:2px 8px;margin-left:6px;color:#fff}
+.b-ger{background:#b08d3f}.b-sla{background:#1a7a3c}.b-kel{background:#7a4f9e}.b-bal{background:#2b7a9e}.b-vor{background:#666}
+.count{font-size:.72rem;color:#888;text-align:right;margin-top:6px}
+.hint{font-size:.72rem;color:#999;text-align:center;margin-top:8px}
+.regions{margin-top:12px;border-top:2px solid var(--line);padding-top:10px}
+.regions .rt{font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);text-align:center;margin-bottom:8px}
+.reggrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.regcard{border-radius:10px;padding:10px 11px;border:1px solid var(--line);background:#fffdf8}
+.regcard .re{font-size:1.1rem}
+.regcard .rn{font-weight:bold;font-size:.76rem;margin:2px 0 4px;line-height:1.25}
+.regcard .rc{font-size:.7rem;line-height:1.7}
+.regcard .rc span{display:inline-block;background:#eee7d6;border:1px solid #d9cfb4;border-radius:999px;padding:2px 8px;margin:1px 2px 1px 0;font-size:.66rem;color:var(--ink);cursor:pointer}
+.regcard .rc span:hover{background:var(--navy);color:#fff}
+.reg-meck{border-left:4px solid #1a7a3c}.reg-ruegen{border-left:4px solid #d31334}
+.reg-ucker{border-left:4px solid #b08d3f}.reg-posen{border-left:4px solid #7a4f9e}
+.reg-nrw{border-left:4px solid #2b7a9e}.reg-thuer{border-left:4px solid #8a2b5e}
+/* Vollbild-Datenblatt */
+.dhead{text-align:center;margin-bottom:12px}
+.dhead .dt{font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+.dcard{background:#fff;border:1px solid var(--line);border-top:5px solid var(--red);border-radius:12px;padding:18px;margin:0 auto;max-width:640px;box-shadow:0 6px 22px rgba(0,0,0,.08)}
+.dcard h2{color:var(--navy);font-size:1.35rem;margin-bottom:2px}
+.dcard .cat{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:#8a8273;margin-bottom:12px}
+.field{margin:12px 0}
+.field .fl{font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:2px}
+.field .fv{font-size:.86rem;line-height:1.55}
+.field .fv a{color:var(--red)}
+.backrow{text-align:center;margin-top:16px}
+button.btn{font-family:inherit;font-size:.78rem;padding:8px 16px;border-radius:999px;border:1px solid var(--navy);background:#fff;color:var(--navy);cursor:pointer;margin:2px}
+button.btn.red{background:var(--red);border-color:var(--red);color:#fff}
+/* Ahnen-App */
+.plist .prow{display:flex;justify-content:space-between;gap:10px;padding:8px;border-bottom:1px solid var(--line);cursor:pointer;border-radius:6px}
 .plist .prow:hover{background:#f6f0e2}
 .plist .nm{font-weight:bold;color:var(--navy)}
 .plist .meta{font-size:.72rem;color:#777}
-.focuslabel{text-align:center;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin:2px 0 8px}
 .rowlabel{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:#8a8273;margin:16px 0 6px;border-bottom:1px dashed var(--line);padding-bottom:3px}
 .row{display:flex;flex-wrap:wrap;gap:8px}
 .pcard{background:#fff;border:1px solid var(--line);border-left:4px solid var(--navy);border-radius:10px;padding:9px 11px;box-shadow:0 2px 6px rgba(0,0,0,.05);cursor:pointer;transition:all .15s;flex:1;min-width:150px;max-width:240px}
 .pcard:hover{border-color:var(--navy);transform:translateY(-2px)}
 .pcard.big{max-width:420px;margin:0 auto;border-left:5px solid var(--red);text-align:center}
-.pcard.fem{border-left-color:var(--red)}
-.pcard.big.fem{border-left-color:var(--navy)}
 .pcard .name{font-weight:bold;color:var(--navy);font-size:.9rem}
 .pcard.big .name{font-size:1.1rem}
 .pcard .gebname{display:block;font-weight:normal;font-size:.7rem;color:#8a8273;font-style:italic}
@@ -39,108 +80,397 @@ input{width:100%;font-family:inherit;font-size:.85rem;padding:8px;border:1px sol
 .sep{align-self:center;color:#c9bfa5}
 .orig{background:#fdf8ea;border:1px solid var(--gold);border-radius:10px;padding:10px 12px;margin-top:16px;font-size:.75rem;line-height:1.55}
 .orig .ot{font-weight:bold;color:var(--gold);letter-spacing:.1em;text-transform:uppercase;font-size:.64rem;margin-bottom:4px}
-.orig a{color:var(--red)}
-.hint{font-size:.74rem;color:#999;text-align:center;margin-top:6px}
-.backrow{text-align:center;margin-top:16px}
-button.btn{font-family:inherit;font-size:.8rem;padding:8px 16px;border-radius:999px;border:1px solid var(--navy);background:#fff;color:var(--navy);cursor:pointer;margin:2px}
-button.btn.red{background:var(--red);border-color:var(--red);color:#fff}
-.overlay{display:none;position:fixed;inset:0;background:rgba(20,25,45,.55);z-index:50;align-items:flex-start;justify-content:center;padding:30px 14px;overflow:auto}
-.overlay.on{display:flex}
-.modal{background:#faf6ee;border-radius:14px;max-width:640px;width:100%;padding:22px;box-shadow:0 12px 40px rgba(0,0,0,.3);border-top:5px solid #b08d3f}
-.modal h3{margin-bottom:10px}
-.modal p{font-size:.85rem;margin-bottom:8px}
-.flink{background:none;border:none;color:#012169;text-decoration:underline;cursor:pointer;font-family:inherit;font-size:.76rem;padding:0}
-.azb{background:#faf6ee;border:1px solid #e5dcc8;border-radius:6px;color:#012169;font-weight:700;font-size:.78rem;padding:4px 8px;cursor:pointer;font-family:inherit}
-.azb.on{background:#012169;color:#fff;border-color:#012169}
-.frow{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px}
-.fbundle{background:none;border:none;color:#012169;font-family:inherit;font-weight:bold;font-size:.74rem;letter-spacing:.14em;cursor:pointer;padding:0}
-.fcopy{text-align:center;font-size:.72rem;color:#777;padding:0 0 14px}
-.emblem{position:fixed;bottom:100px;left:50%;transform:translate(-50%,20px) scale(.9);opacity:0;pointer-events:none;z-index:60;background:#012169;color:#fff;border-radius:14px;padding:16px 42px;text-align:center;min-width:300px;box-shadow:0 12px 34px rgba(0,0,0,.35);transition:all .4s cubic-bezier(.34,1.4,.5,1)}
+.tl{border-left:3px solid var(--navy);margin:8px 0 8px 4px;padding:6px 0 6px 14px;cursor:pointer}
+.tl:active{background:rgba(176,141,63,.12)}
+.tl .more{font-size:.68rem;color:var(--navy);margin-top:3px;font-weight:bold}
+.tl .yr{font-weight:bold;color:var(--red);font-size:.8rem}
+.tl .tx{font-size:.78rem;line-height:1.5;color:#333}
+.ncard{border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:10px;padding:10px 12px;margin-bottom:10px;background:#fffdf8}
+.ncard h4{color:var(--navy);font-size:.95rem}
+.ncard .meta{font-size:.66rem;color:#8a8273;margin:2px 0 6px}
+.ncard .txt{font-size:.78rem;line-height:1.55}
+.ncard .src{font-size:.64rem;color:#999;margin-top:5px;font-style:italic}
+.ncard a{color:var(--red)}
+footer{max-width:820px;margin:0 auto;padding:10px 10px 26px;text-align:center;color:#8a8273;border-top:1px solid var(--line)}
+.frow{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.flink{background:none;border:none;color:var(--navy);text-decoration:underline;cursor:pointer;font-family:inherit;font-size:.76rem;padding:0}
+.fbundle{background:none;border:none;color:var(--navy);font-family:inherit;font-weight:bold;font-size:.74rem;letter-spacing:.14em;cursor:pointer;padding:0}
+.fcopy{font-size:.66rem;color:#a39b87;margin-top:6px}
+.emblem{position:fixed;bottom:100px;left:50%;transform:translate(-50%,20px) scale(.9);opacity:0;pointer-events:none;z-index:60;background:var(--navy);color:#fff;border-radius:14px;padding:16px 42px;text-align:center;min-width:300px;box-shadow:0 12px 34px rgba(0,0,0,.35);transition:all .4s cubic-bezier(.34,1.4,.5,1)}
 .emblem.on{opacity:1;pointer-events:auto;transform:translate(-50%,0) scale(1)}
 .emblem-word{font-weight:bold;font-size:1.12rem;letter-spacing:.12em}
 .emblem-studio{font-size:.68rem;letter-spacing:.16em;white-space:nowrap;margin-top:3px;opacity:.95}
 .emblem-methode{font-size:.6rem;letter-spacing:.08em;margin-top:6px;opacity:.85;white-space:nowrap}
+.overlay{display:none;position:fixed;inset:0;background:rgba(20,25,45,.55);z-index:50;align-items:flex-start;justify-content:center;padding:30px 14px;overflow:auto}
+.overlay.on{display:flex}
+.modal{background:var(--cream);border-radius:14px;max-width:640px;width:100%;padding:22px;box-shadow:0 12px 40px rgba(0,0,0,.3);border-top:5px solid var(--red)}
+.modal h3{color:var(--navy);margin-bottom:10px}
+.modal p{font-size:.85rem;margin-bottom:8px}
+/* Deckblatt */
+#cover{position:fixed;inset:0;z-index:90;background:linear-gradient(180deg,#012169 0%,#0a2a7d 55%,#012169 100%);display:flex;align-items:center;justify-content:center;text-align:center;cursor:pointer;color:#fff;overflow:auto;padding:26px 18px}
+.cv-in{max-width:560px;animation:cv 1.1s ease}
+@keyframes cv{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.cv-top{font-size:.62rem;letter-spacing:.34em;text-transform:uppercase;color:#b08d3f;margin-bottom:16px}
+.cv-title{font-size:2rem;font-weight:bold;letter-spacing:.04em;line-height:1.2}
+.cv-sub{font-size:.85rem;font-style:italic;opacity:.85;margin-top:8px}
+.cv-sec{font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:#b08d3f;margin:20px 0 10px;border-top:1px solid rgba(176,141,63,.45);padding-top:16px}
+.cv-names{font-size:.82rem;line-height:2.05;color:#faf6ee}
+.cv-names b{color:#fff;font-weight:bold}
+.cv-open{display:inline-block;margin-top:24px;font-size:.8rem;border:1px solid rgba(255,255,255,.5);border-radius:999px;padding:9px 22px;background:rgba(255,255,255,.08)}
+.cv-copy{font-size:.6rem;opacity:.6;margin-top:18px}
+.speakrow{display:flex;gap:8px;flex-wrap:wrap}
+
+.azb{background:#faf6ee;border:1px solid #e5dcc8;border-radius:6px;color:#012169;font-weight:700;font-size:.78rem;padding:4px 8px;cursor:pointer;font-family:inherit}
+.azb.on{background:#012169;color:#fff;border-color:#012169}
 </style>
 </head>
 <body>
 <header>
-  <div><h1>🌳 Der Stammbaum unserer Familie · Interaktiv</h1>
-  <div class="sub">Version 4.3.1 · Alle Personen · Germanische Stämme · Namensherkunft · alle 161 Personen ab 1869</div></div>
+  <div onclick="showCover()" style="cursor:pointer" title="Zum Deckblatt"><h1>🏛️ Von den Germanen des Tacitus bis zu den Slawen Mecklenburgs</h1>
+  <div class="sub">Version 3.3.4</div></div>
   <nav>
-    <button id="nav-list" class="on" onclick="showView('list')">📇 Alle Personen</button>
-    <button id="nav-stamm" onclick="showView('stamm')">🛡️ Germanische Stämme</button>
-    <button id="nav-namen" onclick="showView('namen')">📖 Namensherkunft</button>
+    <button data-nav="staemme" class="on" onclick="go('staemme')">📇 Stämme</button>
+    <button data-nav="roemer" onclick="go('roemer')">🦅 Römer-Zeitleiste</button>
+    <button data-nav="namen" onclick="go('namen')">📖 Familiennamen</button>
+    <button data-nav="ahnen" onclick="go('ahnen')">🌳 Ahnen-Datenbank</button>
+    <button onclick="showCover()" title="Zurück zum Deckblatt">✦ Deckblatt</button>
   </nav>
 </header>
 <main>
-<section id="list" class="view on">
+<section id="staemme" class="view on">
   <div class="card">
-    <h3>📇 Deine Familien-Datenbank</h3>
-    <input id="search" placeholder="🔍 Namen suchen …" oninput="renderList()">
-    <div id="azbar" style="display:flex;flex-wrap:wrap;gap:4px;margin-top:8px"></div>
-    <div id="tbody" class="plist" style="margin-top:8px"></div>
-    <div class="hint" style="margin-top:6px;text-align:left">Alle Personen alphabetisch von A bis Z sortiert – Antippen zeigt die ganze Verzweigung.</div>
-    <div class="hint">Jede Person antippen zeigt Eltern, Großeltern, Partner, Kinder, Enkel, Geschwister – und ihre Stammes-Wurzeln.</div>
+    <h3>📇 Alle Stämme – suchen oder auswählen</h3>
+    <div class="filters">
+      <input id="search" placeholder="🔍 Stamm suchen …" oninput="renderList()">
+      <select id="picker" onchange="if(this.value)selectTribe(this.value)"><option value="">📖 Aus Liste auswählen …</option></select>
+    </div>
+    <div class="letters" id="letters"></div>
+    <div id="tlist"></div>
+    <div class="count" id="count"></div>
+    <div class="hint">Tippe einen Stamm an – das Datenblatt öffnet sich über den ganzen Bildschirm.</div>
   </div>
-  <div class="card"><h3>📊 Statistik deiner Familie</h3><div id="statbox"></div>
-  <div class="hint">Alle Zahlen werden live aus der Datenbank berechnet – sie stimmen immer mit dem Stand der Datei überein.</div></div>
-</section>
-<section id="personview" class="view">
-  <div id="panel"></div>
-</section>
-<section id="stamm" class="view">
   <div class="card">
-    <h3>🛡️ Germanische Stämme – die Völker in den Herkunftsregionen</h3>
-    <div class="hint" style="text-align:left">Unsere Familien stammen aus Gegenden, in denen diese germanischen und slawischen Stämme einst siedelten. Ob wir direkt von ihnen abstammen, lässt sich wegen der Völkerwanderung und der späteren Besiedlungsgeschichte nicht sicher sagen – sicher sind nur die Regionen, aus denen unsere Familien kommen.</div>
-    <div class="orig" style="margin-top:6px"><div class="ot">Die Zirzipanen</div>
-    Die Familien <b>Rath</b> (aus Teterow) und <b>Möller</b> (aus Neu Wokern) kommen aus dem Land der <b>Zirzipanen</b>: Der slawische Stamm („um die Peene") siedelte vom 7. bis 12. Jahrhundert genau um den <b>Teterower See</b> – Demmin, Dargun, Malchin, Alt-Kalen. Erwähnt 955 in den St. Galler Annalen, im Wendenkreuzzug 1147 fast ausgerottet, Reste assimiliert. <a href="https://de.wikipedia.org/wiki/Zirzipanen" target="_blank" rel="noopener">Wikipedia: Zirzipanen</a></div>
-    <div class="orig"><div class="ot">Die Burgunder, Leubuzzi & Polanen</div>
-    Mütterlicherseits die Familien <b>Ziebarth, Kalkbrenner und Tabbert</b> – alle aus der ehemaligen <b>Provinz Posen</b>: Rogasen und Woldenberg (Ziebarth, Kalkbrenner), Kölzig und <b>Arnswalde</b> (heute Choszczno) (Tabbert). Diese Gegend an mittlerer Oder und Warthe war bis zum großen Wandern im 5. Jahrhundert <b>Siedlungsland der Burgunder</b> – sie zogen an den Rhein nach Worms, ihr Untergang 437 durch die Hunnen wurde im <b>Nibelungenlied</b> verewigt. Später, nachdem die Slawen eingewandert waren, lag diese Gegend genau an der Grenze zwischen dem Land der <b>Leubuzzi</b> (um Lebus an der Oder) und dem Land der <b>Polanen</b> (um Posen). <a href="https://de.wikipedia.org/wiki/Arnswalde" target="_blank" rel="noopener">Wikipedia: Arnswalde</a></div>
-    <div class="orig"><div class="ot">Die Ubier, Cherusker & Franken</div>
-    Die Buhl-Linie aus <b>Hilden bei Düsseldorf</b>: Land der <b>Ubier</b> (Gründerstamm Kölns), nördlich die <b>Cherusker</b> des Arminius/Hermann (Varusschlacht 9 n. Chr., Hermannsdenkmal bei Detmold), später Land der <b>ripuarischen Franken</b>.</div>
-    <div class="orig"><div class="ot">Die Abodriten (Obodriten)</div>
-    Zarrentin am Schaalsee – slawisch „Zarnethin“, der „Ort des Schwarzen“ – lag im Kernland der mächtigsten elbslawischen Stammes, der <b>Abodriten</b>. Sie gaben Mecklenburg den Namen („große Burg“); ihr Fürst Niklot ist Stammvater der Mecklenburger Dynastie, die bis 1918 regierte. Hier wurde dein Großvater <b>Karl Martin Heinrich Friedrich Rath</b> geboren (23.09.1904, Geburtsregister Nr. 59) – die Rath-Wiege stand also im Abodriten-Land, direkt neben dem Zirzipanen-Land um Teterow. <a href="https://de.wikipedia.org/wiki/Abodriten" target="_blank" rel="noopener">Wikipedia: Abodriten</a></div>
-    <div class="orig"><div class="ot">Die Hermunduren → Thüringer</div>
-    Die Schütz-Linie aus Thüringen: Dein Schwiegervater <b>Kurt Werner Schütz</b> wurde im Land der <b>Hermunduren</b> geboren (Annemarie: das Herzberger Land), aus denen im 3./4. Jahrhundert die <b>Thüringer</b> hervorgingen – einer von vier germanischen Stämmen, deren Namen als Bundesland überlebt hat (neben Sachsen, Hessen aus den Chatten und Bayern aus den Bajuwaren). Um 400 errichteten die Thüringer ein eigenes Königreich, das 531 von Franken und Sachsen zerschlagen wurde. <a href="https://de.wikipedia.org/wiki/Thüringer" target="_blank" rel="noopener">Wikipedia: Thüringer</a></div>
-    <div class="orig"><div class="ot">Quellen zu den Stämmen</div>
-    Tacitus, <i>Germania</i> (98 n. Chr.) · Ptolemäus, <i>Geographike</i> · Helmold von Bosau, <i>Slawenchronik</i> (ca. 1170) · Adam von Bremen · Thietmar von Merseburg · St. Galler Annalen</div>
+    <div class="regions"><div class="rt">⭐ Deine Stämme nach Region · einfach antippen</div>
+      <div class="reggrid">
+        <div class="regcard reg-meck"><div class="re">🌾</div><div class="rn">Mecklenburg (Teterow)</div>
+          <div class="rc"><span onclick="selectTribe('zirzipanen')">Zirzipanen ⭐</span><span onclick="selectTribe('abodriten')">Abodriten</span><span onclick="selectTribe('warnower')">Warnower</span><span onclick="selectTribe('lutizen')">Lutizen</span></div></div>
+        <div class="regcard reg-ruegen"><div class="re">🏝️</div><div class="rn">Rügen &amp; Küste</div>
+          <div class="rc"><span onclick="selectTribe('rujanen')">Rujanen · Swantewit bei Kap Arkona 🛕</span><span onclick="selectTribe('rugier')">Rugier („Rugana")</span><span onclick="selectTribe('woliner')">Woliner · Vineta</span></div></div>
+        <div class="regcard reg-ucker"><div class="re">🌲</div><div class="rn">Uckermark &amp; Brandenburg</div>
+          <div class="rc"><span onclick="selectTribe('ukranen')">Ukranen</span><span onclick="selectTribe('heveller')">Heveller</span><span onclick="selectTribe('semnonen')">Semnonen</span></div></div>
+        <div class="regcard reg-posen"><div class="re">🟣</div><div class="rn">Neumark &amp; Provinz Posen</div>
+          <div class="rc"><span onclick="selectTribe('leubuzzi')">Leubuzzi</span><span onclick="selectTribe('polanen')">Polanen</span><span onclick="selectTribe('burgunder')">Burgunder ⚔️ Nibelungenlied</span></div></div>
+        <div class="regcard reg-nrw"><div class="re">⛲</div><div class="rn">NRW (Hilden)</div>
+          <div class="rc"><span onclick="selectTribe('ubier')">Ubier</span><span onclick="selectTribe('cherusker')">Cherusker · Hermann ⭐</span><span onclick="selectTribe('brukterer')">Brukterer</span><span onclick="selectTribe('marsen')">Marsen</span></div></div>
+        <div class="regcard reg-thuer"><div class="re">🏛️</div><div class="rn">Thüringen (Kurt Schütz)</div>
+          <div class="rc"><span onclick="selectTribe('thueringer')">Thüringer ⭐</span><span onclick="selectTribe('hermunduren')">Hermunduren</span></div></div>
+      </div>
+    </div>
   </div>
 </section>
+<section id="roemer" class="view">
+  <div class="card">
+    <h3>🦅 Wann die Römer kamen – Zeitleiste</h3>
+    <p style="font-size:.75rem;color:#666;margin-bottom:10px">Antippen öffnet die ganze Epoche als Lernkarte: mehr Hintergrund, und wer zu dieser Zeit in Rom das Sagen hatte. Mit 🔊 wird die Karte vorgelesen, mit ⏹ gestoppt.</p>
+    <div class="tl" onclick="showEra(0)"><div class="yr">58–51 v. Chr.</div><div class="tx"><b>Cäsar erobert Gallien</b> – Rom rückt an den Rhein. Kämpfe gegen Usipeter und Tenkterer (55 v. Chr.).</div><div class="more">👆 Epoche öffnen · 🏛️ Wer regierte in Rom?</div></div>
+    <div class="tl" onclick="showEra(1)"><div class="yr">12–9 v. Chr.</div><div class="tx"><b>Drusus’ Feldzüge</b> bis an die Elbe – in den Westen deines Heimatgebietes.</div><div class="more">👆 Epoche öffnen · 🏛️ Wer regierte in Rom?</div></div>
+    <div class="tl" onclick="showEra(2)"><div class="yr">9 n. Chr.</div><div class="tx"><b>Varusschlacht</b> (vermutlich Kalkriese): Arminius vernichtet drei Legionen. Rom zieht sich hinter den Rhein zurück.</div><div class="more">👆 Epoche öffnen · 🏛️ Wer regierte in Rom?</div></div>
+    <div class="tl" onclick="showEra(3)"><div class="yr">14–16 n. Chr.</div><div class="tx"><b>Germanicus’ Rache-Feldzüge</b> durch das Land der Marsen, Brukterer und Chatten (NRW!). Danach gibt Rom Germanien auf.</div><div class="more">👆 Epoche öffnen · 🏛️ Wer regierte in Rom?</div></div>
+    <div class="tl" onclick="showEra(4)"><div class="yr">ab 83–85 n. Chr.</div><div class="tx"><b>Limes</b>: Köln und Xanten sind römisch – <b>Mecklenburg, Brandenburg und Posen nie</b>. 98 n. Chr. schreibt Tacitus die „Germania“.</div><div class="more">👆 Epoche öffnen · 🏛️ Wer regierte in Rom?</div></div>
+    <div class="tl" onclick="showEra(5)"><div class="yr">166–180 n. Chr.</div><div class="tx"><b>Markomannenkriege</b>: Rom steht an der Kippe.</div><div class="more">👆 Epoche öffnen · 🏛️ Wer regierte in Rom?</div></div>
+    <div class="tl" onclick="showEra(6)"><div class="yr">ca. 260 n. Chr.</div><div class="tx"><b>Limesfall</b> – die Völkerwanderung beginnt.</div><div class="more">👆 Epoche öffnen · 🏛️ Wer regierte in Rom?</div></div>
+    <div class="tl" onclick="showEra(7)"><div class="yr">476 n. Chr.</div><div class="tx"><b>Westrom fällt</b> – Odoaker entthront den letzten Kaiser. Das antike Rom ist Geschichte.</div><div class="more">👆 Epoche öffnen · 🏛️ Wer regierte in Rom?</div></div>
+    <div class="tl" onclick="showEra(8)"><div class="yr">6./7. Jh. n. Chr.</div><div class="tx"><b>Die Slawen rücken ein</b> – Mecklenburg wird Obodriten- und Zirzipanen-Land.</div><div class="more">👆 Epoche öffnen · 🏛️ Wer regierte in Rom?</div></div>
+    <div class="tl" onclick="showEra(9)"><div class="yr">789–804 n. Chr.</div><div class="tx"><b>Karl der Große und die Abodriten</b> – Franken und Sachsenkriege, die Slawen werden Nachbarn der neuen Großmacht.</div><div class="more">👆 Epoche öffnen · 🏛️ Wer regierte in Rom?</div></div>
+    <div class="tl" onclick="showEra(10)"><div class="yr">983 n. Chr.</div><div class="tx"><b>Der große Slawenaufstand</b> beendet die deutsche Herrschaft östlich der Elbe für fast 200 Jahre.</div><div class="more">👆 Epoche öffnen · 🏛️ Wer regierte in Rom?</div></div>
+    <div class="tl" onclick="showEra(11)"><div class="yr">1147–1168 n. Chr.</div><div class="tx"><b>Wendenkreuzzug und Fall von Arkona</b> – die letzten heidnischen Slawenstämme werden unterworfen.</div><div class="more">👆 Epoche öffnen · 🏛️ Wer regierte in Rom?</div></div>
+  </div>
+</section>
+<section id="eradetail" class="view"><div id="erapanel"></div></section>
 <section id="namen" class="view">
   <div class="card">
-    <h3>📖 Namensherkunft – woher die Familiennamen kommen</h3>
-    <div class="orig"><div class="ot">Der Name Ziebarth</div>
-    Norddeutsches Patronym zum alten Rufnamen Ziebart/Siegbert (althochdeutsch *sigu* „Sieg“ + *beraht* „hell, glänzend“). Häufig in Nord- und Ostdeutschland (Mecklenburg, Brandenburg). Die Linie deiner Urgroßmutter Hulda Kalkbrenner geb. Ziebarth und ihrer Geschwister Martha, Dorothea, Hertha und Hugo – aus Rogasen auf dem Sandberg. <a href="https://www.namenforschung.net/id/name/5945/1" target="_blank" rel="noopener">Digitales Familiennamenwörterbuch</a></div>
-    <div class="orig"><div class="ot">Der Name Knegendorf</div>
-    Mecklenburgischer Herkunftsname nach dem <b>Weiler Knegendorf bei Laage</b> (heute Landkreis Rostock, Mecklenburg-Vorpommern). Ein typischer Ortsname mit der Endung <i>-dorf</i>. Die Linie deiner Urgroßmutter Frieda Möller geb. Knegendorf (16.10.1873 – 22.12.1943) – Ehefrau von Johann Möller, Urgroßmutter väterlicherseits. <a href="https://www.namenforschung.net" target="_blank" rel="noopener">Digitales Familiennamenwörterbuch</a></div>
-    <div class="orig"><div class="ot">Der Name Kalkbrenner</div>
-    Berufsname aus mittelhochdeutsch <b>kalc</b> „Kalk“ + <b>brenner</b> „Brenner“. Bezeichnete den Kalkbrenner, der Kalk für Bau und Landwirtschaft herstellte. Zwei Linien in deinem Stammbaum: deine Urgroßmutter <b>Hulda Kalkbrenner</b> geb. Ziebarth aus Rogasen und ihre Tochter Marie-Sophie Tabbert geb. Kalkbrenner, deine Großmutter mütterlicherseits. <a href="https://www.namenforschung.net" target="_blank" rel="noopener">Digitales Familiennamenwörterbuch</a></div>
-    <div class="orig"><div class="ot">Der Name Lindemann</div>
-    Wohnstättenname aus „Linde“ + „Mann“. Bezeichnete jemanden, der bei Lindenbäumen wohnte oder aus einem Linden-Ort stammte. Verbreitet in Nord- und Mitteldeutschland. Die Linie deiner Urgroßmutter Ernestine Tabbert geb. Lindemann (25.12.1867) – Ehefrau von August Wilhelm Tabbert aus Kölzig. <a href="https://www.namenforschung.net" target="_blank" rel="noopener">Digitales Familiennamenwörterbuch</a></div>
-    <div class="orig"><div class="ot">Der Name Tabbert</div>
-    Norddeutsch und niederländisch. Entweder vom mittelalterlichen Kleidungsstück <b>Tabbert</b> (ärmelloser Überwurf) oder vom friesisch-germanischen Rufnamen <b>Tjabbert/Dagobert</b>. Die Linie aus Kölzig und Arnswalde in der Neumark – mütterlicherseits weitergegeben (Großvater Wilhelm Tabbert, Urgroßvater August Wilhelm Tabbert). <a href="https://www.namenforschung.net" target="_blank" rel="noopener">Digitales Familiennamenwörterbuch</a></div>
-    <div class="orig"><div class="ot">Der Name Möller</div>
-    Niederdeutsche Form von <b>Müller</b>. Berufsname für den Müller, den Betreiber einer Mühle. Besonders häufig in Norddeutschland (Schleswig-Holstein, Niedersachsen, Mecklenburg). Die Linie deines Urgroßvaters <b>Johann Möller</b> aus Neu Wokern (12.01.1869) und seiner Frau Frieda geb. Knegendorf – Eltern deiner Großmutter Hedwig Rath geb. Möller. <a href="https://www.namenforschung.net" target="_blank" rel="noopener">Digitales Familiennamenwörterbuch</a></div>
-    <div class="orig"><div class="ot">Der Name Rath</div>
-    Mehrere Möglichkeiten: Übername für einen klugen Menschen oder Ratgeber (mittelhochdeutsch <b>rāt</b> „Rat“), Kurzform alter Namen mit *rād/rāt* oder Ortsname von einer Rodung im Rheinland. Die alte Linie aus <b>Teterow</b> im Zirzipanen-Land – vom Großvater Karl Martin Heinrich Friedrich Rath bis heute. <a href="https://www.namenforschung.net" target="_blank" rel="noopener">Digitales Familiennamenwörterbuch</a></div>
-    <div class="orig"><div class="ot">Der Name Schütz</div>
-    Berufs- und Funktionsname aus mittelhochdeutsch <b>schütze</b>. Bezeichnete den Bogenschützen, Armbrustschützen oder Wächter und Beschützer – die Flur- und Stadtwächter. Die Linie von Andreas Jörg Schütz aus Thüringen – im Land der Hermunduren, aus denen die Thüringer hervorgingen. <a href="https://www.namenforschung.net" target="_blank" rel="noopener">Digitales Familiennamenwörterbuch</a></div>
-    <div class="orig"><div class="ot">Der Name Zimmermann</div>
-    Berufsname aus mittelhochdeutsch <b>zimber</b> „Bauholz“ + <b>mann</b>. Bezeichnete den Zimmermann, den Holzbauhandwerker. Einer der häufigsten deutschen Familiennamen. Die Linie der Familie deines Enkels Alaistair: sein Vater Steven Zimmermann, Adoptivvater Detlef Zimmermann und Stiefmutter Andrea geb. Rüdiger. <a href="https://www.namenforschung.net" target="_blank" rel="noopener">Digitales Familiennamenwörterbuch</a></div>
-    <div class="orig"><div class="ot">Der Name Reimer</div>
-    Patronym, Kurzform des alten germanischen Rufnamens <b>Reinmar/Raginmar</b> (*ragin* „Rat“ + *māri* „berühmt“). Besonders in Norddeutschland (Schleswig-Holstein, Niedersachsen, Mecklenburg) verbreitet. Die Linie der Familie Reimer: Martina Reimer (04.05.1955) und Wolfgang Reimer – die Eltern deiner Schwiegertochter Ulrike, der Frau von Marco. <a href="https://www.namenforschung.net" target="_blank" rel="noopener">Digitales Familiennamenwörterbuch</a></div>
-    <div class="orig"><div class="ot">Der Name Köhler</div>
-    Berufsname aus mittelhochdeutsch <b>kol</b> „Holzkohle“. Bezeichnete den Holzkohlenbrenner, den Meilerbetreiber. Häufig in waldreichen Regionen (Harz, Erzgebirge, Schwarzwald). Die Linie der Familie deiner Cousine Karin Köhler geb. Buhl – mit ihren Kindern und Enkeln (Janina Christina, Amy Tanja, Ari Henry). <a href="https://www.namenforschung.net" target="_blank" rel="noopener">Digitales Familiennamenwörterbuch</a></div>
-    <div class="orig"><div class="ot">Der Name Buhl</div>
-    Übername aus mittelhochdeutsch <b>buole</b> „naher Verwandter, Vertrauter“ oder süddeutsche Variante von <b>Bühl</b> „Hügel“ (Wohnstättenname). Die Linie von Werner Kurt Buhl aus Hilden bei Düsseldorf – Onkel und Tante Annemarie. <a href="https://www.namenforschung.net" target="_blank" rel="noopener">Digitales Familiennamenwörterbuch</a></div>
-    <div class="orig"><div class="ot">Der Name Lange</div>
-    Übername nach der Körpergröße aus mittelhochdeutsch/mittelniederdeutsch <b>lanc/lank</b> „lang, großgewachsen“. Die Form mit -e ist typisch norddeutsch. Die Linie deiner Schwägerin Martina Rath geb. Lange (17.09.1958) – Frau von Thomas. <a href="https://www.namenforschung.net" target="_blank" rel="noopener">Digitales Familiennamenwörterbuch</a></div>
-    <div class="orig"><div class="ot">Quellen zu den Namenserklärungen</div>
-    <a href="https://www.namenforschung.net" target="_blank" rel="noopener">Digitales Familiennamenwörterbuch Deutschlands (namenforschung.net)</a></div>
+    <h3>📖 Familiennamen-Lexikon deiner Familie</h3>
+    <p style="font-size:.75rem;color:#666;margin-bottom:10px">Alle dreizehn Familiennamen deiner Familie, sortiert nach Häufigkeit: der seltenste Name steht ganz oben, der häufigste ganz unten. Antippen öffnet die ganze Karte als Vollbild. Mit 🔊 wird die Karte vorgelesen, mit ⏹ gestoppt. Hauptquelle: Digitales Familiennamenwörterbuch Deutschlands (DFD), Akademie Mainz.</p>
+    <div id="nlist"></div>
   </div>
 </section>
+<section id="namendetail" class="view"><div id="npanel"></div></section>
+<section id="ahnen" class="view">
+  <div class="card">
+    <h3>🌳 Ahnen-Datenbank – Katharinas Familie</h3>
+    <input id="psuche" placeholder="🔍 Namen suchen (Vorname, Nachname, Geburtsname) …" oninput="renderPersons()">
+    <div id="azbar" style="display:flex;flex-wrap:wrap;gap:4px;margin-top:8px"></div>
+    <div class="hint" style="margin-top:6px;text-align:left">Alle 161 Personen · Heirat deiner Eltern: 30.09.1955 in Jördensdorf</div>
+  </div>
+  <div class="card"><div id="plist" class="plist"></div>
+  <div class="hint">Jede Person antippen zeigt die ganze Verzweigung – Eltern, Großeltern, Partner, Kinder, Enkel, Geschwister – und ihre Stammes-Wurzeln.</div></div>
+  <div class="card"><h3>📊 Statistik deiner Familie</h3><div id="statbox"></div>
+  <div class="hint">Alle Zahlen werden live aus der Datenbank berechnet – sie stimmen immer mit dem Stand der Datei überein.</div></div>
+  <div class="card"><h3>📛 Die Verteilung der Familiennamen</h3><div id="namebox"></div>
+  <div class="hint">Gezählt wird der Nachname jeder Person – die Balken zeigen, wie oft jeder Name in der Familie vorkommt. Alles live berechnet.</div></div>
+</section>
+<section id="tribedetail" class="view"><div id="tpanel"></div></section>
+<section id="persondetail" class="view"><div id="ppanel"></div></section>
 </main>
+<footer>
+  <div class="frow">
+    <button class="flink" onclick="openModal('impModal')">Impressum</button>
+    <button class="fbundle" onclick="toggleBundle()">ARC(E)ANA</button>
+    <button class="flink" onclick="openModal('dsModal')">Datenschutz</button>
+  </div>
+  <div class="fcopy">© 2026 · Version 3.3.4</div>
+</footer>
+<div class="emblem" id="emblem" onclick="toggleBundle()">
+  <div class="emblem-word">ARC(E)ANA</div>
+  <div class="emblem-studio">creative studio</div>
+  <div class="emblem-methode">ENTDECKEN · ENTWICKELN · ERSCHAFFEN</div>
+</div>
+<div class="overlay" id="impModal" onclick="if(event.target===this)closeModal('impModal')">
+  <div class="modal">
+    <h3>Impressum</h3>
+    <p><strong>Datenbank der Familie</strong><br>
+    Das Stammbuch der Familie Rath-Tabbert – meine Eltern und Großeltern</p>
+    <p><strong>Anbieterin (§ 5 DDG – Digitale-Dienste-Gesetz, vormals § 5 TMG):</strong><br>
+    Katharina Schütz<br>
+    Platz der Einheit 10<br>
+    14467 Potsdam<br>
+    Deutschland</p>
+    <p><strong>Zweckbestimmung:</strong> Ausschließlich für private Zwecke – zur Familien- und Ahnenforschung der Familie Rath-Tabbert. Diese Datenbank ist unverkäuflich und ausschließlich für die Familie bestimmt.</p>
+    <p><strong>Methode &amp; Veröffentlichung:</strong> Die App ist nach ARC(E)ANA aufgebaut – meiner ganz persönlichen Lernmethode, die ich für dieses Projekt entsprechend aufbereitet habe. Veröffentlicht ist die App in meinem persönlichen GitHub-Konto.</p>
+    <p><strong>Entstehung:</strong> Die Zusammenstellung der germanischen und slawischen Stämme sowie die Programmierung dieser App erfolgten mit Unterstützung künstlicher Intelligenz (KI).<br>
+    <em>Hinweis: KI kann Fehler machen. Deshalb sollte jede und jeder die Angaben eigenständig prüfen und mit weiteren Quellen abgleichen.</em></p>
+    <p><strong>Recherche – der größte Familienschatz:</strong> Die Grundlage meiner Familienforschung bildet ein ganz besonderer Fundus: das Familienstammbuch, das meine Schwester <strong>Sarina Rath</strong>, die als Standesbeamtin tätig ist, vor einigen Jahren mit viel Sorgfalt zusammengestellt hat. Sie hat für jeden ihrer Geschwister ein eigenes Buch angefertigt. Darin finden sich zahlreiche Geburts- und Registereinträge sowie Angaben zu unseren Großeltern, Eltern, Geschwistern und Kindern. Auch wenn nicht zu jeder Person sämtliche Geburts- und Sterbedaten vorliegen, ist dieses Buch eine wertvolle Grundlage, um familiäre Zusammenhänge und Verwandtschaftsverhältnisse nachzuvollziehen. Ein wirklich schöner und wertvoller Familienschatz, der auch unseren Kindern zugutekommt.</p>
+    <p><strong>Erinnerungen meiner Mutter:</strong> Eine weitere wichtige Quelle sind die persönlichen Erinnerungen meiner Mutter <strong>Friedel Rath, geborene Tabbert</strong>. In unseren Gesprächen und Telefonaten erzählt sie immer wieder aus ihrer Kindheit und von ihrer Familie. Manchmal fällt ihr etwas ein, das sie lange nicht erwähnt hat, und bei einem späteren Gespräch kommen weitere Erinnerungen hinzu. Besonders die Namen und Familiengeschichten der Geschwister ihres Vaters sind dadurch wieder lebendig geworden. Ich halte diese Erzählungen fest und ergänze damit nach und nach das Bild unserer Familiengeschichte.</p>
+    <p><strong>Urkunden &amp; Standesämter:</strong> Auch vorhandene Urkunden und standesamtliche Registerauszüge helfen dabei, einzelne Angaben zu überprüfen, Personen einander zuzuordnen und bisherige Erkenntnisse zu ergänzen. Dazu gehören unter anderem Unterlagen des <strong>Standesamtes Teterow</strong> und des früheren <strong>Standesamtes Kölzig</strong> (heute Kolsk, Polen), bei denen entsprechende Anfragen gestellt und Registerauszüge eingeholt wurden, soweit diese noch vorhanden waren.</p>
+    <p><strong>Ersatzstandesamt Berlin:</strong> Eine weitere wichtige Anlaufstelle ist das <strong>Standesamt II in Berlin (Ersatzstandesamt)</strong>. Dort befinden sich rund zwei Millionen historische Karteikarten und weitere überlieferte Unterlagen aus den ehemaligen preußischen Ostgebieten, darunter Schlesien und Ostpreußen, die heute überwiegend zu Polen gehören. Hierzu habe ich bereits einen Antrag gestellt und stehe weiterhin im Schriftverkehr, um möglicherweise noch vorhandene Einträge und Dokumente ausfindig zu machen. Besonders interessant sind dabei auch mögliche Überlieferungen aus alten Kirchenbüchern. Da viele historische Kirchenbücher inzwischen digitalisiert werden, eröffnen sich weitere Möglichkeiten, den Spuren unserer mütterlichen Familiengeschichte nachzugehen. Vielleicht lässt sich auf diesem Weg noch so mancher bisher unbekannte Eintrag entdecken.</p>
+    <p><strong>Stand der Recherche:</strong> Bislang beruht meine Recherche vor allem auf diesen familiären Überlieferungen und den mir zugänglichen Dokumenten. Eine Anmeldung bei externen Ahnenforschungs-Datenbanken ist bisher nicht erfolgt. Ich möchte mich zunächst mit den Möglichkeiten und den jeweiligen Datenschutzbedingungen vertraut machen.</p>
+    <p><strong>Besonderer Hinweis · Urkunden:</strong> Mir liegt eine Kopie der Sterbeurkunde meines Großvaters <strong>Wilhelm Tabbert</strong>, geboren am 26.01.1908 in Hitzdorf, vor. Solche Dokumente sind für die Ahnenforschung besonders wertvoll. Sie ermöglichen es, unterschiedliche Angaben miteinander abzugleichen und wichtige Lebensdaten wie Geburtsort, Sterbedatum und Lebensalter nachvollziehbar zusammenzuführen.</p>
+    <p><strong>Warum ich Ahnenforschung betreibe:</strong> <em>Wer seine Wurzeln nicht kennt, kann die Zukunft nicht gestalten.</em> Mich treibt die Frage an: Wer bin ich eigentlich, und woher komme ich? Über Jahrhunderte hinweg haben Kriege, wechselnde Herrschaftsverhältnisse, neue Grenzen und politische Umbrüche die Lebenswege der Menschen geprägt, Familien auseinandergerissen und ganze Bevölkerungsgruppen entwurzelt. Aus alten Stammesgebieten wurden Königreiche, Kaiserreiche und neue Staaten. Grenzen und Zugehörigkeiten veränderten sich – doch die Menschen und ihre Familiengeschichten blieben Teil dieser Geschichte. Mit meiner Ahnenforschung möchte ich diese Spuren wieder sichtbar machen, Zusammenhänge verstehen und ein Stück meiner familiären Identität zurückgewinnen. Denn wer seine Herkunft kennt, versteht auch besser, was ihn geprägt hat.</p>
+    <p><strong>Herzlichen Dank</strong> an alle, die bisher an dieser Familienforschung mitgewirkt haben – und ebenso an diejenigen, die mich auch in Zukunft mit ihren Erinnerungen, Dokumenten und Hinweisen unterstützen werden.</p>
+    <p><strong>Hinweis zu den alten germanischen und slawischen Stämmen:</strong> Die Zusammenstellung der Stämme dient dem besseren Verständnis unserer historischen Wurzeln. Sie soll Familiennamen und Herkunftsorte in einen größeren geschichtlichen Zusammenhang einordnen und einen Einblick in die tausendjährige Geschichte des alten Europas geben. Dabei handelt es sich um eine historische Orientierung, nicht um einen Nachweis einer direkten Abstammung von einem bestimmten Stamm.</p>
+    <p><strong>Aktualisierung:</strong> Diese Datenbank wird regelmäßig ergänzt und aktualisiert, sobald mir neue Informationen, Dokumente oder Erkenntnisse vorliegen.</p>
+    <p><strong>Urheberrecht:</strong> © 2026 Katharina Schütz · Alle Rechte vorbehalten.</p>
+    <p><strong>Quellen-Basis:</strong> Tacitus (Germania, 98 n. Chr.) · Ptolemäus · Cäsar · Thietmar von Merseburg · Adam von Bremen · Helmold von Bosau · St. Galler Annalen · Digitales Familiennamenwörterbuch Deutschlands (namenforschung.net) · Standesamtliche Registerauszüge · Sterbeurkunde Wilhelm Tabbert (Nr. 137/1945) · Familien-Stammbuch (Zusammenstellung: Sarina Rath, Standesbeamtin) · Gespräche mit Friedel Rath, geborene Tabbert · Standesamt II Berlin (Ersatzstandesamt).</p>
+    <div style="text-align:right;margin-top:14px"><button class="flink" onclick="closeModal('impModal')">✕ Schließen</button></div>
+  </div>
+</div>
+<div class="overlay" id="dsModal" onclick="if(event.target===this)closeModal('dsModal')">
+  <div class="modal">
+    <h3>Datenschutz</h3>
+    <p><strong>1. Keine Datenerhebung:</strong> Diese App erhebt, überträgt oder verarbeitet <strong>keinerlei Daten</strong>. Kein Server, keine Cloud, keine Cookies, kein Tracking, keine Analyse-Tools.</p>
+    <p><strong>2. Vollständig offline:</strong> Alle Inhalte – alle 161 Personen, Stämme und Familiennamen – sind vollständig in dieser Datei enthalten und laufen offline auf deinem Gerät. Suchbegriffe bleiben nur im Arbeitsspeicher deines Geräts und werden nirgends gespeichert oder übertragen.</p>
+    <p><strong>3. Vorlesefunktion:</strong> Das Vorlesen nutzt ausschließlich die eingebaute Sprachausgabe deines Gerätes (z. B. iPhone). Dabei verlässt das Gerät diese Datei nicht – es wird kein Text an Dritte gesendet.</p>
+    <p><strong>4. Familienangaben:</strong> Angaben zu Familienmitgliedern dienen ausschließlich der privaten Familien-Ahnenforschung. Sie werden nicht an Dritte weitergegeben, nicht verkauft und nicht online gestellt.</p>
+    <p><strong>5. Rechtlicher Hinweis (DSGVO):</strong> Nach Art. 5 der Datenschutz-Grundverordnung (VO (EU) 2016/679) gelten die Grundsätze der Datenvermeidung und Datenminimierung. Da diese App als rein lokale, private Datei <strong>keine personenbezogenen Daten verarbeitet</strong>, sind die Pflichten der DSGVO nur eingeschränkt anwendbar. Ein Impressum mit Name und Anschrift wird gleichwohl nach § 5 DDG (Digitale-Dienste-Gesetz, vormals § 5 TKG) bereitgestellt.</p>
+    <p><strong>6. Einverständnis der Familie:</strong> Die Veröffentlichung von Lebensdaten innerhalb der Familie erfolgt im Einvernehmen; bei Widerspruch eines Familienmitglieds werden dessen Angaben auf Wunsch entfernt oder anonymisiert.</p>
+    <div style="text-align:right;margin-top:14px"><button class="flink" onclick="closeModal('dsModal')">✕ Schließen</button></div>
+  </div>
+</div>
+<div id="cover" onclick="openApp()">
+ <div class="cv-in">
+  <div class="cv-top">✦ ARC(E)ANA · 2026 ✦</div>
+  <div class="cv-title">🏛️ Datenbank der Familie</div>
+  <div class="cv-sub">Stämme · Familiennamen · Ahnen</div>
+  <div class="cv-sec">Die Familiennamen</div>
+  <div class="cv-names">Knegendorf · Ziebarth · Kalkbrenner · Lindemann · Möller<br>Tabbert · <b>Rath</b> · Buhl · Köhler<br>Schütz · Zimmermann · Reimer</div>
+  <div class="cv-open">👆 Antippen zum Öffnen</div>
+  <div class="cv-copy">© 2026 · Version 3.3.4</div>
+ </div>
+</div>
 <script>
+/* ============ STÄMME ============ */
+const T=[
+["alemannen","Alemannen","Germanisch","3.–6. Jh. n. Chr.","Oberrhein, Schwarzwald, Bodensee, Elsass, Schweiz","Vage römische Sammelbezeichnung („alle Männer“) für die Germanen am Limes. Namensgeber der französischen Bezeichnung für Deutschland („Allemagne“) und Wurzel der Schwaben.","Tacitus; Ammianus Marcellinus"],
+["ambronen","Ambronen","Germanisch","2.–1. Jh. v. Chr.","Nordseeküste (vermutlich Jütland)","Verbündete der Kimbern und Teutonen; 102 v. Chr. von Marius bei Aquae Sextiae vernichtet.","Plutarch, Marius"],
+["amsivarier","Amsivarier","Germanisch","1. Jh. v. Chr.–1. Jh. n. Chr.","Emsland, Raum Rheine–Lingen","„Leute am Ems-Arm“. Flohen 4 n. Chr. vor den Römern ostwärts.","Tacitus, Annalen"],
+["angeln","Angeln","Germanisch","bis 5. Jh. n. Chr.","Schleswig / Angeln","Wanderten im 5. Jh. nach Britannien; gaben England den Namen.","Beda Venerabilis"],
+["angrivarier","Angrivarier","Germanisch","1. Jh. v. Chr.–3. Jh. n. Chr.","Zwischen Ems und Weser","Nachbarn der Chauken und Cherusker; gingen in den Sachsen auf.","Tacitus; Ptolemäus"],
+["bastarnen","Bastarnen","Germanisch","ca. 200 v. Chr.–3. Jh. n. Chr.","Weichsel-Oder-Gebiet, Karpatenvorland","Ältester bekannter Germanenstamm im Osten; stark mit Skythen und Sarmaten vermischt.","Tacitus; Livius"],
+["balten","Balten (Prußen, Litauer, Letten)","Balten","seit ca. 2000 v. Chr.","Ostpreußen, Litauen, Lettland, Kaliningrad","Keine Slawen, sondern eigene indogermanische Gruppe. Die Prußen gaben dem späteren Preußen den Namen; erst 1283 vom Deutschen Orden unterworfen.","Tacitus (Aestii); Peter von Dusburg"],
+["bataven","Bataven","Germanisch","1. Jh. v. Chr.–4. Jh. n. Chr.","Niederrhein, Rhein-Maas-Delta (Niederlande)","Elite-Stamm der römischen Armee; großer Aufstand 69/70 n. Chr. unter Iulius Civilis.","Tacitus, Historien"],
+["bajuwaren","Bajuwaren (Baiern)","Germanisch","ab 6. Jh. n. Chr.","Alpenvorland, Oberösterreich, Bayern","Aus Markomannen- und Rugier-Resten an der Donau entstanden; Wurzel der Bayern.","Fredegar"],
+["boier","Boier","Keltisch","ca. 400–1. Jh. v. Chr.","Böhmen, Oberösterreich, Norditalien","Der mächtigste keltische Stamm Ostmitteleuropas; Böhmen heißt wörtlich „Heim der Boier“ (Boihaemum).","Cäsar; Tacitus"],
+["brukterer","Brukterer","Germanisch","1. Jh. v. Chr.–4. Jh. n. Chr.","Münsterland, Ems-Ruhr-Raum, Osnabrücker Land","Mächtiger Stamm zwischen Ems und Lippe; bei ihnen wuchs Thusnelda, Arminius' Frau, auf; 83 n. Chr. von Römern geschlagen.","Tacitus"],
+["burgunder","Burgunder","Germanisch","1.–5. Jh. n. Chr.","1. Bornholm → 2. mittlere Oder und Warthe (Ecke Arnswalde/Kölzig/Posen!) → 3. Worms am Rhein → 4. Burgund (Frankreich)","Der Wanderstamm schlechthin: Von der Ostsee ins Warthe-Oder-Gebiet (Neumark/Provinz Posen – deine Region!), dann an den Rhein. Nach ihrer Vernichtung 437 durch die Hunnen entstand das Nibelungenlied („Etzel“ = Attila, „Worms“). Ihr Name lebt in Burgund fort.","Plinius; Ptolemäus; Nibelungenlied"],
+["chamaven","Chamaven","Germanisch","1.–4. Jh. n. Chr.","Münsterland, Niederrhein","Später ins Bataverland eingewandert; gingen in den Franken auf.","Tacitus"],
+["chatten","Chatten (Hatten)","Germanisch","1. Jh. v. Chr.–3. Jh. n. Chr.","Hessen, Raum Kassel, Wetterau","Fast sicher die Vorfahren der heutigen Hessen – ein Stamm, der als Landesname überlebte.","Tacitus, Germania"],
+["chauken","Chauken","Germanisch","1. Jh. v. Chr.–3. Jh. n. Chr.","Ostfriesland, Unterelbe, Wesermündung","Zahlreicher, friedlicher Küstenstamm auf Warften. Tacitus: „Die Germanen, die niemand bekämpft.“","Tacitus; Plinius"],
+["cherusker","Cherusker","Germanisch","1. Jh. v. Chr.–3. Jh. n. Chr.","Ostwestfalen-Lippe: Osnabrück, Bielefeld, Detmold, Teutoburger Wald","Der Stamm des Arminius („Hermann“): 9 n. Chr. Vernichtung der drei Legionen des Varus (vermutlich bei Kalkriese). Das Hermannsdenkmal bei Detmold (1875) erinnert daran.","Tacitus; Velleius"],
+["cugerner","Cugerner","Germanisch","1.–4. Jh. n. Chr.","Niederrhein, Raum Xanten–Wesel","Kleiner Stamm auf römischem Gebiet; Xanten ihre Zentralstadt.","Tacitus"],
+["daleminzier","Daleminzier","Slawisch","9.–10. Jh.","Mittleres Elbtal, Meißen–Dresden","Von Thietmar erwähnt; gingen in den Sachsen auf.","Thietmar von Merseburg"],
+["doschanen","Doschanen","Slawisch","10.–12. Jh.","Dosse-Gebiet, Prignitz/Ostbrandenburg","Kleiner Stamm um die Dosse; früh unterworfen.","Brandenburger Urkunden"],
+["franken","Franken","Germanisch","ab 3. Jh. n. Chr.","Rhein-Main → Gallien","Stammesbund aus Sugambrern, Chamaven u. a.; eroberten 486 Gallien – Namensgeber Frankreichs. Die ripuarischen Franken waren der Stamm des Rheinlandes (Hilden!).","Ammianus; Gregor von Tours"],
+["friesen","Friesen","Germanisch","1. Jh. v. Chr. bis heute","Nordseeküste: Friesland, Ostfriesland, Nordfriesland","Seefahrer und Händler; der einzige Stamm, der bis heute als Volksgruppe und Sprache fortbesteht.","Tacitus; Plinius"],
+["gepiden","Gepiden","Germanisch","1.–6. Jh. n. Chr.","Weichsel-Oder → Siebenbürgen","Gotenverwandt; langobardische Erzfeinde; 567 von Avaren zerstört.","Jordanes"],
+["goten","Goten","Germanisch","1.–8. Jh. n. Chr.","Weichselmündung → Schwarzmeer → Italien / Spanien","Der größte Wanderstamm der Völkerwanderung; ihre Wulfila-Bibel (4. Jh.) ist das älteste germanische Buch. Westgoten: Spanien; Ostgoten: Italien.","Jordanes; Ammianus"],
+["hallstatt","Hallstatt-Kultur","Vorstufen & Andere","ca. 800–450 v. Chr.","Alpenraum, Salzkammergut","Frühkelten – erste Eisenzeit Europas; berühmte Fürstengräber.","Archäologie"],
+["hermunduren","Hermunduren","Germanisch","1. Jh. v. Chr.–5. Jh. n. Chr.","Thüringen, Saale, mittleres Elbtal","Römisch-freundlicher Stamm; als einzige Germanen mit Handelsbrücke über die Donau; Vorfahren der Thüringer. Das Land deines Schwiegervaters Kurt Schütz!","Tacitus, Germania"],
+["heveller","Heveller (Havolane)","Slawisch","8.–12. Jh.","Havel-Gebiet: Brandenburg, Potsdam, Rathenow, Spandau","Namensgeber der Havel und Brandenburgs; Fürst Pribislaw-Heinrich vermachte sein Land den Askaniern – Potsdam lag im Heveller-Land!","Thietmar; Helmold von Bosau"],
+["jastorf","Jastorf-Kultur (Ur-Germanen)","Vorstufen & Andere","ca. 600–1 v. Chr.","Niedersachsen, Schleswig-Holstein, Mecklenburg","Die archäologische „Wiege der Germanen“ – auch in deiner Region.","Archäologie"],
+["jueden","Jüten","Germanisch","bis 6. Jh. n. Chr.","Jütland (Dänemark)","Wanderten mit Angeln und Sachsen nach Britannien; Namensgeber von Kent und der Isle of Wight.","Beda Venerabilis"],
+["kelten","Kelten (La-Tène-Kultur)","Keltisch","ca. 450 v. Chr.–1. Jh. n. Chr.","ganz Mitteleuropa: Bayern, Baden, Hessen, Böhmen, Frankreich, Schweiz, Österreich","Die beherrschende Eisenzeit-Kultur vor den Germanen; viele Flüsse und Städte (Wien, Paris) tragen keltische Namen.","Cäsar; Archäologie"],
+["kessiner","Kessiner","Slawisch","10.–12. Jh.","Kessin bei Rostock, untere Warnow","Kleinster Liutizen-Teilstamm; 1121 unterwarf sich ihr Fürst Heinrich dem Löwen.","Helmold von Bosau"],
+["kimbern","Kimbern","Germanisch","ca. 120–101 v. Chr.","Jütland → ganz Europa auf Wanderschaft","Der älteste uns bekannte Germanenstamm; vernichteten 113 und 105 v. Chr. römische Heere; 101 v. Chr. von Marius besiegt – der „cimbrische Schrecken“.","Livius; Plutarch"],
+["langobarden","Langobarden","Germanisch","1. Jh. v. Chr.–8. Jh. n. Chr.","Unterelbe (Hamburg/Lüneburg) → Italien","Ursprünglich „Winniler“; eroberten 568 Norditalien – ihr Name lebt in der Lombardei fort.","Tacitus; Paulus Diaconus"],
+["leubuzzi","Leubuzzi (Lubuszanen)","Slawisch","9.–11. Jh.","Land Lebus: Küstrin, Frankfurt (Oder), Züllichau – Kölzig liegt genau hier!","Kleiner Stamm mit Burg Lebus; früh ins Piastenreich integriert. Deine mütterliche Tabbert-Linie (Kölzig) sitzt in ihrem alten Land.","Thietmar"],
+["lugier","Lugier","Germanisch","ca. 200 v. Chr.–5. Jh. n. Chr.","Schlesien, Obersachsen, Oder-Gebiet","Großer Stammesverband, aus dem u. a. die Vandalen hervorgingen.","Tacitus; Ptolemäus"],
+["lusizer","Lusizer (Lusitzi)","Slawisch","10.–12. Jh.","Niederlausitz, Cottbus, Lübben, Guben","Namensgeber der Lausitz; Liutizen-Teilstamm.","Thietmar"],
+["lutizen","Lutizen / Wilzen","Slawisch","9.–12. Jh.","Zwischen unterer Elbe und Oder (Mecklenburg-Vorpommern)","Lockerer Stammesbund mit Kultzentren Rethra; die Zirzipanen waren ein Teilstamm der Lutizen.","Thietmar; Adam von Bremen"],
+["markomannen","Markomannen","Germanisch","1. Jh. v. Chr.–4. Jh. n. Chr.","Mainfranken → Böhmen","Unter König Marbod Großreich in Böhmen; verursachten ab 166 n. Chr. die Markomannenkriege.","Tacitus"],
+["marsen","Marsi","Germanisch","1. Jh. v. Chr.–1. Jh. n. Chr.","Ruhr-Lippe-Raum, Hamm, Soest, Haltern","Verbündete Arminius' in der Varusschlacht; 14 n. Chr. von Germanicus geschlagen. Haltern war römisches Hauptlager.","Tacitus, Annalen"],
+["masowier","Masowier","Slawisch","ab 8./9. Jh.","Masowien, Raum Warschau","Kernstamm des mittelalterlichen Polens.","Polnische Chroniken"],
+["milzener","Milzener","Slawisch","9.–11. Jh.","Oberlausitz, um Bautzen","Von Thietmar erwähnt; Ahnherren der heutigen Sorben.","Thietmar von Merseburg"],
+["moritzer","Moritzer (Mürzitzer)","Slawisch","10.–12. Jh.","Müritz-Gebiet, Südmecklenburg","Kleiner Stamm südlich der Obodriten; früh unter deren Herrschaft.","Helmold von Bosau"],
+["abodriten","Abodriten (Obodriten)","Slawisch","8.–12. Jh.","Westmecklenburg: Wismar, Schwerin, Ratzeburg – Kernland auch um Zarrentin (slawisch Zarnethin)","Der mächtigste elbslawische Stamm; ihr Fürst Niklot ist Stammvater der Mecklenburger Dynastie, die bis 1918 regierte. Sie gaben Mecklenburg den Namen – der Großteil deines Heimatlandes war Abodriten-Land, auch Zarrentin, wo dein Großvater Karl Martin geboren wurde.","Helmold; Adam von Bremen"],
+["polanen","Polanen","Slawisch","9.–12. Jh.","Großpolen, Posen, Gnesen","Namensgeber der Polen („Feldbewohner“); ihre Piasten-Dynastie einigte Polen ab 960 – die Provinz Posen deiner Ziebarth-Linie war ihr Kernland.","Gallus Anonymus"],
+["pomoranen","Pomoranen","Slawisch","10.–12. Jh.","Vorpommern & polnisches Pommern: Stettin, Kolberg, Danzig","Namensgeber Pommerns („am Meer“); das Greifen-Geschlecht regierte bis 1637.","Gallus Anonymus"],
+["pruessen","Prußen (Alte Preußen)","Balten","bis 1283 n. Chr.","Ostpreußen, Kaliningrad, Memelland","Balten, keine Slawen; heidnisch bis zur Eroberung durch den Deutschen Orden; gaben dem späteren Staat Preußen den Namen.","Peter von Dusburg"],
+["quaden","Quaden","Germanisch","1.–4. Jh. n. Chr.","Mähren, Slowakei, Oberdonau","Markomannische Nachbarn und Verbündete.","Tacitus"],
+["redarier","Redarier","Slawisch","10.–12. Jh.","Seenplatte südöstlich von Rostock, Neubrandenburg","Liutizen-Teilstamm, Hüter der Tempelburg Rethra.","Thietmar"],
+["rugier","Rugier","Germanisch","1.–5. Jh. n. Chr.","Pommern, v. a. Rügen („Rugard“) → Donauraum","Tacitus kennt sie als starken Ostseestamm. Viele Forscher sehen Rügen als ihre Urheimat – die „Rugana“! Später am Donauraum, verschwanden im Hunnensturm.","Tacitus; Jordanes"],
+["rujanen","Rujanen (Ranen)","Slawisch","9.–12. Jh.","Insel Rügen und Hiddensee","Der letzte eigenständige slawische Stamm Norddeutschlands; Tempelburg Arkona mit dem viergesichtigen Gott Swantewit (das Denkmal bei Kap Arkona, das du kennst!); erst 1168 christianisiert.","Helmold; Saxo Grammaticus"],
+["sachsen","Sachsen","Germanisch","ab 3. Jh. n. Chr.","Niedersachsen → England","Aus Chauken und Angrivariern geformt; Karl der Große zwang sie 772–804 zum Christentum („Sachsenkriege“).","Beda; Fränkische Annalen"],
+["schlesier","Slezane (Schlesier)","Slawisch","9.–12. Jh.","Schlesien, Raum Breslau","Namensgeber Schlesiens; Piastenherzogtum.","Bayerischer Geograph"],
+["semnonen","Semnonen","Germanisch","1.–3. Jh. n. Chr.","Spree- und Havelgebiet (Berlin/Brandenburg)","Der vornehmste suebische Stamm mit heiligem Hain – der altgermanische Stamm Brandenburgs.","Tacitus, Germania"],
+["skiren","Skiren","Germanisch","1.–5. Jh. n. Chr.","Oder-Weichsel-Gebiet","Kleiner Wanderstamm; Odoaker, der 476 den letzten weströmischen Kaiser stürzte, war halber Skire.","Jordanes"],
+["skythen","Skyten & Sarmaten","Vorstufen & Andere","ca. 800 v. Chr.–4. Jh. n. Chr.","Süd-russische Steppe, Ukraine, bis Ungarn","Iranische Reiternomaden; brachten den Germanen Reitkunst und Tierstil-Ornamentik.","Herodot"],
+["sorbier","Sorben","Slawisch","ab 6. Jh. bis heute","Oberlausitz, Bautzen, Cottbus","Das letzte slawische Volk Deutschlands mit eigener Sprache (ca. 60.000 Menschen); Nachfahren der Milzener und Lusizer.","Helmold; Volkszählungen"],
+["sprewanen","Sprewanen","Slawisch","10.–12. Jh.","Unter-Spree, Berliner Raum, Köpenick","Köpenick (Zcopnic) war ihre Hauptburg; Berlin war slawisch-deutsch geprägt.","Helmold"],
+["sugambrer","Sugambrer","Germanisch","1. Jh. v. Chr.–4. Jh. n. Chr.","Ruhr, Sieg, Sauerland, Bergisches Land","Furchteinflößende frühe Gegner Roms; verschmolzen später mit den Franken.","Cäsar; Tacitus"],
+["tenkterer","Tenkterer","Germanisch","1. Jh. v. Chr.–1. Jh. n. Chr.","Rechtsrheinisches Mittelrheingebiet, Neuwied","Von Cäsar 55 v. Chr. bekämpft und weitgehend vernichtet.","Cäsar"],
+["teutonen","Teutonen","Germanisch","2.–1. Jh. v. Chr.","Jütland → Mitteleuropa","Mit den Kimbern auf Wanderschaft; 102 v. Chr. von Marius vernichtet – „teutonische Wut“.","Plutarch"],
+["thueringer","Thüringer","Germanisch","3./4.–6. Jh. n. Chr.","Thüringen, Harz, Saale-Unstrut-Gebiet","Hervorgegangen aus den Hermunduren. Errichteten um 400 ein eigenes Königreich, das 531 von Franken und Sachsen zerschlagen wurde. Einer von vier germanischen Stämmen, deren Namen als Bundesland überlebt haben (neben Sachsen, Hessen aus den Chatten und Bayern aus den Bajuwaren) – das Land deines Schwiegervaters Kurt Schütz!","Tacitus; Prokop; Gregor von Tours"],
+["tollenser","Tollenser","Slawisch","10.–12. Jh.","Tollenseetal, Plau, Lübz, Mecklenburgische Seenplatte","Liutizen-Teilstamm – dein Mecklenburg war Liutizen-Land.","Thietmar"],
+["tschechen","Tschechen","Slawisch","ab 6. Jh.","Böhmen (Tschechien)","Kamen im 6. Jh. nach Böhmen – auf den Boden der keltischen Boier und germanischen Markomannen.","Cosmas von Prag"],
+["ubier","Ubier","Germanisch","1. Jh. v. Chr.–3. Jh. n. Chr.","Köln, Düsseldorf, Raum Ahr","Wurden 38 v. Chr. von Rom auf das linksrheinische Ufer umgesiedelt; ihr Oppidum Ubiorum wurde Köln. Hilden, die Heimat der Buhls, lag im Ubier-Land!","Tacitus; Strabon"],
+["ukranen","Ukranen","Slawisch","8.–12. Jh.","Uckermark: Templin, Prenzlau, Angermünde","Namensgeber von Ucker und Uckermark; unterlagen im 12. Jh. den Askaniern.","Mecklenburger Urkunden"],
+["usipeter","Usipeter","Germanisch","1. Jh. v. Chr.–1. Jh. n. Chr.","Rhein (Raum Neuwied)","Von Cäsar 55 v. Chr. brutal bekämpft.","Cäsar"],
+["vandalen","Vandalen (Silingen & Hasdingen)","Germanisch","1.–6. Jh. n. Chr.","Schlesien → Spanien → Karthago (439)","Ostgermanen aus Schlesien; plünderten 455 Rom – daher „Vandalismus“. 533 von Byzanz vernichtet.","Prokop; Jordanes"],
+["warnen","Warnen","Germanisch","1.–6. Jh. n. Chr.","Elbgegend → später Nordsee/Rhein-Maas","Kleiner Suebenstamm; Name lebt im Namen der Kanalinsel Guernsey weiter.","Tacitus; Prokop"],
+["warnower","Warnower","Slawisch","9.–12. Jh.","Warnow-Gebiet: Rostock, Bützow, Güstrow","Namensgeber des Flusses Warnow – dein Mecklenburg ist voll slawischer Flussnamen (Warnow, Peene, Tollense).","Helmold von Bosau"],
+["wislanen","Wislanen","Slawisch","9.–10. Jh.","Weichsel-Land, Raum Krakau","Kernland Kleinpolens; wurden von den Piasten vereint.","Bayerischer Geograph"],
+["woliner","Woliner","Slawisch","9.–12. Jh.","Insel Wolin & Usedom, Odermündung","Ihre Stadt Wolin gilt als das sagenhafte Vineta, die versunkene Handelsmetropole der Ostsee.","Adam von Bremen; Helmold"],
+["zirzipanen","Zirzipanen (Cirzipaner)","Slawisch","7./9.–12. Jh.","Um den Teterower See: Demmin, Dargun, Malchin, Alt-Kalen","„Um die Peene“ – Teilstamm der Lutizen; erstmals 955 in den St. Galler Annalen erwähnt; im Wendenkreuzzug 1147 fast ausgerottet. Das Kernland deiner väterlichen Rath-Linie!","St. Galler Annalen; Adam von Bremen; Helmold"]
+];
+const grpColor=g=>g==="Germanisch"?"b-ger":g==="Slawisch"?"b-sla":g==="Keltisch"?"b-kel":g==="Balten"?"b-bal":"b-vor";
+let curLetter="";
+/* Buchstabenleiste */
+(function(){const L=document.getElementById("letters");
+ ["*","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","Z"].forEach(x=>{
+  const b=document.createElement("button");b.textContent=x==="*"?"Alle":x;
+  b.onclick=function(){curLetter=x==="*"?"":x;
+   Array.prototype.forEach.call(L.children,function(c){c.classList.remove("on")});
+   b.classList.add("on");renderList()};
+  if(x==="*")b.classList.add("on");L.appendChild(b)})})();
+/* Auswahlliste */
+(function(){const pk=document.getElementById("picker");
+ [...T].sort((a,b)=>a[1].localeCompare(b[1],"de")).forEach(t=>{
+  const o=document.createElement("option");o.value=t[0];o.textContent=t[1];pk.appendChild(o)})})();
+function renderList(){
+ const q=document.getElementById("search").value.toLowerCase();
+ let a=T.filter(function(t){return (!curLetter||t[1].toUpperCase().indexOf(curLetter)===0)&&(!q||(t[1]+" "+t[2]+" "+t[3]+" "+t[4]+" "+t[5]).toLowerCase().indexOf(q)>-1)});
+ a.sort(function(x,y){return x[1].localeCompare(y[1],"de")});
+ document.getElementById("tlist").innerHTML=a.map(function(t){
+  return "<div class='trow' onclick=\"selectTribe('"+t[0]+"')\"><span class='nm'>"+t[1]+"</span><span class='badge "+grpColor(t[2])+"'>"+t[2]+"</span><br><span class='zz'>⏳ "+t[3]+"</span><br><span class='rg'>📍 "+t[4]+"</span></div>"}).join("");
+ document.getElementById("count").textContent=a.length+" von "+T.length+" Stämmen"}
+function selectTribe(id){const t=null;const entry=T.filter(function(x){return x[0]===id})[0];
+ if(!entry)return;
+ document.getElementById("tpanel").innerHTML=
+  "<div class='dhead'><div class='dt'>✦ Stammes-Datenblatt ✦</div></div>"+
+  "<div class='dcard'><h2>"+entry[1]+"</h2><div class='cat'><span class='badge "+grpColor(entry[2])+"'>"+entry[2]+"</span></div>"+
+  "<div class='field'><div class='fl'>⏳ Zeitraum</div><div class='fv'>"+entry[3]+"</div></div>"+
+  "<div class='field'><div class='fl'>📍 Region (heutige Sicht)</div><div class='fv'>"+entry[4]+"</div></div>"+
+  "<div class='field'><div class='fl'>📖 Geschichte</div><div class='fv'>"+entry[5]+"</div></div>"+
+  "<div class='field'><div class='fl'>🏛️ Quellen</div><div class='fv'>"+entry[6]+"</div></div>"+
+  "<div class='field'><div class='fl'>🔊 Vorlesen (Lernkarte)</div><div class='fv'><button class='btn' onclick=\"speakTribe('"+id+"')\">Karte vorlesen</button> <button class='btn red' onclick=\"stopSpeak()\">⏹ Stoppen</button></div></div>"+
+  "<div class='backrow'><button class='btn red' onclick=\"go('staemme')\">📇 Zurück zur Übersicht</button> "+
+  "<button class='btn' onclick=\"go('roemer')\">🦅 Römer-Zeitleiste</button> "+
+  "<button class='btn' onclick=\"go('ahnen')\">🌳 Ahnen-Datenbank</button></div></div>";
+ go("tribedetail")}
+/* ============ NAMEN (alphabetisch) ============ */
+const NAMEN=[
+["Knegendorf","sehr selten (Norddeutschland)","Herkunftsname nach dem Dorf Knegendorf bei Ribnitz-Damgarten in Mecklenburg (Landkreis Rostock): „der aus Knegendorf“ – und wieder im Zirzipanen-Land!","Extrem selten – ein Schatz für die Familienforschung: eindeutig nach Mecklenburg verweisend. Frieda Lisette Dorothea Möller geb. Knegendorf. Hinweis: Zwei Dörfer tragen den Namen – bei Ribnitz-Damgarten und als Weiler bei Laage (der Recknitzstadt, LK Rostock). Beide liegen an der Recknitz, der Westgrenze des Zirzipanen-Landes.","Ortslexikon Mecklenburg"],
+["Kalkbrenner","selten (vereinzelt, Nord- und Ostdeutschland)","Berufsname: der Kalkbrenner – er brannte in Kalköfen Kalkstein zu Branntkalk, den wichtigsten Baustoff für Mörtel. Ohne ihn kein Kirchturm und kein Steinfundament! Ein ehrlicher Handwerksname.","Vereinzelt verbreitet. Deine Kalkbrenner: Friedrich Kalkbrenner (Urgroßvater mütterlicherseits, Provinz Posen/Neumark – Gegend um Posen, Arnswalde und Marienwalde, heute alles Polen) und seine Tochter Marie-Sophie Tabbert geb. Kalkbrenner (Großmutter mütterlicherseits).","DFD namenforschung.net"],
+["Tabbert","selten (v. a. Norddeutschland)","Niederdeutsch-friesische Kurzform des germanischen Rufnamens Tjadbert/Tiedbert (Theudebert) – „der im Volk Glänzende“.","Typisch norddeutscher Name – passt zur Kölzig/Neumark-Linie (Wilhelm Tabbert geb. in Arnswalde).","Forebears; Stark"],
+["Ziebarth","597 · Rang 5.939","Patronym zum germanischen Rufnamen Ziebart aus Siegbert – „Sieg“ und „glänzend“: „Sohn des Siegbert“. Ein altgermanischer Fürstenname! Erste Belege: 1153 Sibertus de Frankenburg, 1219 Johan Sieberth von Ravensburg.","Selten; Deutschland und Polen (43 Nennungen 2002 – passt zur Provinz Posen). Die Linie aus Rogasen auf dem Sandberg: Martha, Hugo und Hulda.","DFD namenforschung.net"],
+["Buhl","2.545 · Rang 1.136","Zwei Deutungen: 1. Übername zu mhd. buole „nahe(r Verwandter), Geliebte(r)“ – der Liebste. 2. Wohnstättenname zu Bühl „Hügel, Anhöhe“ – der vom Hügel (Beleg 1559 „uffem Buel“).","Süd- und Mitteldeutschland – die Linie von Werner Kurt Buhl aus Hilden bei Düsseldorf.","DFD; Geneanet"],
+["Rath","4.578 · Rang 575","Zwei Deutungen: 1. Patronym zu einer Kurzform germanischer Rufnamen mit ahd. rāt „Rat, Beratung“ – der kluge Ratgeber. 2. Im Rheinland: Siedlungsname zu -rode „Rodung“.","Deutschland, regional auch Ostbelgien – die alte Linie aus Teterow (Zirzipanen-Land).","DFD; Wikipedia"],
+["Reimer","5.320 · Rang 476","Patronym zum Rufnamen Reimer (ahd. Ragemar/Reinmar) – „der durch Rat Berühmte“. Wieder ein germanischer Fürstenname!","Nord- und Mitteldeutschland – die Linie von Ulrike Schütz geb. Reimer.","DFD"],
+["Schütz","12.117 · Rang 147","Berufsname: der Bogen-Schütze oder der Wald- und Flurschütz, der Wächter der Allmende und Nachtwächter der Stadt.","Einer der häufigsten deutschen Namen – die Linie von Andreas, aus Thüringen (Hermunduren-Land).","DFD"],
+["Lindemann","häufig (ca. 24.000)","Wohnstättenname: „der Mann an der Linde“ – benannt nach dem markanten Baum (Dorflinde, Gerichtslinde).","Besonders Süden und Osten Deutschlands – Ernestine Wilhelmine Tabbert geb. Lindemann aus Kölzig.","DFD; Geneanet"],
+["Möller","29.613 · Rang 46","Die niederdeutsche Form von Müller – Berufname für den Müller. Der Klassiker des Nordens: Wo „Möller“ gesprochen wird, ist plattdeutsches Land.","Sehr häufig in Norddeutschland – passt zur Urgroßfamilie Möller in Mecklenburg.","DFD"],
+["Zimmermann","42.872 · Rang 20","Berufsname: der Handwerker, der das Fachwerkhaus und den Dachstuhl baute. Im Norden oft Verhochdeutschung von „Timmermann“.","Rang 20 – die Linie von Andrea und Steven; auch Nathalies Familienname heute.","DFD"],
+["Lange","sehr häufig (ca. 71.000)","Übername zu mnd. lange „lang, groß“: „der Lange“ – für einen auffallend hochgewachsenen Mann vergeben.","Typisch Norddeutschland – Martina Rath ist eine geborene Lange.","DFD; Geneanet"],
+["Schmidt","sehr häufig (Top 10)","Berufsname zu mhd. smit „Schmied“: der wichtigste Handwerker des Mittelalters – ohne ihn keine Ritterburg!","Allgemein verbreitet; die Schwestern Marianne und Stefanie Rath sind geborene Schmidt.","DFD; Wiktionary"]
+];
+document.getElementById("nlist").innerHTML=NAMEN.map(function(n,i){
+ return "<div class='ncard' style='cursor:pointer' onclick=\"selectName("+i+")\"><h4>"+n[0]+" <span style='font-size:.6rem;color:#b08d3f'>▸ öffnen</span></h4><div class='meta'>👥 "+n[1]+"</div>"+
+ "<div class='txt'>"+n[2]+"</div>"+
+ "<div class='speakrow' style='margin-top:7px'><button class='btn' onclick=\"event.stopPropagation();speakName("+i+")\">🔊 Vorlesen</button>"+
+ " <button class='btn red' onclick=\"event.stopPropagation();stopSpeak()\">⏹ Stoppen</button></div></div>"}).join("");
+function selectName(i){var n=NAMEN[i];if(!n)return;
+ var src=n[4].replace(/DFD namenforschung\.net/g,"<a href='https://www.namenforschung.net' target='_blank' rel='noopener'>DFD namenforschung.net 🔗</a>");
+ document.getElementById("npanel").innerHTML=
+  "<div class='dhead'><div class='dt'>✦ Familienname · Lexikon ✦</div></div>"+
+  "<div class='dcard'><h2>"+n[0]+"</h2>"+
+  "<div class='field'><div class='fl'>👥 Häufigkeit</div><div class='fv'>"+n[1]+"</div></div>"+
+  "<div class='field'><div class='fl'>📖 Bedeutung</div><div class='fv'>"+n[2]+"</div></div>"+
+  "<div class='field'><div class='fl'>🗺️ Verbreitung &amp; Familienlinie</div><div class='fv'>"+n[3]+"</div></div>"+
+  "<div class='field'><div class='fl'>🏛️ Quelle</div><div class='fv'>"+src+"</div></div>"+
+  "<div class='field'><div class='fl'>🔊 Vorlesen (Lernkarte)</div><div class='fv'><button class='btn' onclick=\"speakName("+i+")\">Karte vorlesen</button> <button class='btn red' onclick=\"stopSpeak()\">⏹ Stoppen</button></div></div>"+
+  "<div class='backrow'><button class='btn red' onclick=\"go('namen')\">📖 Zurück zum Lexikon</button></div></div>";
+ go("namendetail")}
+/* ============ RÖMER-ZEITLEISTE (interaktiv) ============ */
+const TLDATA=[
+["58–51 v. Chr.","Cäsar erobert Gallien","Gaius Iulius Cäsar, Feldherr und später Diktator.","Zwei Generationen bevor Augustus Kaiser wird, erobert Cäsar in acht Jahren Gallien – das heutige Frankreich – und rückt damit erstmals an den Rhein. Germanische Stämme wie die Usipeter und Tenkterer, die über den Rhein vor den Römern flüchten, werden von Cäsars Reitern 55 v. Chr. am Niederrhein gestellt und vernichtet. Für deine Vorfahren östlich des Rheins beginnt hier die Berührung mit der Weltmacht Rom – als Nachbarn, nicht als Untertanen."],
+["12–9 v. Chr.","Drusus’ Feldzüge","Kaiser Augustus, der erste Kaiser.","Drusus, der Stiefsohn des Augustus, führt die römischen Legionen über den Rhein bis an die Elbe – weiter als je zuvor. In Mogontiacum (Mainz) und an der Lippe entstehen römische Lager. Damit rückt Rom bis in den Westen des Gebiets, das später dein Heimatland werden sollte. Drusus stirbt 9 v. Chr. nach einem Sturz vom Pferd; sein Bruder Tiberius setzt die Vorstöße noch einige Jahre fort."],
+["9 n. Chr.","Die Varusschlacht","Kaiser Augustus – sein Adoptivsohn Tiberius wird 14 n. Chr. sein Nachfolger.","Der Cheruskerfürst Arminius, römisch ausgebildeter Offizier, lockt drei Legionen unter Publius Quinctilius Varus in einen Hinterhalt – vermutlich bei Kalkriese am Wiehengebirge. Rund 15.000 römische Soldaten fallen; Augustus soll monatelang gerufen haben: „Varus, gib mir meine Legionen zurück!“ Rom zieht sich hinter den Rhein zurück. Germanien bleibt frei – die Römer haben dein Heimatgebiet nie erobert."],
+["14–16 n. Chr.","Germanicus’ Rache-Feldzüge","Kaiser Tiberius, müde und misstrauisch geworden.","Germanicus, Tiberius’ populärer Neffe, durchzieht mit acht Legionen das Land der Marsen, Brukterer und Chatten – im heutigen Nordrhein-Westfalen. Er findet das Schlachtfeld der Varusschlacht und bestattet die Gefallenen. Doch die Siege bringen nichts Dauerhaftes: Tiberius ruft ihn 16 n. Chr. zurück. Rom gibt Germanien endgültig auf – der Rhein wird für Jahrhunderte die Grenze bleiben."],
+["ab 83–85 n. Chr.","Der Limes","Kaiser Domitian; die „Germania“ des Tacitus entsteht 98 n. Chr. unter Nerva und Trajan.","Der Limes – eine über 500 Kilometer lange Grenzbefestigung mit Wachtürmen, Kastellen und Palisaden – sichert das Gebiet zwischen Rhein und Donau. Köln, Xanten, Mainz und Trier blühen als römische Städte. Aber alles östlich davon – Mecklenburg, Brandenburg, Posen, Schlesien – bleibt freies germanisches Land. Der Historiker Tacitus schreibt um 98 n. Chr. seine „Germania“, unsere wichtigste Quelle über die Stämme deiner Heimat."],
+["166–180 n. Chr.","Die Markomannenkriege","Kaiser Marc Aurel, der Philosoph auf dem Thron – er schreibt seine „Selbstbetrachtungen“ im Feldlager.","Germanische und sarmatische Völker brechen an der Donaugrenze ein – Markomannen, Quaden, Jazygen. Marc Aurel verbringt den Großteil seiner restlichen Regierung im Feldlager, kämpft Verteidigungskriege ums Überleben des Reiches. Es ist die größte Krise Roms seit Bürgerkriegszeiten. Die Kriege zeigen: Der Druck der Völkerwanderung beginnt. Erst sein Tod 180 n. Chr. beendet die Kämpfe."],
+["ca. 260 n. Chr.","Der Limesfall","Kaiser Gallienus – die Zeit der Soldatenkaiser mit über 20 Herrschern in 50 Jahren.","Alamannen und Franken durchbrechen den Limes, die Römer räumen das Gebiet östlich des Rheins. Germanische Gruppen wandern ein, römische Städte östlich des Rheins werden aufgegeben. Die Völkerwanderung beginnt allmählich: Germanische Stämme suchen neues Land im Reich, zunächst als Söldner und Verbündete, später als Eroberer. Burgunder, Wandalen, Goten – ihre Namen wirst du später in der Stämme-Liste finden."],
+["476 n. Chr.","Westrom fällt","niemand mehr – Odoaker entthront den Knabenkaiser Romulus Augustulus.","Der germanische Heerführer Odoaker schickt die kaiserlichen Abzeichen nach Konstantinopel: Es gibt keinen Kaiser des Westens mehr. Italien wird ein germanisches Königreich. Im Osten lebt das Reich als Ostrom (Byzanz) weiter. Wichtig für dich: Als vier Generationen später die Slawen nach Mecklenburg einwandern, existiert das antike Rom schon lange nicht mehr. Zirzipanen und Abodriten haben also nie gegen „die Römer“ gekämpft – ihre Gegner waren später die Franken und Sachsen."],
+["6./7. Jh. n. Chr.","Die Slawen rücken ein","Kaiser Herakleios, der gegen die Perser kämpft.","Im Zuge der slawischen Wanderung besiedeln slawische Gruppen das Land zwischen Elbe und Oder, das nach dem Abzug der germanischen Stämme dünn besiedelt war. In Mecklenburg entstehen die Stämme der Abodriten und Zirzipanen, an der unteren Elbe und in der Lausitz die Wilzen und Lutizen. Sie bauen Burgen wie die Mecklenburg („große Burg“) – die Abodriten geben dem Land seinen Namen, der bis heute gilt."],
+["789–804 n. Chr.","Karl der Große und die Abodriten","Karl der Große – seit Weihnachten 800 „Kaiser der Römer“ in der Peterskirche.","Karl der Große unterwirft die Sachsen in jahrzehntelangen Kriegen. Die Abodriten unter ihrem Fürsten Thrasco werden seine Verbündeten gegen die Sachsen – ein Bündnis, das den Abodriten ihre Herrschaft sichert. Gegen die Wilzen im Osten führt Karl 789 selbst einen großen Feldzug. Die Slawenstämme östlich der Elbe bleiben aber unabhängig. Richtig brenzlig wird es für Abodriten und Zirzipanen erst unter den Nachfolgarn: mit den Sachsenherzögen, den Ottonen und dem Wendenkreuzzug."],
+["983 n. Chr.","Der große Slawenaufstand","Kaiser Otto II. – er stirbt ausgerechnet in diesem Jahr mit 28 Jahren in Rom.","Nach dem Tod Ottos II. erheben sich die slawischen Stämme zwischen Elbe und Oder – Lutizen, Abodriten und Zirzipanen gemeinsam – und werfen die deutsche Herrschaft östlich der Elbe ab. Klöster und Bistümer werden zerstört, die Grenze des Reiches fällt auf die Elbe zurück. Fast 200 Jahre lang bleibt das Land der Zirzipanen um Teterow und Neu Wokern slawisch und unabhängig – deine ältesten Familiennamen-Orte liegen in dieser Zeit im freien Zirzipanen-Land."],
+["1147–1168 n. Chr.","Wendenkreuzzug und Fall von Arkona","Papst Eugen III. – er ruft 1145/47 zum Kreuzzug auch gegen die heidnischen Slawen („Wenden“) auf.","König Konrad III. und sächsische Herzöge führen den Wendenkreuzzug – der Slawenaufstand des 12. Jahrhunderts endet mit der Eroberung. Der Abodritenfürst Niklot, Stammvater der Mecklenburger Dynastie, fällt 1160; sein Sohn Pribislaw wird 1167 als Lehnsmann Heinrichs des Löwen Mecklenburgs erster Fürst. 1168 erobert der dänische König Waldemar I. die Tempelburg Arkona auf Rügen – das heidnische Slawenland tritt ins christliche Europa ein. Die Wendenkreuzzugs-Zeit ist das eigentliche „Endkapitel“ der freien Slawenstämme – nicht die Römerzeit."]
+];
+function showEra(i){var e=TLDATA[i];if(!e)return;
+ document.getElementById("erapanel").innerHTML=
+  "<div class=\"card\" style=\"max-width:720px;margin:0 auto;padding:22px\">"+
+  "<div class=\"sub\" style=\"margin-bottom:8px\">🦅 Römer-Zeitleiste · Epoche "+(i+1)+" von "+TLDATA.length+"</div>"+
+  "<h3>"+e[1]+"</h3>"+
+  "<div class=\"field\"><div class=\"fl\">📅 Zeit</div><div class=\"fv\"><b>"+e[0]+"</b></div></div>"+
+  "<div class=\"field\"><div class=\"fl\">🏛️ Wer hat in Rom das Sagen?</div><div class=\"fv\">"+e[2]+"</div></div>"+
+  "<div class=\"field\"><div class=\"fl\">📜 Mehr darüber</div><div class=\"fv\" style=\"line-height:1.6\">"+e[3]+"</div></div>"+
+  "<div class=\"field\"><div class=\"fl\">🔊 Vorlesen (Lernkarte)</div><div class=\"fv\"><button class=\"btn\" onclick=\"speakEra("+i+")\">Epoche vorlesen</button> <button class=\"btn red\" onclick=\"stopSpeak()\">⏹ Stoppen</button></div></div>"+
+  "<div class=\"backrow\"><button class=\"btn red\" onclick=\"go('roemer')\">🦅 Zurück zur Zeitleiste</button></div></div>";
+ go("eradetail")}
+function speakEra(i){var e=TLDATA[i];if(!e)return;
+ speak(e[1]+". Zeit: "+e[0]+". "+e[2]+" "+e[3])}
+/* ---- Vorlesefunktion ---- */
+function bestVoice(){
+ try{var vs=window.speechSynthesis.getVoices().filter(function(v){return (v.lang||"").indexOf("de")===0});
+ var score=function(v){var n=(v.name||"").toLowerCase();
+  if(n.indexOf("kalamera")>-1||n.indexOf("anna")>-1||n.indexOf("petra")>-1||n.indexOf("marlene")>-1||n.indexOf("helena")>-1||n.indexOf("katja")>-1)return 0;
+  if(n.indexOf("google")>-1)return 1;
+  if(n.indexOf("compact")>-1||n.indexOf("eloquence")>-1)return 9;
+  return 5};
+ vs.sort(function(a,b){return score(a)-score(b)});
+ return vs[0]||null}catch(e){return null}}
+function speak(text){stopSpeak();
+ if(!window.speechSynthesis){alert("Das Vorlesen wird von diesem Browser leider nicht unterstützt.");return}
+ var u=new SpeechSynthesisUtterance(text.replace(/&lt;/g," aus "));
+ u.lang="de-DE";u.rate=0.82;u.pitch=1;u.volume=1;
+ var v=bestVoice();if(v)u.voice=v;
+ window.speechSynthesis.speak(u)}
+function stopSpeak(){try{if(window.speechSynthesis)speechSynthesis.cancel()}catch(e){}}
+function speakName(i){var n=NAMEN[i];if(!n)return;
+ speak(n[0]+". Häufigkeit: "+n[1]+". "+n[2]+" "+n[3])}
+function speakTribe(id){var e=T.filter(function(x){return x[0]===id})[0];if(!e)return;
+ speak(e[1]+". "+e[2]+". Zeitraum: "+e[3]+". Region: "+e[4]+". "+e[5])}
+try{if(window.speechSynthesis){speechSynthesis.getVoices();speechSynthesis.onvoiceschanged=function(){speechSynthesis.getVoices()}}}catch(e){}
+/* ============ AHNEN ============ */
 const SEED=[
 ["AdamZiebarth","Adam","Ziebarth","","m","10.02.2000","","Tübingen","Sohn von Frank und Zusanne Ziebarth",null,"FrankZiebarth","SusanneZiebarth"],
 ["AdrianZiebarth","Adrian","Ziebarth","","m","26.07.2011","","","Sohn von Volker und Natalia Ziebarth",null,"VolkerZiebarth","NataliaZiebarth"],
@@ -304,81 +634,84 @@ const SEED=[
 ["willi","Willi","Wegner","","m","unbekannt","Datum unbekannt","","Halbonkel – aus Huldas 2. Ehe",null,"ottoW","hulda"],
 ["wolfgangReimer","Wolfgang","Reimer","","m","22.11.1952","","","Vater von Ulrike",[["martinaReimer","ehe","",""]]]
 ];
-/* Datenbank aufbauen */
-const MAP={};SEED.forEach(s=>{const[id,vn,nn,gn,g,geb,gest,ort,note,ps,v,m]=s;
-MAP[id]={id,vn:vn||'',nn:nn||'',gn:gn||'',g:g||'w',geb:geb||'',gest:gest||'',ort:ort||'',note:note||'',vater:v||null,mutter:m||null,ps:[]}});
-SEED.forEach(s=>{const ps=(s[9]&&Array.isArray(s[9][0]))?s[9]:(s[9]?[s[9]]:[]);
-ps.forEach(p=>{if(MAP[p[0]])MAP[s[0]].ps.push({p:p[0],t:p[1]||'ehe',h:p[2]||'',l:p[3]||''})})});
-const P=Object.values(MAP);
-const byId=id=>MAP[id];
-const nameOf=p=>[(p.vn||'').trim(),(p.nn||'').trim()].filter(Boolean).join(' ')||'–';
-const fullName=id=>{const p=byId(id);return p?nameOf(p):''};
-const parentsOf=id=>{const p=byId(id);return p?[p.vater,p.mutter].filter(Boolean).filter(byId):[]};
-const childrenOf=id=>P.filter(p=>p.vater===id||p.mutter===id).map(p=>p.id);
-const partnersOf=id=>{const out=[];const me=byId(id);
-  (me.ps||[]).forEach(x=>{if(byId(x.p))out.push({other:x.p,t:x.t,h:x.h,l:x.l})});
-  P.forEach(p=>{if(p.id!==id){(p.ps||[]).forEach(x=>{if(x.p===id&&!out.some(o=>o.other===p.id))out.push({other:p.id,t:x.t,h:x.h,l:x.l})})}});
-  return out};
-const siblingsOf=id=>{const p=byId(id);if(!p)return[];
-  return P.filter(q=>q.id!==id&&((p.vater&&q.vater===p.vater)||(p.mutter&&q.mutter===p.mutter))).map(q=>q.id)};
-const uniq=a=>[...new Set(a)];
-function esc(s){return String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
-/* Vorfahren-Prüfung für Stammes-Zuordnung */
-function hasAncestor(id,anc){if(id===anc)return true;const p=byId(id);if(!p)return false;
-  return [p.vater,p.mutter].filter(Boolean).some(x=>hasAncestor(x,anc))}
-function originOf(id){
-  const o=[];
-  if(hasAncestor(id,'karlheinz')||hasAncestor(id,'karlMartin'))
-    o.push('🛡️ <b>Zirzipanen-Land</b> – die väterlichen Wurzeln liegen in Teterow und Neu Wokern, im Kernland des slawischen Stammes der Zirzipanen (um den Teterower See, 7.–12. Jh.): die Familien Rath aus Teterow und Möller aus Neu Wokern.');
-  if(hasAncestor(id,'friedel')||hasAncestor(id,'wilhelm')||hasAncestor(id,'hulda')||hasAncestor(id,'august'))
-    o.push('🌾 <b>Burgunder-Land, Leubuzzi & Polanen</b> – mütterlicherseits die Familien Ziebarth, Kalkbrenner und Tabbert, alle aus der Provinz Posen: Rogasen und Woldenberg (Ziebarth, Kalkbrenner) sowie Kölzig und Arnswalde (Tabbert). Diese Gegend an mittlerer Oder und Warthe war bis ins 5. Jahrhundert Siedlungsland der Burgunder – ihr Zug an den Rhein nach Worms und ihr Untergang 437 sind im Nibelungenlied verewigt. Später, nachdem die Slawen eingewandert waren, lag diese Gegend genau an der Grenze zwischen dem Land der Leubuzzi (um Lebus an der Oder) und dem Land der Polanen (um Posen).');
-  if(hasAncestor(id,'schuetzVater')||hasAncestor(id,'schuetzMutter'))
-    o.push('🏛️ <b>Schütz-Linie aus Thüringen</b> – Kurt Schütz wurde im Land der <b>Hermunduren</b> geboren, aus denen die <b>Thüringer</b> hervorgingen – einer von vier germanischen Stämmen, deren Namen als Bundesland überlebt haben (neben Sachsen, Hessen aus den Chatten und Bayern aus den Bajuwaren)');
-  if(hasAncestor(id,'wernerKurt')||hasAncestor(id,'annemarieB'))
-    o.push('⛲ <b>Buhl-Linie</b> – die Buhls stammen aus Hilden bei Düsseldorf, im alten Land der Ubier (Köln) und der ripuarischen Franken; nördlich saßen die Cherusker des Hermann/Arminius');
-  if(byId(id)&&byId(id).note&&byId(id).note.indexOf('Texas')>-1)
-    o.push('🤠 Ausgewandert nach Texas');
-  return o}
-/* Ansichten */
-function showView(v){document.querySelectorAll('.view').forEach(x=>x.classList.remove('on'));
-  document.getElementById(v).classList.add('on');
-  ['list','stamm','namen'].forEach(n=>document.getElementById('nav-'+n).classList.toggle('on',v===n||(v==='personview'&&n==='list')));
-  window.scrollTo(0,0)}
-function renderList(){
-  const q=document.getElementById('search').value.toLowerCase();
-  const a=[...P].sort((x,y)=>nameOf(x).localeCompare(nameOf(y),'de'))
-    .filter(p=>!AZ||(p.nn||'').toUpperCase().charAt(0)===AZ)
-    .filter(p=>!q||(nameOf(p)+' '+(p.gn||'')+' '+(p.note||'')).toLowerCase().includes(q));
-  document.getElementById('tbody').innerHTML=a.map(p=>
-   `<div class="prow" onclick="select('${p.id}')"><span><span class="nm">${esc(nameOf(p))}</span>${p.gest?' ✝':''}<br><span class="meta">${esc(p.gn)}${p.gn?' · ':''}${esc(p.note)}</span></span><span class="meta">${esc(p.geb)}</span></div>`).join('')}
-function cardHTML(id,big){const p=byId(id);if(!p)return '';
-  const ps=parentsOf(id),ks=childrenOf(id),sps=partnersOf(id);
-  let desc='';
-  if(ps.length)desc+='↑ '+(p.g==='m'?'Sohn':'Tochter')+' von '+ps.map(fullName).join(' und ')+'<br>';
-  sps.forEach(x=>{desc+=(x.t==='ehe'?'⚭ Ehe mit ':'♥ Partner/in ')+fullName(x.other)+(x.h?' ('+esc(x.h)+')':'')+'<br>'});
-  if(ks.length)desc+='↓ '+(p.g==='m'?'Vater':'Mutter')+' von '+ks.map(k=>nameOf(byId(k)).split(' ')[0]).join(', ');
-  return `<div class="pcard${big?' big':''}${p.g==='w'&&!big?' fem':''}" onclick="select('${id}')">`
-    +`<div class="name">${esc(nameOf(p))}${p.gn?`<span class="gebname">${esc(p.gn)}</span>`:''}</div>`
-    +`<div class="meta">geb. ${esc(p.geb)}${p.ort?' · '+esc(p.ort):''}${p.gest?'<br/>✝ '+esc(p.gest):''}</div>`
-    +(p.note?`<div class="desc">${esc(p.note)}</div>`:'')
-    +(desc?`<div class="desc">${desc}</div>`:'')+'</div>'}
-function rowHTML(label,ids){if(!ids.length)return'';
-  return `<div class="rowlabel">${label}</div><div class="row">`+ids.map(id=>cardHTML(id,false)).join('<span class="sep">·</span>')+'</div>'}
-function select(id){if(!byId(id))return;
-  let html=`<div class="focuslabel">✦ ${esc(nameOf(byId(id)).split(' ')[0])} – gerade ausgewählt ✦</div><div class="row">`;
-  html+=cardHTML(id,true)+'</div>';
-  html+=rowHTML('Ehepartner ⚭ · Partner ♥',partnersOf(id).map(x=>x.other));
-  const dl=['Kinder','Enkelkinder','Urenkelkinder','Ururenkelkinder'];
-  let gen=childrenOf(id),di=0;
-  while(gen.length&&di<dl.length){html+=rowHTML(dl[di],gen);gen=uniq(gen.flatMap(childrenOf));di++}
-  const ul=['Eltern','Großeltern','Urgroßeltern','Ur-Urgroßeltern'];
-  let up=parentsOf(id),ui=0;
-  while(up.length&&ui<ul.length){html+=rowHTML(ul[ui],up);up=uniq(up.flatMap(parentsOf));ui++}
-  html+=rowHTML('Geschwister',siblingsOf(id));
-  const orig=originOf(id);
-  if(orig.length)html+=`<div class="orig"><div class="ot">🧬 Woher diese Linie kommt</div>${orig.join('<br>')}</div>`;
-  html+=`<div class="backrow"><button class="btn" onclick="select('katharina')">🌳 Zu mir (Katharina)</button> <button class="btn" onclick="showView('stamm')">🛡️ Germanische Stämme</button> <button class="btn" onclick="showView('namen')">📖 Namensherkunft</button> <button class="btn red" onclick="showView('list')">📇 Alle Personen</button></div>`;
-  document.getElementById('panel').innerHTML=html;showView('personview')}
+const MAP={};SEED.forEach(function(s){const d={id:s[0],vn:s[1]||"",nn:s[2]||"",gn:s[3]||"",geb:s[5]||"",gest:s[6]||"",ort:s[7]||"",note:s[8]||"",vater:s[10]||null,mutter:s[11]||null,ps:[]};MAP[s[0]]=d});
+SEED.forEach(function(s){const ps=(s[9]&&Array.isArray(s[9][0]))?s[9]:(s[9]?[s[9]]:[]);
+ ps.forEach(function(p){if(MAP[p[0]])MAP[s[0]].ps.push({p:p[0],t:p[1]||"ehe",h:p[2]||"",l:p[3]||""})})});
+const P=Object.keys(MAP).map(function(k){return MAP[k]});
+const nameOf=function(p){return ((p.vn||"").trim()+" "+(p.nn||"").trim()).trim()||"–"};
+const fullName=function(id){return MAP[id]?nameOf(MAP[id]):""};
+const parentsOf=function(id){const p=MAP[id];return p?[p.vater,p.mutter].filter(Boolean).filter(function(x){return MAP[x]}):[]};
+const childrenOf=function(id){return P.filter(function(p){return p.vater===id||p.mutter===id}).map(function(p){return p.id})};
+const partnersOf=function(id){const out=[];const me=MAP[id];if(!me)return out;
+ (me.ps||[]).forEach(function(x){if(MAP[x.p])out.push(x.p)});
+ P.forEach(function(p){if(p.id!==id){(p.ps||[]).forEach(function(x){if(x.p===id&&out.indexOf(p.id)<0)out.push(p.id)})}});
+ return out};
+const siblingsOf=function(id){const p=MAP[id];if(!p)return[];
+ return P.filter(function(q){return q.id!==id&&((p.vater&&q.vater===p.vater)||(p.mutter&&q.mutter===p.mutter))}).map(function(q){return q.id})};
+const uniq=function(a){return a.filter(function(v,i){return a.indexOf(v)===i})};
+function esc(s){return String(s||"").replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]})}
+function hasAncestor(id,anc){if(id===anc)return true;const p=MAP[id];if(!p)return false;
+ return [p.vater,p.mutter].filter(Boolean).some(function(x){return hasAncestor(x,anc)})}
+function originOf(id){const o=[];
+ if(hasAncestor(id,"karlheinz")||hasAncestor(id,"karlMartin"))
+  o.push("🩸 Zirzipanenblut – väterlicherseits aus Teterow, dem Kernland der slawischen Zirzipanen (um den Teterower See, 7.–12. Jh.) – von den Familien Möller und Rath: die Rath aus Teterow und die Möller aus Neu Wokern, beide im Zirzipanen-Land.");
+ if(hasAncestor(id,"friedel")||hasAncestor(id,"wilhelm")||hasAncestor(id,"hulda")||hasAncestor(id,"august"))
+  o.push("🌾 Burgunder-Land, Leubuzzi & Polanen – mütterlicherseits die Familien Ziebarth, Kalkbrenner und Tabbert, alle aus der Provinz Posen und der Neumark (heute alles Polen): Rogasen und Woldenberg (Ziebarth), Rogasen, Woldenberg, Arnswalde und Marienwalde (Kalkbrenner) sowie Kölzig und Arnswalde (Tabbert). Diese Gegend an mittlerer Oder und Warthe war bis zum großen Wandern im 5. Jahrhundert Siedlungsland der Burgunder – ihr Zug an den Rhein nach Worms und ihr Untergang 437 sind im Nibelungenlied verewigt. Später, nachdem die Slawen eingewandert waren, lag diese Gegend genau an der Grenze zwischen dem Land der Leubuzzi (um Lebus an der Oder) und dem Land der Polanen (um Posen).");
+ if(hasAncestor(id,"schuetzVater")||hasAncestor(id,"schuetzMutter"))
+  o.push("🏛️ Schütz-Linie aus Thüringen – Kurt Schütz wurde im Land der Hermunduren geboren, aus denen die Thüringer hervorgingen (Annemarie: Herzberger Land)");
+ if(hasAncestor(id,"wernerKurt")||hasAncestor(id,"annemarieB"))
+  o.push("⛲ Buhl-Linie – die Buhls stammen aus Hilden bei Düsseldorf, im alten Land der Ubier (Köln) und der ripuarischen Franken; nördlich saßen die Cherusker des Hermann");
+ return o}
+function renderPersons(){
+ const q=document.getElementById("psuche").value.toLowerCase();
+ const a=P.filter(function(p){return !AZ||(p.nn||"").toUpperCase().charAt(0)===AZ}).filter(function(p){return !q||(nameOf(p)+" "+(p.gn||"")+" "+(p.note||"")).toLowerCase().indexOf(q)>-1})
+  .sort(function(x,y){return nameOf(x).localeCompare(nameOf(y),"de")});
+ document.getElementById("plist").innerHTML=a.map(function(p){
+  return "<div class='prow' onclick=\"selectPerson('"+p.id+"')\"><span><span class='nm'>"+esc(nameOf(p))+"</span>"+(p.gest?" ✝":"")+"<br><span class='meta'>"+esc(p.gn)+(p.gn?" · ":"")+esc(p.note)+"</span></span><span class='meta'>"+esc(p.geb)+"</span></div>"}).join("")}
+function cardHTML(id,big){const p=MAP[id];if(!p)return"";
+ const ps=parentsOf(id),ks=childrenOf(id),sps=partnersOf(id);
+ let desc="";
+ if(ps.length)desc+="↑ "+(p.nn==="Schütz"&&big?"Tochter":"Kind")+" von "+ps.map(fullName).join(" und ")+"<br>";
+ sps.forEach(function(x){const sp=(MAP[id].ps||[]).filter(function(y){return y.p===x})[0]||{};
+  desc+=(sp.t==="ehe"?"⚭ Ehe mit ":"♥ Partner/in ")+fullName(x)+(sp.h?" ("+esc(sp.h)+")":"")+"<br>"});
+ if(ks.length)desc+="↓ "+(ks.length?"Elternteil von ":"")+ks.map(function(k){return nameOf(MAP[k]).split(" ")[0]}).join(", ");
+ return "<div class='pcard"+(big?" big":"")+"' onclick=\"selectPerson('"+id+"')\">"+
+  "<div class='name'>"+esc(nameOf(p))+(p.gn?"<span class='gebname'>"+esc(p.gn)+"</span>":"")+"</div>"+
+  "<div class='meta'>geb. "+esc(p.geb)+(p.ort?" · "+esc(p.ort):"")+(p.gest?"<br/>✝ "+esc(p.gest):"")+"</div>"+
+  (p.note?"<div class='desc'>"+esc(p.note)+"</div>":"")+
+  (desc?"<div class='desc'>"+desc+"</div>":"")+"</div>"}
+function rowHTML(label,ids){if(!ids.length)return"";
+ return "<div class='rowlabel'>"+label+"</div><div class='row'>"+ids.map(function(id){return cardHTML(id,false)}).join("<span class='sep'>·</span>")+"</div>"}
+function selectPerson(id){if(!MAP[id])return;
+ const sps=partnersOf(id),sib=siblingsOf(id);
+ let html="<div class='dhead'><div class='dt'>✦ "+esc(nameOf(MAP[id]).split(" ")[0])+" – gerade ausgewählt ✦</div></div><div class='row'>";
+ html+=cardHTML(id,true)+"</div>";
+ html+=rowHTML("Ehepartner ⚭ · Partner ♥",sps);
+ const dl=["Kinder","Enkelkinder","Urenkelkinder","Ururenkelkinder"];
+ let gen=childrenOf(id),di=0;
+ while(gen.length&&di<dl.length){html+=rowHTML(dl[di],gen);gen=uniq(gen.flatMap(childrenOf));di++}
+ const ul=["Eltern","Großeltern","Urgroßeltern","Ur-Urgroßeltern"];
+ let up=parentsOf(id),ui=0;
+ while(up.length&&ui<ul.length){html+=rowHTML(ul[ui],up);up=uniq(up.flatMap(parentsOf));ui++}
+ html+=rowHTML("Geschwister",sib);
+ const orig=originOf(id);
+ if(orig.length)html+="<div class='orig'><div class='ot'>🧬 Woher diese Linie kommt</div>"+orig.join("<br>")+"</div>";
+ html+="<div class='backrow'><button class='btn' onclick=\"selectPerson('katharina')\">🌳 Zu mir (Katharina)</button> "+
+  "<button class='btn red' onclick=\"go('ahnen')\">📇 Ahnen-Datenbank</button> "+
+  "<button class='btn' onclick=\"go('staemme')\">🏛️ Stämme A–Z</button></div>";
+ document.getElementById("ppanel").innerHTML=html;go("persondetail")}
+/* ============ NAVIGATION & MODALS ============ */
+function go(v){const views=["staemme","roemer","eradetail","namen","namendetail","ahnen","tribedetail","persondetail"];
+ views.forEach(function(x){document.getElementById(x).classList.remove("on")});
+ document.getElementById(v).classList.add("on");
+ document.querySelectorAll("nav button").forEach(function(b){b.classList.toggle("on",b.getAttribute("data-nav")===v)});
+ window.scrollTo(0,0)}
+function openApp(){document.getElementById("cover").style.display="none";try{if(window.speechSynthesis)speechSynthesis.getVoices()}catch(e){}}
+function showCover(){try{stopSpeak()}catch(e){};document.getElementById("cover").style.display="flex"}
+function openModal(id){document.getElementById(id).classList.add("on")}
+function closeModal(id){document.getElementById(id).classList.remove("on")}
+function toggleBundle(){document.getElementById("emblem").classList.toggle("on")}
+renderList();
 function renderStats(){
  var m=0,w=0,leb=0,tot=0,linked=0,both=0;
  SEED.forEach(function(s){if(s[4]==="m")m++;else w++;if(s[6])tot++;else leb++;
@@ -395,74 +728,25 @@ function renderStats(){
   cell(linked,"🔗 mit Eltern verknüpft – davon "+both+" mit beiden Elternteilen","#d31334")+
   "</div>";
 }
-var AZ='';
-function setAZ(l){AZ=(AZ===l)?'':l;renderAZ();renderList()}
+function renderNameStats(){
+ var cnt={};
+ SEED.forEach(function(s){var nn=(s[2]||"").trim();if(!nn)return;cnt[nn]=(cnt[nn]||0)+1});
+ var arr=Object.keys(cnt).map(function(k){return[k,cnt[k]]}).sort(function(a,b){return b[1]-a[1]||a[0].localeCompare(b[0],"de")});
+ var max=arr.length?arr[0][1]:1;
+ var box=document.getElementById("namebox");if(!box)return;
+ box.innerHTML=arr.map(function(e){
+  return "<div style='display:flex;align-items:center;gap:8px;padding:4px 0'><div style='width:112px;font-weight:700;color:var(--navy);font-size:.82rem'>"+e[0]+"</div><div style='flex:1;background:#eee7d7;border-radius:6px;height:18px'><div style='height:18px;border-radius:6px;background:linear-gradient(90deg,#b08d3f,#d31334);width:"+Math.round(e[1]/max*100)+"%'></div></div><div style='width:64px;text-align:right;font-weight:700;font-size:.82rem'>"+e[1]+"</div></div>"}).join("")}
+var AZ="";
+function setAZ(l){AZ=(AZ===l)?"":l;renderAZ();renderPersons()}
 function renderAZ(){
  var letters=[];for(var c=65;c<=90;c++)letters.push(String.fromCharCode(c));
- document.getElementById('azbar').innerHTML=
-  "<button class='azb"+(AZ===''?' on':'')+"' onclick=\"setAZ('')\">✳ Alle</button> "+
-  letters.map(function(l){return "<button class='azb"+(AZ===l?' on':'')+"' onclick=\"setAZ('"+l+"')\">"+l+"</button>"}).join(' ')}
+ document.getElementById("azbar").innerHTML=
+  "<button class='azb"+(AZ===""?" on":"")+"' onclick=\"setAZ('')\">✳ Alle</button> "+
+  letters.map(function(l){return "<button class='azb"+(AZ===l?" on":"")+"' onclick=\"setAZ('"+l+"')\">"+l+"</button>"}).join(" ")}
 renderAZ();
 renderStats();
-renderList();
-select('katharina');
-
-function toggleBundle(){document.getElementById("emblem").classList.toggle("on")}
-function openModal(id){document.getElementById(id).classList.add("on")}
-function closeModal(id){document.getElementById(id).classList.remove("on")}
+renderNameStats();
+renderPersons();
 </script>
-
-<div class="frow">
-  <button class="flink" onclick="openModal('impModal')">Impressum</button>
-  <button class="fbundle" onclick="toggleBundle()">ARC(E)ANA</button>
-  <button class="flink" onclick="openModal('dsModal')">Datenschutz</button>
-</div>
-<div class="fcopy">Stand: 21.11.2026</div>
-<div class="emblem" id="emblem" onclick="toggleBundle()">
-  <div class="emblem-word">ARC(E)ANA</div>
-  <div class="emblem-studio">kreative studio</div>
-  <div class="emblem-methode">ENTDECKEN · ENTWICKELN · ERSCHAFFEN</div>
-</div>
-<div class="overlay" id="impModal" onclick="if(event.target===this)closeModal('impModal')">
-  <div class="modal">
-    <h3>Impressum</h3>
-    <p><strong>Der Stammbaum unserer Familie</strong><br>
-    Das Stammbuch der Familie Rath-Tabbert – meine Eltern und Großeltern</p>
-    <p><strong>Anbieterin (§ 5 DDG – Digitale-Dienste-Gesetz, vormals § 5 TMG):</strong><br>
-    Katharina Schütz<br>
-    Platz der Einheit 10<br>
-    14467 Potsdam<br>
-    Deutschland</p>
-    <p><strong>Zweckbestimmung:</strong> Ausschließlich für private Zwecke – zur Familien- und Ahnenforschung der Familie Rath-Tabbert. Diese Datenbank ist unverkäuflich und ausschließlich für die Familie bestimmt.</p>
-    <p><strong>Methode &amp; Veröffentlichung:</strong> Die App ist nach ARC(E)ANA aufgebaut – meiner ganz persönlichen Lernmethode, die ich für dieses Projekt entsprechend aufbereitet habe. Veröffentlicht ist die App in meinem persönlichen GitHub-Konto.</p>
-    <p><strong>Entstehung:</strong> Die Zusammenstellung der germanischen und slawischen Stämme sowie die Programmierung dieser App erfolgten mit Unterstützung künstlicher Intelligenz (KI).<br>
-    <em>Hinweis: KI kann Fehler machen. Deshalb sollte jede und jeder die Angaben eigenständig prüfen und mit weiteren Quellen abgleichen.</em></p>
-    <p><strong>Recherche – der größte Familienschatz:</strong> Die Grundlage meiner Familienforschung bildet ein ganz besonderer Fundus: das Familienstammbuch, das meine Schwester <strong>Sarina Rath</strong>, die als Standesbeamtin tätig ist, vor einigen Jahren mit viel Sorgfalt zusammengestellt hat. Sie hat für jeden ihrer Geschwister ein eigenes Buch angefertigt. Darin finden sich zahlreiche Geburts- und Registereinträge sowie Angaben zu unseren Großeltern, Eltern, Geschwistern und Kindern. Auch wenn nicht zu jeder Person sämtliche Geburts- und Sterbedaten vorliegen, ist dieses Buch eine wertvolle Grundlage, um familiäre Zusammenhänge und Verwandtschaftsverhältnisse nachzuvollziehen. Ein wirklich schöner und wertvoller Familienschatz, der auch unseren Kindern zugutekommt.</p>
-    <p><strong>Erinnerungen meiner Mutter:</strong> Eine weitere wichtige Quelle sind die persönlichen Erinnerungen meiner Mutter <strong>Friedel Rath, geborene Tabbert</strong>. In unseren Gesprächen und Telefonaten erzählt sie immer wieder aus ihrer Kindheit und von ihrer Familie. Manchmal fällt ihr etwas ein, das sie lange nicht erwähnt hat, und bei einem späteren Gespräch kommen weitere Erinnerungen hinzu. Besonders die Namen und Familiengeschichten der Geschwister ihres Vaters sind dadurch wieder lebendig geworden. Ich halte diese Erzählungen fest und ergänze damit nach und nach das Bild unserer Familiengeschichte.</p>
-    <p><strong>Urkunden &amp; Standesämter:</strong> Auch vorhandene Urkunden und standesamtliche Registerauszüge helfen dabei, einzelne Angaben zu überprüfen, Personen einander zuzuordnen und bisherige Erkenntnisse zu ergänzen. Dazu gehören unter anderem Unterlagen des <strong>Standesamtes Teterow</strong> und des früheren <strong>Standesamtes Kölzig</strong> (heute Kolsk, Polen), bei denen entsprechende Anfragen gestellt und Registerauszüge eingeholt wurden, soweit diese noch vorhanden waren.</p>
-    <p><strong>Ersatzstandesamt Berlin:</strong> Eine weitere wichtige Anlaufstelle ist das <strong>Standesamt II in Berlin (Ersatzstandesamt)</strong>. Dort befinden sich rund zwei Millionen historische Karteikarten und weitere überlieferte Unterlagen aus den ehemaligen preußischen Ostgebieten, darunter Schlesien und Ostpreußen, die heute überwiegend zu Polen gehören. Hierzu habe ich bereits einen Antrag gestellt und stehe weiterhin im Schriftverkehr, um möglicherweise noch vorhandene Einträge und Dokumente ausfindig zu machen. Besonders interessant sind dabei auch mögliche Überlieferungen aus alten Kirchenbüchern. Da viele historische Kirchenbücher inzwischen digitalisiert werden, eröffnen sich weitere Möglichkeiten, den Spuren unserer mütterlichen Familiengeschichte nachzugehen. Vielleicht lässt sich auf diesem Weg noch so mancher bisher unbekannte Eintrag entdecken.</p>
-    <p><strong>Stand der Recherche:</strong> Bislang beruht meine Recherche vor allem auf diesen familiären Überlieferungen und den mir zugänglichen Dokumenten. Eine Anmeldung bei externen Ahnenforschungs-Datenbanken ist bisher nicht erfolgt. Ich möchte mich zunächst mit den Möglichkeiten und den jeweiligen Datenschutzbedingungen vertraut machen.</p>
-    <p><strong>Besonderer Hinweis · Urkunden:</strong> Mir liegt eine Kopie der Sterbeurkunde meines Großvaters <strong>Wilhelm Tabbert</strong>, geboren am 26.01.1908 in Hitzdorf, vor. Solche Dokumente sind für die Ahnenforschung besonders wertvoll. Sie ermöglichen es, unterschiedliche Angaben miteinander abzugleichen und wichtige Lebensdaten wie Geburtsort, Sterbedatum und Lebensalter nachvollziehbar zusammenzuführen.</p>
-    <p><strong>Warum ich Ahnenforschung betreibe:</strong> <em>Wer seine Wurzeln nicht kennt, kann die Zukunft nicht gestalten.</em> Mich treibt die Frage an: Wer bin ich eigentlich, und woher komme ich? Über Jahrhunderte hinweg haben Kriege, wechselnde Herrschaftsverhältnisse, neue Grenzen und politische Umbrüche die Lebenswege der Menschen geprägt, Familien auseinandergerissen und ganze Bevölkerungsgruppen entwurzelt. Aus alten Stammesgebieten wurden Königreiche, Kaiserreiche und neue Staaten. Grenzen und Zugehörigkeiten veränderten sich – doch die Menschen und ihre Familiengeschichten blieben Teil dieser Geschichte. Mit meiner Ahnenforschung möchte ich diese Spuren wieder sichtbar machen, Zusammenhänge verstehen und ein Stück meiner familiären Identität zurückgewinnen. Denn wer seine Herkunft kennt, versteht auch besser, was ihn geprägt hat.</p>
-    <p><strong>Herzlichen Dank</strong> an alle, die bisher an dieser Familienforschung mitgewirkt haben – und ebenso an diejenigen, die mich auch in Zukunft mit ihren Erinnerungen, Dokumenten und Hinweisen unterstützen werden.</p>
-    <p><strong>Hinweis zu den alten germanischen und slawischen Stämmen:</strong> Die Zusammenstellung der Stämme dient dem besseren Verständnis unserer historischen Wurzeln. Sie soll Familiennamen und Herkunftsorte in einen größeren geschichtlichen Zusammenhang einordnen und einen Einblick in die tausendjährige Geschichte des alten Europas geben. Dabei handelt es sich um eine historische Orientierung, nicht um einen Nachweis einer direkten Abstammung von einem bestimmten Stamm.</p>
-    <p><strong>Aktualisierung:</strong> Diese Datenbank wird regelmäßig ergänzt und aktualisiert, sobald mir neue Informationen, Dokumente oder Erkenntnisse vorliegen.</p>
-    <p><strong>Urheberrecht:</strong> © 2026 Katharina Schütz · Alle Rechte vorbehalten.</p>
-    <p><strong>Quellen-Basis:</strong> Tacitus (Germania, 98 n. Chr.) · Ptolemäus · Cäsar · Thietmar von Merseburg · Adam von Bremen · Helmold von Bosau · St. Galler Annalen · Digitales Familiennamenwörterbuch Deutschlands (namenforschung.net) · Standesamtliche Registerauszüge · Sterbeurkunde Wilhelm Tabbert (Nr. 137/1945) · Familien-Stammbuch (Zusammenstellung: Sarina Rath, Standesbeamtin) · Gespräche mit Friedel Rath, geborene Tabbert · Standesamt II Berlin (Ersatzstandesamt).</p>
-    <div style="text-align:right;margin-top:14px"><button class="flink" onclick="closeModal('impModal')">✕ Schließen</button></div>
-  </div>
-</div>
-<div class="overlay" id="dsModal" onclick="if(event.target===this)closeModal('dsModal')">
-  <div class="modal">
-    <h3>Datenschutz</h3>
-    <p><strong>1. Keine Datenerhebung:</strong> Diese App erhebt, überträgt oder verarbeitet <strong>keinerlei Daten</strong>. Kein Server, keine Cloud, keine Cookies, kein Tracking, keine Analyse-Tools.</p>
-    <p><strong>2. Vollständig offline:</strong> Alle Inhalte – alle 161 Personen, Stämme und Familiennamen – sind vollständig in dieser Datei enthalten und laufen offline auf deinem Gerät. Suchbegriffe bleiben nur im Arbeitsspeicher deines Geräts und werden nirgends gespeichert oder übertragen.</p>
-    <p><strong>3. Vorlesefunktion:</strong> Das Vorlesen nutzt ausschließlich die eingebaute Sprachausgabe deines Gerätes (z. B. iPhone). Dabei verlässt das Gerät diese Datei nicht – es wird kein Text an Dritte gesendet.</p>
-    <p><strong>4. Familienangaben:</strong> Angaben zu Familienmitgliedern dienen ausschließlich der privaten Familien-Ahnenforschung. Sie werden nicht an Dritte weitergegeben, nicht verkauft und nicht online gestellt.</p>
-    <p><strong>5. Rechtlicher Hinweis (DSGVO):</strong> Nach Art. 5 der Datenschutz-Grundverordnung (VO (EU) 2016/679) gelten die Grundsätze der Datenvermeidung und Datenminimierung. Da diese App als rein lokale, private Datei <strong>keine personenbezogenen Daten verarbeitet</strong>, sind die Pflichten der DSGVO nur eingeschränkt anwendbar. Ein Impressum mit Name und Anschrift wird gleichwohl nach § 5 DDG (Digitale-Dienste-Gesetz, vormals § 5 TKG) bereitgestellt.</p>
-    <p><strong>6. Einverständnis der Familie:</strong> Die Veröffentlichung von Lebensdaten innerhalb der Familie erfolgt im Einvernehmen; bei Widerspruch eines Familienmitglieds werden dessen Angaben auf Wunsch entfernt oder anonymisiert.</p>
-    <div style="text-align:right;margin-top:14px"><button class="flink" onclick="closeModal('dsModal')">✕ Schließen</button></div>
-  </div>
-
 </body>
 </html>
